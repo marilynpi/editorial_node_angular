@@ -1,0 +1,25 @@
+h2 Editar docente
+label(for='nombre') Nombre:
+input(ng-model='form.nombre', name='nombre', value='{{form.nombre}}') 
+label(for='apellido') Apellido:
+input(ng-model='form.apellido', name='apellido', value='{{form.apellido}}'))
+label(for='tipoDni') Tipo de documento:
+input(ng-model='form.tipo_dni', name='tipo_dni', value='{{form.tipo_dni}}'))
+label(for='dni') Nro de documento:
+input(ng-model='form.id', name='id', value='{{form.id}}'))
+label(for='fechaNac') Fecha de Nacimiento:
+input(ng-model='form.fechaNac', name='fechaNac', value='{{form.fechaNac}}'))
+label(for='direccion') Dirección:
+input(ng-model='form.direccion', name='direccion', value='{{form.direccion}}'))
+label(for='ciudad') Ciudad:
+input(ng-model='form.ciudad', name='ciudad',value='{{form.ciudad}}'))
+label(for='cp') CP:
+input(ng-model='form.cp', name='cp', value='{{form.cp}}'))
+label(for='email') E-mail:
+input(ng-model='form.email', name='email', value='{{form.email}}'))
+label(for='telefono') Telefono:
+input(ng-model='form.telefono', name='telefono', value='{{form.telefono}}'))
+label(for='provincia') Provincia:
+input(ng-model='form.provincia', name='provincia', value='{{form.provincia}}'))
+p
+  button(ng-click='editDocente()') Edit Docente

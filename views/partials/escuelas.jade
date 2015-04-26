@@ -1,0 +1,6 @@
+p There are {{escuelas.length}} escuelas
+div(ng-repeat='escuela in escuelas')
+  h3 {{escuela.nombre}}
+  a(href='readEscuela/{{escuela.id}}') Ver
+  a(href='editEscuela/{{escuela.id}}') Editar
+  a(href='deleteEscuela/{{escuela.id}}') Borrar
