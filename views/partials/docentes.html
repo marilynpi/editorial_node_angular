@@ -1,0 +1,7 @@
+<p>Hay {{docentes.length}} docentes</p>
+<div class="ng-scope" ng-repeat="docente in docentes">
+	<h3>{{docente.nombre}}</h3>
+	<a href="readDocente/{{docente.id}}">Ver</a>
+	<a href="editDocente/{{docente.id}}">Editar</a>
+	<a href="deleteDocente/{{docente.id}}">Borrar</a>
+</div>

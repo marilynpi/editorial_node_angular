@@ -1,0 +1,33 @@
+<h2 >Nueva escuela</h2>
+<label  for="id">ID:</label>
+<input ng-model="form.id" name="id" value="">
+<label  for="nombre">Nombre:</label>
+<input ng-model="form.nombre" name="nombre">
+<label  for="telefono">Telefono:</label>
+<input ng-model="form.telefono" name="telefono">
+<label  for="email">E-mail:</label>
+<input ng-model="form.email" name="email">
+<label >Sector:
+	<select ng-model="form.sector" name="sector" class="form-control">
+		<option value=""></option>
+		<option value="PUBLICO">PUBLICO</option>
+		<option value="PRIVADO">PRIVADO</option>
+	</select>
+</label>
+<label  for="domicilio">Domicilio:</label>
+<input ng-model="form.domicilio" name="domicilio">
+<label  for="localidad">Localidad:</label>
+<input ng-model="form.localidad" name="localidad">
+<label  for="cp">Código Postal:</label>
+<input ng-model="form.cp" name="cp">
+<label  for="distrito">Distrito:</label>
+<input ng-model="form.distrito" name="distrito">
+<label  for="ubicacion">Ubicación:</label>
+<input ng-model="form.ubicacion" name="ubicacion">
+<label  for="provincia">Provincia:</label>
+<input ng-model="form.provincia" name="provincia">
+<label  for="observaciones">Observaciones:</label>
+<textarea ng-model="form.observaciones" name="observaciones"></textarea>
+<p >
+	<button ng-click="submitEscuela()">Guardar</button>
+</p>

@@ -1,0 +1,31 @@
+<h2>Nuevo docente</h2>
+<label for="nombre">Nombre:</label>
+<input ng-model="form.nombre" name="nombre">
+<label for="apellido">Apellido:</label>
+<input ng-model="form.apellido" name="apellido">
+<label for="id">Nro de documento:</label>
+<input ng-model="form.id" name="id">
+<label> Tipo de documento:
+	<select ng-model="form.tipo_dni" name="tipo_dni" class="form-control ng-pristine ng-valid">
+		<option value="? undefined:undefined ?"></option>
+		<option value="DNI">DNI</option>
+		<option value="LC">LC</option>
+	</select>
+</label>
+<label for="fechaNac">Fecha de Nacimiento:</label>
+<input ng-model="form.fechaNac" name="fechaNac">
+<label for="direccion">Dirección:</label>
+<input ng-model="form.direccion" name="direccion">
+<label for="ciudad">Ciudad:</label>
+<input ng-model="form.ciudad" name="ciudad">
+<label for="provincia">Provincia:</label>
+<input ng-model="form.provincia" name="provincia">
+<label for="cp">CP:</label>
+<input ng-model="form.cp" name="cp">
+<label for="email">E-mail:</label>
+<input ng-model="form.email" name="email">
+<label for="telefono">Telefono:</label>
+<input ng-model="form.telefono" name="telefono">
+<p >
+	<button ng-click="submitDocente()">Guardar</button>
+</p>

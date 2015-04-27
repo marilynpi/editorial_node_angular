@@ -28,3 +28,22 @@
   content: "";
   padding: 0;
 }
+.skin-blue .main-header .logo {
+  position: relative;
+  z-index: 9999;
+}
+.navbar {
+  margin-bottom: 0!important;
+}
+.table td{
+  font-weight: 400!important;
+  word-wrap: break-word
+}
+.table { table-layout: fixed; }
+.table td p{
+  display: inline;
+  max-width: 30px;
+}
+form input, form textarea{
+  font-weight: 400!important;
+}
