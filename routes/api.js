@@ -3,7 +3,8 @@
  */
 //obtenemos el modelo UserModel con toda la funcionalidad
 var DocenteModel = require('../models/docente');
-var EscuelaModel = require('../models/escuela');
+var School = require('../models/escuela');
+var EscuelaModel = new School();
 var _ = require('underscore');
 
 
@@ -184,7 +185,6 @@ exports.editEscuela = function (req, res) {
 };
 exports.deleteEscuela = function (req, res) {
   var id = req.params.id;
-
   EscuelaModel.deleteEscuelas(id,function(error, data)
     {
       if(data && data.msg === "deleted" || data.msg === "notExist")
