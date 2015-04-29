@@ -1,5 +1,8 @@
 var Connection = (function(){
 	
+	//Self represents "this", without the well-known fucking scope issue.
+	var self = this;
+	
 	var mysql = require('mysql');
 	var connection = mysql.createConnection(
 						{ 
@@ -11,14 +14,14 @@ var Connection = (function(){
 					);		
 
 	function Connection(){
-		this.connection = connection;
+		self.connection = connection;
 	}
 
 	Connection.prototype.getAllSchools = function(table_name,table_pk,callback){
-		if (this.connection) 
+		if (self.connection) 
 		{
 			var query = 'SELECT * FROM '+table_name+', provincia, localidad WHERE escuela.provincia = provincia.id_provincia AND escuela.localidad = localidad.id_localidad ORDER BY '+table_pk;
-			this.connection.query(query, function(error, rows) {
+			self.connection.query(query, function(error, rows) {
 				if(error)
 				{
 					throw error;
@@ -32,10 +35,10 @@ var Connection = (function(){
 	};
 
 	Connection.prototype.getSchoolById = function(table_name,table_pk,id,callback){
-		if (this.connection) 
+		if (self.connection) 
 		{
-			var query = 'SELECT * FROM '+table_name+', provincia, localidad WHERE escuela.provincia = provincia.id_provincia AND escuela.localidad = localidad.id_localidad AND '+table_pk+' = ' + this.connection.escape(id);
-			this.connection.query(query, function(error, row) 
+			var query = 'SELECT * FROM '+table_name+', provincia, localidad WHERE escuela.provincia = provincia.id_provincia AND escuela.localidad = localidad.id_localidad AND '+table_pk+' = ' + self.connection.escape(id);
+			self.connection.query(query, function(error, row) 
 			{
 				if(error)
 				{
@@ -50,10 +53,10 @@ var Connection = (function(){
 	}
 
 	Connection.prototype.insertSchool = function(table_name,data,callback){
-		if (this.connection) 
+		if (self.connection) 
 		{
 			var query = 'INSERT INTO '+table_name+' SET ?';
-			this.connection.query(query, data, function(error, result) 
+			self.connection.query(query, data, function(error, result) 
 			{
 				if(error)
 				{
@@ -69,21 +72,21 @@ var Connection = (function(){
 	}
 
 	Connection.prototype.updateSchool = function(table_name,table_pk,data, callback){
-		if(this.connection)
+		if(self.connection)
 		{
-			var sql = 'UPDATE '+table_name+' SET nombre = ' + this.connection.escape(data.nombre) + ',' + 
-			'telefono = ' + this.connection.escape(data.telefono) + ',' +
-			'email = ' + this.connection.escape(data.email) + ',' + 
-			'domicilio = ' + this.connection.escape(data.domicilio) + ',' +
-			'localidad = ' + this.connection.escape(data.localidad) + ',' +
-			'cp = ' + this.connection.escape(data.cp) + ',' + 
-			'sector = ' + this.connection.escape(data.sector) + ',' +
-			'distrito = ' + this.connection.escape(data.distrito) + ',' +
-			'ubicacion = ' + this.connection.escape(data.ubicacion) + ',' +
-			'provincia = ' + this.connection.escape(data.provincia) + ',' +
-			'observaciones = ' + this.connection.escape(data.observaciones) +
+			var sql = 'UPDATE '+table_name+' SET nombre = ' + self.connection.escape(data.nombre) + ',' + 
+			'telefono = ' + self.connection.escape(data.telefono) + ',' +
+			'email = ' + self.connection.escape(data.email) + ',' + 
+			'domicilio = ' + self.connection.escape(data.domicilio) + ',' +
+			'localidad = ' + self.connection.escape(data.localidad) + ',' +
+			'cp = ' + self.connection.escape(data.cp) + ',' + 
+			'sector = ' + self.connection.escape(data.sector) + ',' +
+			'distrito = ' + self.connection.escape(data.distrito) + ',' +
+			'ubicacion = ' + self.connection.escape(data.ubicacion) + ',' +
+			'provincia = ' + self.connection.escape(data.provincia) + ',' +
+			'observaciones = ' + self.connection.escape(data.observaciones) +
 			' WHERE '+table_pk+' = ' + data.id;
-			this.connection.query(sql, function(error, result) 
+			self.connection.query(sql, function(error, result) 
 			{
 				if(error)
 				{
@@ -98,16 +101,15 @@ var Connection = (function(){
 	}
 
 	Connection.prototype.deleteSchool = function(table_name,table_pk,id, callback){
-		if(this.connection)
+		if(self.connection)
 		{
-			var sqlExists = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + this.connection.escape(id);
-			this.connection.query(sqlExists, function(err, row){
+			var sqlExists = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
+			self.connection.query(sqlExists, function(err, row){
 				if(row)
 				{
-					var sql = 'DELETE FROM '+table_name+' WHERE '+table_pk+' = ' + id;//this.connection.escape(id);
-					console.log("SFDSDSDFS"+sql);
-					this.connection.query(sql, function(error, result) 
-					{
+					var sql = 'DELETE FROM '+table_name+' WHERE '+table_pk+' = ' + id;//self.connection.escape(id);
+					
+					self.connection.query(sql, function(error, result){
 						if(error)
 						{
 							throw error;
