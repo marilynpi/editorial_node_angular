@@ -8,23 +8,18 @@ var _ = require('underscore');
 
 
 exports.docentes = function (req, res) {
-  data = DocenteModel.getPersonas(function(error, data)
-	{
+  data = DocenteModel.getPersonas(function(error, data){
   		res.json(200,data);
   	});
 };
+
 exports.docente = function (req, res) {
   var id = req.params.id;
-  data = DocenteModel.getPersona(id,function(error, data)
-  {
-    //si el usuario existe lo mostramos en formato json
-    if (typeof data !== 'undefined' && data.length > 0)
-    {
+  data = DocenteModel.getPersona(id,function(error, data){    
+    if (typeof data !== 'undefined' && data.length > 0){
       res.json(200,data);
-    }
-    //en otro caso mostramos una respuesta conforme no existe
-    else
-    {
+    }    
+    else{
       res.json(404,{"msg":"notExist"});
     }
   });
@@ -44,21 +39,17 @@ exports.addDocente = function (req, res) {
               email: req.param('email'),
               telefono: req.param('telefono')
             }
-  DocenteModel.insertPersona(datos,function(error, data)
-    {
-      //si el usuario se ha insertado correctamente mostramos su info
-      if(data && data.insertId)
-      {
+  DocenteModel.insertPersona(datos,function(error, data){      
+      if(data && data.insertId){
         res.redirect("/api/docente/" + data.insertId);
       }
-      else
-      {
+      else{
         res.json(500,{"msg":"Error"});
       }
     });
 };
-exports.editDocente = function (req, res) {
-  //almacenamos los datos del formulario en un objeto
+
+exports.editDocente = function (req, res) {  
   var data = {
               id:req.param('id'),
               tipo_dni: req.param('tipo_dni'),
@@ -72,52 +63,42 @@ exports.editDocente = function (req, res) {
               email: req.param('email'),
               telefono: req.param('telefono')
             }
-    DocenteModel.updatePersona(data,function(error, data)
-    {
-      //si el usuario se ha actualizado correctamente mostramos un mensaje
-      if(data && data.msg)
-      {
+    DocenteModel.updatePersona(data,function(error, data){      
+      if(data && data.msg){
         res.json(200,data);
       }
-      else
-      {
+      else{
         res.json(500,{"msg":"Error"});
       }
     });
 };
+
 exports.deleteDocente = function (req, res) {
   var id = req.params.id;
 
-  DocenteModel.deletePersona(id,function(error, data)
-    {
-      if(data && data.msg === "deleted" || data.msg === "notExist")
-      {
+  DocenteModel.deletePersona(id,function(error, data){
+      if(data && data.msg === "deleted" || data.msg === "notExist"){
         res.json(200,data);
       }
-      else
-      {
+      else{
         res.json(500,{"msg":"Error"});
       }
     });
 };
-exports.escuelas = function (req, res) {
-  data = EscuelaModel.getEscuelas(function(error, data)
-  {
+
+exports.escuelas = function (req, res){
+  data = EscuelaModel.getEscuelas(function(error, data){
       res.json(200,data);
     });
 };
+
 exports.escuela = function (req, res) {
   var id = req.params.id;
-  data = EscuelaModel.getEscuela(id,function(error, data)
-  {
-    //si el usuario existe lo mostramos en formato json
-    if (typeof data !== 'undefined' && data.length > 0)
-    {
+  data = EscuelaModel.getEscuela(id,function(error, data){    
+    if (typeof data !== 'undefined' && data.length > 0){
       res.json(200,data);
-    }
-    //en otro caso mostramos una respuesta conforme no existe
-    else
-    {
+    }    
+    else{
       res.json(404,{"msg":"notExist"});
     }
   });
@@ -139,22 +120,18 @@ exports.addEscuela = function (req, res) {
         provincia: req.param('provincia'),
         observaciones: req.param('observaciones')
   }
-  EscuelaModel.insertEscuela(datos,function(error, data)
-    {
-      //si el usuario se ha insertado correctamente mostramos su info
+  EscuelaModel.insertEscuela(datos,function(error, data){      
       console.log(data,data.insertId )
-      if(data && data.insertId)
-      {
+      if(data && data.insertId){
         res.redirect("/api/escuela/" + data.insertId);
       }
-      else
-      {
+      else{
         res.json(500,{"msg":"Error"});
       }
     });
 };
-exports.editEscuela = function (req, res) {
-  //almacenamos los datos del formulario en un objeto
+
+exports.editEscuela = function (req, res) { 
   var data = {
               id:req.param('id'),
               nombre:req.param('nombre'),
@@ -169,29 +146,23 @@ exports.editEscuela = function (req, res) {
               provincia: req.param('id_provincia'),
               observaciones: req.param('observaciones')
             }
-    EscuelaModel.updateEscuela(data,function(error, data)
-    {
-      //si el usuario se ha actualizado correctamente mostramos un mensaje
-      if(data && data.msg)
-      {
+    EscuelaModel.updateEscuela(data,function(error, data){    
+      if(data && data.msg){
         res.json(200,data);
       }
-      else
-      {
+      else{
         res.json(500,{"msg":"Error"});
       }
     });
 };
+
 exports.deleteEscuela = function (req, res) {
   var id = req.params.id;
-  EscuelaModel.deleteEscuelas(id,function(error, data)
-    {
-      if(data && data.msg === "deleted" || data.msg === "notExist")
-      {
+  EscuelaModel.deleteEscuelas(id,function(error, data){
+      if(data && data.msg === "deleted" || data.msg === "notExist"){
         res.json(200,data);
       }
-      else
-      {
+      else{
         res.json(500,{"msg":"Error"});
       }
     });

@@ -31,6 +31,7 @@ var Teacher = (function(){
 		connection.deleteTeacher(self.table_name,self.table_pk,id,callback);
 	}
 
+	return Teacher;
 })();
 
 module.exports = Teacher;
