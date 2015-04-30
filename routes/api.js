@@ -1,10 +1,9 @@
-/*
- * Serve JSON to our AngularJS client
- */
-//obtenemos el modelo UserModel con toda la funcionalidad
-var DocenteModel = require('../models/docente');
+var Teacher = require('../models/docente');
+var DocenteModel = new Teacher();
+
 var School = require('../models/escuela');
 var EscuelaModel = new School();
+
 var _ = require('underscore');
 
 
