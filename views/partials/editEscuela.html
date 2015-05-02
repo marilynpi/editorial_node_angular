@@ -16,11 +16,11 @@
 				            </div>
 				            <div class="form-group">
 				                <label>Telefono:</label>
-				                <input ng-model="form.nombre" name="nombre" value="{{form.telefono}}">
+				                <input ng-model="form.telefono" name="nombre" value="{{form.telefono}}">
 				            </div>
 				            <div class="form-group">
 				                <label>E-mail:</label>
-				                <input ng-model="form.nombre" name="nombre" value="{{form.email}}">
+				                <input ng-model="form.email" name="nombre" value="{{form.email}}">
 				            </div>
 				            <div class="form-group">
 				                <label>Sector:</label>
@@ -56,7 +56,7 @@
 							</div>
 					</div>
 					<div class="box-footer">
-				        <button type="editEscuela()" class="btn btn-primary">Guardar</button>
+				        <button ng-click="editEscuela()" class="btn btn-primary">Guardar</button>
 				    </div>
 				</div><!-- /.box -->
         </div><!-- col-xs-12 -->

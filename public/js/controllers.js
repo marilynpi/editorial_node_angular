@@ -129,6 +129,7 @@ angular.module('myApp.controllers', []).
   controller('AddEscuelaCtrl', function ($scope, $http, $location) {
     $scope.form = {};
     $scope.submitEscuela = function () {
+      console.log('hola');
       $http.post('/api/escuela', $scope.form).
         success(function(data) {
           $location.path('/escuelas');
@@ -161,7 +162,7 @@ angular.module('myApp.controllers', []).
     $scope.editEscuela = function () {
       $http.put('/api/escuela/' + $routeParams.id, $scope.form).
         success(function(data) {
-          $location.url('/readEscuela/' + $routeParams.id);
+          $location.url('/escuelas');
         });
     };
   }).
