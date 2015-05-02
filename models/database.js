@@ -232,31 +232,8 @@ var Connection = (function(){
 				}
 			});
 		}		
-	}	
-
-<<<<<<< HEAD
-	Connection.prototype.getSchoolCourseByYear = function(school_id,callback){
-		if(self.connection){
-
-			var sql = 'SELECT * FROM escuela e '+
-						'INNER JOIN escuela_ciclo ec ON (e.id = ec,id_escuela) '+
-						'INNER JOIN ciclo c ON (ec.id_ciclos = c.id) '+
-						'WHERE e.id = '+ self.connection.escape(id) +
-						' AND c.description LIKE '+YEAR(CURDATE())+
-						' AND c.id IN (SELECT g.id_ciclo FROM grado g)'
-
-			self.connection.query(sql,function(error,row){
-				if(error){
-					throw error;
-				}else{
-					callback(null,row);
-				}
-			});
-		}
 	}
-
-
-=======
+		
 	Connection.prototype.getCitiesByStateId = function(table_name,state_pk,callback){
 		if (self.connection){	
 			var query = 'SELECT * FROM ' + table_name + ' WHERE id_provincia = ' + state_pk + ' ORDER BY nombre_localidad';
@@ -284,8 +261,26 @@ var Connection = (function(){
 			});
 		}			
 	}
->>>>>>> 2eab5932d9199fc1012e00ba132d136e27800d66
 
+	Connection.prototype.getSchoolCourseByYear = function(school_id,callback){
+		if(self.connection){
+
+			var sql = 'SELECT * FROM escuela e '+
+						'INNER JOIN escuela_ciclo ec ON (e.id = ec,id_escuela) '+
+						'INNER JOIN ciclo c ON (ec.id_ciclos = c.id) '+
+						'WHERE e.id = '+ self.connection.escape(id) +
+						' AND c.description LIKE '+YEAR(CURDATE())+
+						' AND c.id IN (SELECT g.id_ciclo FROM grado g)'
+
+			self.connection.query(sql,function(error,row){
+				if(error){
+					throw error;
+				}else{
+					callback(null,row);
+				}
+			});
+		}
+	}
 	return Connection;
 })();
 
