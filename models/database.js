@@ -207,6 +207,28 @@ var Connection = (function(){
 		}	
 	}	
 
+	Connection.prototype.getSchoolCourseByYear = function(school_id,callback){
+		if(self.connection){
+
+			var sql = 'SELECT * FROM escuela e '+
+						'INNER JOIN escuela_ciclo ec ON (e.id = ec,id_escuela) '+
+						'INNER JOIN ciclo c ON (ec.id_ciclos = c.id) '+
+						'WHERE e.id = '+ self.connection.escape(id) +
+						' AND c.description LIKE '+YEAR(CURDATE())+
+						' AND c.id IN (SELECT g.id_ciclo FROM grado g)'
+
+			self.connection.query(sql,function(error,row){
+				if(error){
+					throw error;
+				}else{
+					callback(null,row);
+				}
+			});
+		}
+	}
+
+
+
 	return Connection;
 })();
 
