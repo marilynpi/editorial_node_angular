@@ -4,6 +4,12 @@ var DocenteModel = new Teacher();
 var School = require('../models/escuela');
 var EscuelaModel = new School();
 
+var State = require('../models/provincia');
+var ProvinciaModel = new State();
+
+var City = require('../models/localidad');
+var LocalidadModel = new City();
+
 var _ = require('underscore');
 
 
@@ -166,4 +172,40 @@ exports.deleteEscuela = function (req, res) {
         res.json(500,{"msg":"Error"});
       }
     });
+};
+
+exports.provincias = function (req, res){
+  data = ProvinciaModel.getStates(function(error, data){
+      res.json(200,data);
+    });
+};
+
+exports.provincia = function (req, res) {
+  var id = req.params.id;
+  data = ProvinciaModel.getState(id,function(error, data){    
+    if (typeof data !== 'undefined' && data.length > 0){
+      res.json(200,data);
+    }    
+    else{
+      res.json(404,{"msg":"notExist"});
+    }
+  });
+};
+exports.localidades = function (req, res){
+  var id_provincia = req.params.id;
+  data = LocalidadModel.getCities(id_provincia,function(error, data){
+      res.json(200,data);
+    });
+};
+
+exports.localidad = function (req, res) {
+  var id = req.params.localidad;
+  data = LocalidadModel.getCity(id,function(error, data){    
+    if (typeof data !== 'undefined' && data.length > 0){
+      res.json(200,data);
+    }    
+    else{
+      res.json(404,{"msg":"notExist"});
+    }
+  });
 };

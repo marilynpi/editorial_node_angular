@@ -8,7 +8,7 @@ var Connection = (function(){
 						{ 
 							host: 'localhost', 
 							user: 'root',  
-							password: '123', 
+							password: '', 
 							database: 'editorial'
 						}
 					);		
@@ -113,7 +113,6 @@ var Connection = (function(){
 
 	Connection.prototype.getAllTeacher = function(table_name,table_pk,callback){
 		if (self.connection){	
-			
 			var query = 'SELECT * FROM '+table_name+', provincia WHERE provincia = id_provincia ORDER BY '+table_pk;
 			self.connection.query(query, function(error, rows){
 				if(error){
@@ -143,7 +142,6 @@ var Connection = (function(){
 
 	Connection.prototype.insertTeacher = function(table_name,data,callback){
 		if (self.connection){
-
 			var query = 'INSERT INTO '+table_name+' SET ?';
 			self.connection.query(query, data, function(error, result){
 				if(error){
@@ -160,7 +158,7 @@ var Connection = (function(){
 	Connection.prototype.updateTeacher = function(table_name,table_pk,data,callback){
 		if(self.connection){
 
-			var sql = 'UPDATE '+table+' SET nombre = ' + self.connection.escape(data.nombre) + ',' + 
+			var sql = 'UPDATE '+table_name+' SET nombre = ' + self.connection.escape(data.nombre) + ',' + 
 					'apellido = ' + self.connection.escape(data.apellido) + ',' +
 					'nombre = ' + self.connection.escape(data.nombre) + ',' + 
 					'tipo_dni = ' + self.connection.escape(data.tipo_dni) + ',' +
@@ -170,7 +168,7 @@ var Connection = (function(){
 					'cp = ' + self.connection.escape(data.cp) + ',' +
 					'email = ' + self.connection.escape(data.email) + ',' +
 					'telefono = ' + self.connection.escape(data.telefono) +
-					' WHERE '+pk+' = ' + data.id;
+					' WHERE '+table_pk+' = ' + data.id;
 
 			self.connection.query(sql, function(error, result){
 				if(error){
@@ -205,8 +203,38 @@ var Connection = (function(){
 				}
 			});
 		}	
+	}
+
+	Connection.prototype.getAllStates = function(table_name,table_pk,callback){
+		if (self.connection){	
+			var query = 'SELECT * FROM '+table_name+' ORDER BY nombre_provincia';
+			self.connection.query(query, function(error, rows){
+				if(error){
+					throw error;
+				}
+				else{
+					callback(null, rows);
+				}
+			});
+		}			
+	}
+
+	Connection.prototype.getStatesById = function(table_name,table_pk,id,callback){
+		if (self.connection){
+
+			var sql = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
+			self.connection.query(sql, function(error, row){
+				if(error){
+					throw error;
+				}
+				else{
+					callback(null, row);
+				}
+			});
+		}		
 	}	
 
+<<<<<<< HEAD
 	Connection.prototype.getSchoolCourseByYear = function(school_id,callback){
 		if(self.connection){
 
@@ -228,6 +256,35 @@ var Connection = (function(){
 	}
 
 
+=======
+	Connection.prototype.getCitiesByStateId = function(table_name,state_pk,callback){
+		if (self.connection){	
+			var query = 'SELECT * FROM ' + table_name + ' WHERE id_provincia = ' + state_pk + ' ORDER BY nombre_localidad';
+			self.connection.query(query, function(error, rows){
+				if(error){
+					throw error;
+				}
+				else{
+					callback(null, rows);
+				}
+			});
+		}			
+	}
+
+	Connection.prototype.getCityById = function(table_name,table_pk,callback){
+		if (self.connection){	
+			var query = 'SELECT * FROM ' + table_name + ' WHERE '+table_pk+' = ' + self.connection.escape(id);
+			self.connection.query(query, function(error, rows){
+				if(error){
+					throw error;
+				}
+				else{
+					callback(null, rows);
+				}
+			});
+		}			
+	}
+>>>>>>> 2eab5932d9199fc1012e00ba132d136e27800d66
 
 	return Connection;
 })();
