@@ -1,7 +1,7 @@
 /* Controllers */
 
 angular.module('myApp.controllers', []).
-  controller('IndexCtrl', function ($scope, $http) {
+  controller('DocenteCtrl', function ($scope, $http) {
     $http.get('/api/docentes').
     success(function(data, status, headers, config) {
       var docentes = [];
@@ -11,7 +11,7 @@ angular.module('myApp.controllers', []).
           id: docente.dni,
           nombre: docente.nombre,
           apellido: docente.apellido,
-          fechaNac: docente.fecha_nac,
+          fecha_nac: docente.fecha_nac,
           direccion: docente.direccion,
           ciudad: docente.ciudad,
           id_provincia: docente.id_provincia,
@@ -45,7 +45,7 @@ angular.module('myApp.controllers', []).
             id: data[0].dni,
             nombre: data[0].nombre,
             apellido: data[0].apellido,
-            fechaNac: data[0].fecha_nac,
+            fecha_nac: data[0].fecha_nac,
             direccion: data[0].direccion,
             ciudad: data[0].ciudad,
             id_provincia: data[0].id_provincia,
@@ -59,7 +59,7 @@ angular.module('myApp.controllers', []).
     $scope.editDocente = function () {
       $http.put('/api/docente/' + $routeParams.id, $scope.form).
         success(function(data) {
-          $location.url('/readDocente/' + $routeParams.id);
+          $location.url('/docentes');
         });
     };
   }).

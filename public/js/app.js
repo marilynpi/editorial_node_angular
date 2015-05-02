@@ -12,7 +12,7 @@ config(function ($routeProvider, $locationProvider) {
   $routeProvider.
     when('/docentes', {
       templateUrl: 'partials/docentes',
-      controller: 'IndexCtrl'
+      controller: 'DocenteCtrl'
     }).
     when('/deleteDocente/:id', {
       templateUrl: 'partials/deleteDocente',

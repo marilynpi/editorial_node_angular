@@ -8,7 +8,7 @@ var Connection = (function(){
 						{ 
 							host: 'localhost', 
 							user: 'root',  
-							password: '123', 
+							password: '', 
 							database: 'editorial'
 						}
 					);		
@@ -113,7 +113,6 @@ var Connection = (function(){
 
 	Connection.prototype.getAllTeacher = function(table_name,table_pk,callback){
 		if (self.connection){	
-			
 			var query = 'SELECT * FROM '+table_name+', provincia WHERE provincia = id_provincia ORDER BY '+table_pk;
 			self.connection.query(query, function(error, rows){
 				if(error){
@@ -143,7 +142,6 @@ var Connection = (function(){
 
 	Connection.prototype.insertTeacher = function(table_name,data,callback){
 		if (self.connection){
-
 			var query = 'INSERT INTO '+table_name+' SET ?';
 			self.connection.query(query, data, function(error, result){
 				if(error){
@@ -160,7 +158,7 @@ var Connection = (function(){
 	Connection.prototype.updateTeacher = function(table_name,table_pk,data,callback){
 		if(self.connection){
 
-			var sql = 'UPDATE '+table+' SET nombre = ' + self.connection.escape(data.nombre) + ',' + 
+			var sql = 'UPDATE '+table_name+' SET nombre = ' + self.connection.escape(data.nombre) + ',' + 
 					'apellido = ' + self.connection.escape(data.apellido) + ',' +
 					'nombre = ' + self.connection.escape(data.nombre) + ',' + 
 					'tipo_dni = ' + self.connection.escape(data.tipo_dni) + ',' +
@@ -170,7 +168,7 @@ var Connection = (function(){
 					'cp = ' + self.connection.escape(data.cp) + ',' +
 					'email = ' + self.connection.escape(data.email) + ',' +
 					'telefono = ' + self.connection.escape(data.telefono) +
-					' WHERE '+pk+' = ' + data.id;
+					' WHERE '+table_pk+' = ' + data.id;
 
 			self.connection.query(sql, function(error, result){
 				if(error){
