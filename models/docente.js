@@ -22,6 +22,7 @@ var Teacher = (function(){
 	}
 
 	Teacher.prototype.insertPersona = function(data,callback){
+		console.log(data, self.table_name);
 		Teacher();
 		connection.insertTeacher(self.table_name,data,callback);		
 	}

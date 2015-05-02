@@ -28,10 +28,21 @@ angular.module('myApp.controllers', []).
   }).
   controller('AddDocenteCtrl', function ($scope, $http, $location) {
     $scope.form = {};
+    $http.get('/api/provincias').
+    success(function(data, status, headers, config) {
+      var provincias = [];
+      data.forEach(function (provincia, i) {
+        provincias.push({
+          id_provincia: provincia.id_provincia,
+          nombre_provincia: provincia.nombre_provincia,
+        });
+      });
+      $scope.provincias = provincias;
+    });
     $scope.submitDocente = function () {
       $http.post('/api/docente', $scope.form).
         success(function(data) {
-          $location.path('/readDocente/'+ data[0].dni);
+          $location.path('/docentes');
         });
     };
   }).
@@ -128,12 +139,48 @@ angular.module('myApp.controllers', []).
   }).
   controller('AddEscuelaCtrl', function ($scope, $http, $location) {
     $scope.form = {};
+    $http.get('/api/provincias').
+    success(function(data, status, headers, config) {
+      var provincias = [];
+      data.forEach(function (provincia, i) {
+        provincias.push({
+          id_provincia: provincia.id_provincia,
+          nombre_provincia: provincia.nombre_provincia,
+        });
+      });
+      $scope.provincias = provincias;
+    });
+    $http.get('/api/provincias').
+    success(function(data, status, headers, config) {
+      var provincias = [];
+      data.forEach(function (provincia, i) {
+        provincias.push({
+          id_provincia: provincia.id_provincia,
+          nombre_provincia: provincia.nombre_provincia,
+        });
+      });
+      $scope.provincias = provincias;
+    });
     $scope.submitEscuela = function () {
-      console.log('hola');
       $http.post('/api/escuela', $scope.form).
         success(function(data) {
           $location.path('/escuelas');
         });
+    };
+    $scope.getLocalidades = function () {
+      console.log('localidades',$scope.form.provincia);
+      $http.get('/api/localidades/' + $scope.form.provincia).
+      success(function(data) {
+        var localidades = [];
+        console.log(data);
+        data.forEach(function (localidad, i) {
+          localidades.push({
+            id_localidad: localidad.id_localidad,
+            nombre_localidad: localidad.nombre_localidad,
+          });
+        });
+        $scope.localidades = localidades;
+      });
     };
   }).
   controller('EditEscuelaCtrl', function ($scope, $http, $location, $routeParams) {

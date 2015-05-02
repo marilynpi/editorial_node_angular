@@ -203,7 +203,64 @@ var Connection = (function(){
 				}
 			});
 		}	
+	}
+
+	Connection.prototype.getAllStates = function(table_name,table_pk,callback){
+		if (self.connection){	
+			var query = 'SELECT * FROM '+table_name+' ORDER BY nombre_provincia';
+			self.connection.query(query, function(error, rows){
+				if(error){
+					throw error;
+				}
+				else{
+					callback(null, rows);
+				}
+			});
+		}			
+	}
+
+	Connection.prototype.getStatesById = function(table_name,table_pk,id,callback){
+		if (self.connection){
+
+			var sql = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
+			self.connection.query(sql, function(error, row){
+				if(error){
+					throw error;
+				}
+				else{
+					callback(null, row);
+				}
+			});
+		}		
 	}	
+
+	Connection.prototype.getCitiesByStateId = function(table_name,state_pk,callback){
+		if (self.connection){	
+			var query = 'SELECT * FROM ' + table_name + ' WHERE id_provincia = ' + state_pk + ' ORDER BY nombre_localidad';
+			self.connection.query(query, function(error, rows){
+				if(error){
+					throw error;
+				}
+				else{
+					callback(null, rows);
+				}
+			});
+		}			
+	}
+
+	Connection.prototype.getCityById = function(table_name,table_pk,callback){
+		if (self.connection){	
+			var query = 'SELECT * FROM ' + table_name + ' WHERE '+table_pk+' = ' + self.connection.escape(id);
+			self.connection.query(query, function(error, rows){
+				if(error){
+					throw error;
+				}
+				else{
+					callback(null, rows);
+				}
+			});
+		}			
+	}
 
 	return Connection;
 })();

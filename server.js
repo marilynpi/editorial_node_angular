@@ -56,6 +56,14 @@ app.get('/api/escuela/:id', api.escuela);
 app.post('/api/escuela/:id', api.escuela);
 app.put('/api/escuela/:id', api.editEscuela);
 app.delete('/api/escuela/:id', api.deleteEscuela);
+
+// Provincias y Localidades
+app.get('/api/provincias', api.provincias);
+app.get('/api/provincia/:id', api.provincia);
+app.get('/api/localidades/:id', api.localidades);
+app.get('/api/localidad/:id', api.localidad);
+
+
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);
 

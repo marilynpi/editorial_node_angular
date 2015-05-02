@@ -27,8 +27,8 @@
 				            	<input ng-model="form.email" name="email">
 				            </div>
 				            <div class="form-group">
-				            	<label >Sector:
-									<select ng-model="form.sector" name="sector" class="form-control">
+				            	<label for="sector">Sector:
+									<select ng-model="form.sector" name="sector">
 										<option value="PUBLICO">PUBLICO</option>
 										<option value="PRIVADO">PRIVADO</option>
 									</select>
@@ -47,12 +47,18 @@
 				            	<input ng-model="form.distrito" name="distrito">
 				            </div>
 				            <div class="form-group">
-				            	<label  for="localidad">Localidad:</label>
-								<input ng-model="form.localidad" name="localidad">
+				            	<label for="provincia"> Provincia:
+									<select ng-model="form.provincia" name="provincia" ng-change="getLocalidades()">
+										<option ng-repeat="provincia in provincias" value="{{provincia.id_provincia}}">{{provincia.nombre_provincia}}</option>
+									</select>
+								</label>
 				            </div>
 				            <div class="form-group">
-				            	<label  for="provincia">Provincia:</label>
-								<input ng-model="form.provincia" name="provincia">
+				            	<label for="localidad"> Localidad:
+									<select ng-model="form.localidad" name="localidad" >
+										<option ng-repeat="localidad in localidades" value="{{localidad.id_localidad}}">{{localidad.nombre_localidad}}</option>
+									</select>
+								</label>
 				            </div>
 				            <div class="form-group">
 				            	<label  for="ubicacion">Ubicación:</label>
