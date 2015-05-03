@@ -21,8 +21,7 @@ var School = (function(){
 
 	School.prototype.insertEscuela = function(data,callback){
 		School()
-		console.log(self.table_name,self.table_pk,data);
-		connection.insertSchool(self.table_name,self.table_pk,data,callback);	
+		connection.insertSchool(self.table_name,data,callback);	
 	};
 
 	School.prototype.updateEscuela = function(data, callback){

@@ -111,7 +111,7 @@ exports.escuela = function (req, res) {
 };
 // POST
 exports.addEscuela = function (req, res) {
-  var id = req.params.id;
+  //var id = req.params.id;
   var datos = {
         id:req.param('id'),
         nombre:req.param('nombre'),
