@@ -8,13 +8,13 @@ var Connection = (function(){
 						{ 
 							host: 'localhost', 
 							user: 'root',  
-							password: '', 
+							password: '123', 
 							database: 'editorial'
 						}
 					);		
 
 	function Connection(){
-		self.connection = connection;
+		self.connection = connection;		
 	}
 
 	Connection.prototype.getAllSchools = function(table_name,table_pk,callback){
@@ -46,18 +46,20 @@ var Connection = (function(){
 		}
 	}
 
-	Connection.prototype.insertSchool = function(table_name,data,callback){
-		if (self.connection){
-			var query = 'INSERT INTO '+table_name+' SET ?';
+	Connection.prototype.insertSchool = function(table_name,data,callback){				
+	
+		if (self.connection){			
+			
+			var query = 'INSERT INTO '+table_name+' SET ?';			
 			self.connection.query(query, data, function(error, result){
-				if(error){
+				if(error){					
 					throw error;
 				}
 				else{
 					console.log(data, data.id)
 					callback(null,{"insertId" : data.id});
 				}
-			});
+			});		
 		}
 	}
 
