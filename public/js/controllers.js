@@ -45,6 +45,42 @@ angular.module('myApp.controllers', []).
           $location.path('/docentes');
         });
     };
+    $scope.submitAndAddEscuela = function () {
+      $http.post('/api/docente', $scope.form).
+        success(function(data) {
+          $location.path('/docenteAddEscuela');
+        });
+    };
+  }).
+  controller('AddDocenteEscuelaCtrl', function ($scope, $http, $location) {
+    jQuery('#escuela').hide();
+    $scope.form = {};
+    $http.get('/api/provincias').
+    success(function(data, status, headers, config) {
+      var provincias = [];
+      data.forEach(function (provincia, i) {
+        provincias.push({
+          id_provincia: provincia.id_provincia,
+          nombre_provincia: provincia.nombre_provincia,
+        });
+      });
+      $scope.provincias = provincias;
+    });
+    $scope.submitDocente = function () {
+      $http.post('/api/docente', $scope.form).
+        success(function(data) {
+          $location.path('/docentes');
+        });
+    };
+    $scope.submitAndAddEscuela = function () {
+      $http.post('/api/docente', $scope.form).
+        success(function(data) {
+          $location.path('/docenteAddEscuela');
+        });
+    };
+    $scope.addEscuela = function () {
+      jQuery('#escuela').show();
+    };
   }).
   controller('EditDocenteCtrl', function ($scope, $http, $location, $routeParams) {
     $scope.form = {};

@@ -63,11 +63,22 @@
 				            	<label for="telefono">Telefono:</label>
 								<input ng-model="form.telefono" name="telefono">
 				            </div>
+
+				            <div id="escuelas" class="box box-default">
+							  <div class="box-header with-border">
+							    <h3 class="box-title">Escuelas:</h3>
+							    <div class="box-tools pull-right">
+							    </div><!-- /.box-tools -->
+							  </div><!-- /.box-header -->
+							  <div class="box-body">
+							  </div><!-- /.box-body -->
+							</div><!-- /.box -->
+				            <button class="btn-flat btn" type="button" ng-click="addEscuela()" >
+							  <i class="fa fa-university"></i> Asignar escuela
+							</button>
+
 				            <div class="box-footer">
 						        <button ng-click="submitDocente()" class="btn btn-primary">Guardar</button>
-						    </div>
-						    <div class="box-footer">
-						        <button ng-click="submitAndAddEscuela()" class="btn btn-primary">Guardar y asignar escuelas</button>
 						    </div>
 				        </form>
 				    </div><!-- /.box-body -->

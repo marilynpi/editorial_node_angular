@@ -50,6 +50,10 @@ config(function ($routeProvider, $locationProvider) {
       templateUrl: 'partials/editEscuela',
       controller: 'EditEscuelaCtrl'
     }).
+    when('/docenteAddEscuela', {
+        templateUrl: 'partials/docenteAddEscuela',
+        controller: 'AddDocenteEscuelaCtrl'
+    }).
     otherwise({
       redirectTo: '/'
     });

@@ -48,14 +48,17 @@ var Connection = (function(){
 
 	Connection.prototype.insertSchool = function(table_name,data,callback){
 		if (self.connection){
+			var datos = data;
+			console.log(datos);
 			var query = 'INSERT INTO '+table_name+' SET ?';
-			self.connection.query(query, data, function(error, result){
+			self.connection.query(query, datos, function(error, result){
 				if(error){
+					console.log(datos, datos.id)
 					throw error;
 				}
 				else{
-					console.log(data, data.id)
-					callback(null,{"insertId" : data.id});
+					console.log(datos, datos.id);
+					callback(null,{"insertId" : datos.id});
 				}
 			});
 		}
@@ -233,7 +236,7 @@ var Connection = (function(){
 			});
 		}		
 	}
-		
+
 	Connection.prototype.getCitiesByStateId = function(table_name,state_pk,callback){
 		if (self.connection){	
 			var query = 'SELECT * FROM ' + table_name + ' WHERE id_provincia = ' + state_pk + ' ORDER BY nombre_localidad';

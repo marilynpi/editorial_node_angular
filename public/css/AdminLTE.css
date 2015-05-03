@@ -4064,3 +4064,6 @@ Gradient Background colors
     white-space: normal!important;
   }
 }
+#escuelas{
+  display: none;
+}
