@@ -45,7 +45,8 @@ var Connection = (function(){
 			});
 		}
 	}
-Connection.prototype.insertSchool = function(table_name,data,callback){				
+	
+	Connection.prototype.insertSchool = function(table_name,data,callback){				
 	
 		if (self.connection){			
 			

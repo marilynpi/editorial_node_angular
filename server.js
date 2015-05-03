@@ -53,6 +53,7 @@ app.get('/api/escuelas', api.escuelas);
 app.post('/api/escuela', api.addEscuela);
 app.get('/api/escuela', api.escuela);
 app.get('/api/escuela/:id', api.escuela);
+app.get('/api/escuela/:id', api.escuelaCurso);
 app.post('/api/escuela/:id', api.escuela);
 app.put('/api/escuela/:id', api.editEscuela);
 app.delete('/api/escuela/:id', api.deleteEscuela);

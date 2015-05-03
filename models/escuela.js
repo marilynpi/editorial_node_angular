@@ -34,6 +34,12 @@ var School = (function(){
 		connection.deleteSchool(self.table_name,self.table_pk,id, callback);
 	};
 	
+	School.prototype.getSchoolCourseByYear = function(id,callback){
+		School();
+		console.log(id);
+		connection.getSchoolCourseByYear(id,callback);
+	};
+
 	return School;
 })();
 

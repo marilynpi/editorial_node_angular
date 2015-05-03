@@ -209,3 +209,17 @@ exports.localidad = function (req, res) {
     }
   });
 };
+
+exports.escuelaCurso = function(req,res){
+  //var school_id = req.param.school;
+  var school_id = 5;
+  console.log("adasdasdasdasdasdasadsdas");
+  data = EscuelaModel.getSchoolCourseByYear(school_id,function(error,data){
+      if(typeof data !== 'undefined' && data.length > 0){
+        console.log("asdasdasdasd"+data);
+        res.json(200,data);
+      }else{
+        res.json(404,{'msg':'something went wrong'});
+      }
+  });
+};
