@@ -10,6 +10,9 @@ var ProvinciaModel = new State();
 var City = require('../models/localidad');
 var LocalidadModel = new City();
 
+var SchoolCourse = require('../models/escuela_grado');
+var EscuelaCursoModel = new SchoolCourse();
+
 var _ = require('underscore');
 
 
@@ -221,5 +224,41 @@ exports.escuelaCurso = function(req,res){
       }else{
         res.json(404,{'msg':'something went wrong'});
       }
+  });
+};
+
+exports.grados = function (req, res){
+  data = EscuelaCursoModel.getGrados(function(error, data){
+      res.json(200,data);
+    });
+};
+
+exports.grado = function (req, res) {
+  var id = req.params.id;
+  data = EscuelaCursoModel.getGrado(id,function(error, data){    
+    if (typeof data !== 'undefined' && data.length > 0){
+      res.json(200,data);
+    }    
+    else{
+      res.json(404,{"msg":"notExist"});
+    }
+  });
+};
+
+exports.turnos = function (req, res){
+  data = EscuelaCursoModel.getTurnos(function(error, data){
+      res.json(200,data);
+    });
+};
+
+exports.turno = function (req, res) {
+  var id = req.params.id;
+  data = EscuelaCursoModel.getTurno(id,function(error, data){    
+    if (typeof data !== 'undefined' && data.length > 0){
+      res.json(200,data);
+    }    
+    else{
+      res.json(404,{"msg":"notExist"});
+    }
   });
 };

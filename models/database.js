@@ -8,7 +8,7 @@ var Connection = (function(){
 						{ 
 							host: 'localhost', 
 							user: 'root',  
-							password: '123', 
+							password: '', 
 							database: 'editorial'
 						}
 					);		
@@ -56,8 +56,8 @@ var Connection = (function(){
 					throw error;
 				}
 				else{
-					console.log(datos, datos.id);
-					callback(null,{"insertId" : datos.id});
+					console.log(data, data.id);
+					callback(null,{"insertId" : data.id});
 				}
 			});		
 		}
@@ -262,6 +262,82 @@ var Connection = (function(){
 				}
 			});
 		}			
+	}
+
+	Connection.prototype.getAllCourses = function(table_name,table_pk,callback){
+		if (self.connection){	
+			var query = 'SELECT * FROM '+table_name+' ORDER BY ' + table_pk;
+			self.connection.query(query, function(error, rows){
+				if(error){
+					throw error;
+				}
+				else{
+					callback(null, rows);
+				}
+			});
+		}			
+	}
+
+	Connection.prototype.getCourseById = function(table_name,table_pk,id,callback){
+		if (self.connection){
+
+			var sql = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
+			self.connection.query(sql, function(error, row){
+				if(error){
+					throw error;
+				}
+				else{
+					callback(null, row);
+				}
+			});
+		}		
+	}
+
+	Connection.prototype.getAllTurns = function(table_name,table_pk,callback){
+		if (self.connection){	
+			var query = 'SELECT * FROM '+table_name+' ORDER BY ' + table_pk;
+			self.connection.query(query, function(error, rows){
+				if(error){
+					throw error;
+				}
+				else{
+					console.log(rows);
+					callback(null, rows);
+				}
+			});
+		}			
+	}
+
+	Connection.prototype.getTurnById = function(table_name,table_pk,id,callback){
+		if (self.connection){
+
+			var sql = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
+			self.connection.query(sql, function(error, row){
+				if(error){
+					throw error;
+				}
+				else{
+					callback(null, row);
+				}
+			});
+		}		
+	}
+
+	Connection.prototype.insertSchoolCourse = function(table_name,data,callback){				
+	
+		if (self.connection){			
+			
+			var query = 'INSERT INTO '+table_name+' SET ?';			
+			self.connection.query(query, data, function(error, result){
+				if(error){					
+					throw error;
+				}
+				else{
+					console.log(data, data.id);
+					callback(null,{"insertId" : data.id});
+				}
+			});		
+		}
 	}
 
 	Connection.prototype.getSchoolCourseByYear = function(school_id,callback){

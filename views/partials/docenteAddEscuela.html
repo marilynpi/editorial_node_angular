@@ -46,7 +46,7 @@
 				            </div>
 				            <div class="form-group">
 				            	<label for="provincia"> Provincia:
-									<select ng-model="form.provincia" name="provincia" >
+									<select ng-model="form.provincia" name="provincia">
 										<option ng-repeat="provincia in provincias" value="{{provincia.id_provincia}}">{{provincia.nombre_provincia}}</option>
 									</select>
 								</label>
@@ -71,6 +71,19 @@
 							    </div><!-- /.box-tools -->
 							  </div><!-- /.box-header -->
 							  <div class="box-body">
+							  	<div class="form-escuela">
+					            	<label for="escuela"> Escuela:
+										<select ng-model="form.escuela" name="escuela" ng-change="getDataEscuela(form.escuela)">
+											<option ng-repeat="escuela in escuelas" value="{{escuela.id}}">{{escuela.nombre}}</option>
+										</select>
+									</label>
+									<div class="form-group">
+					            		<label ng-model="escuela.localidad">Localidad: {{escuela.localidad}} </label>
+					            	</div>
+					            	<div class="form-group">
+					            		<label ng-model="escuela.provincia">Provincia: {{escuela.provincia}} </label>
+					            	</div>
+				            	</div>
 							  </div><!-- /.box-body -->
 							</div><!-- /.box -->
 				            <button class="btn-flat btn" type="button" ng-click="addEscuela()" >

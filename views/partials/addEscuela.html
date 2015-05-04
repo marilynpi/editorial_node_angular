@@ -68,6 +68,43 @@
 								<label  for="observaciones">Observaciones:</label>
 								<textarea ng-model="form.observaciones" name="observaciones"></textarea>
 				            </div>
+				            <div id="cursos" class="box box-default">
+							  <div class="box-header with-border">
+							    <h3 class="box-title">Cursos</h3>
+							  </div><!-- /.box-header -->
+							  <div class="box-body" ng-model="form.grados" id="lista-cursos" ng-if="form.grados.length > 0">
+							  		<div ng-repeat="curso in form.grados" class="form-group">
+							            <label>Grado:{{ curso.descripcion_grado}}</label>
+							            <label>Turno:{{ curso.descripcion_turno}}</label>
+							            <label>Cantidad:{{ curso.cantidad_grado}}</label>
+										<button class="btn-flat btn" type="button" ng-click="deleteCurso(curso.id_curso)" ><i class="fa fa-close"></i></button>
+							 	 	</div>
+							  </div><!-- /.box-body -->
+							  <div class="box-footer">
+							  	<div class="form-grado">
+					            	<label for="grado"> Grado:
+										<select ng-model="form.grado" name="grado">
+											<option ng-repeat="grado in grados" value="{{grado.id_grado}}">{{grado.descripcion_grado}}</option>
+										</select>
+									</label>
+									<label for="turno"> Turno:
+										<select ng-model="form.turno" name="turno">
+											<option ng-repeat="turno in turnos" value="{{turno.id_turno}}">{{turno.descripcion_turno}}</option>
+										</select>
+									</label>
+									<label for="cantidad_grado"> Cantidad:
+										<input ng-model="form.cantidad_grado" name="cantidad_grado">
+									</label>
+
+									<button class="btn-flat btn" type="button" ng-click="addCurso(form.grado, form.turno, form.id, form.cantidad_grado)" ><i class="fa fa-check"></i></button>
+				            	</div>
+							  </div><!-- /.box-footer -->
+							</div><!-- /.box -->
+				            <div class="form-group">
+								<button class="btn-flat btn" type="button" ng-click="getCursos()" >
+							  		<i class="fa fa-plus"></i> Agregar Curso
+								</button>
+				            </div>
 				            <div class="box-footer">
 						        <button ng-click="submitEscuela()" class="btn btn-primary">Guardar</button>
 						    </div>

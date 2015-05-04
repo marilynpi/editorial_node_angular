@@ -52,8 +52,8 @@ angular.module('myApp.controllers', []).
         });
     };
   }).
-  controller('AddDocenteEscuelaCtrl', function ($scope, $http, $location) {
-    jQuery('#escuela').hide();
+  controller('AddDocenteEscuelaCtrl', function ($scope, $http, $location, _) {
+    angular.element(document.querySelector('#escuelas')).css('display', 'none');
     $scope.form = {};
     $http.get('/api/provincias').
     success(function(data, status, headers, config) {
@@ -79,7 +79,24 @@ angular.module('myApp.controllers', []).
         });
     };
     $scope.addEscuela = function () {
-      jQuery('#escuela').show();
+      $http.get('/api/escuelas').
+      success(function(data, status, headers, config) {
+        var escuelas = [];
+        data.forEach(function (escuela, i) {
+          escuelas.push({
+            id: escuela.id,
+            nombre: escuela.nombre,
+            localidad: escuela.nombre_localidad,
+            provincia: escuela.nombre_provincia
+          });
+        });
+        $scope.escuelas = escuelas;
+      });
+      angular.element(document.querySelector('#escuelas')).css('display', 'block');
+    };
+    $scope.getDataEscuela = function (id) {
+      var escuela = _.find($scope.escuelas, function(escuela){return escuela.id == id; });
+      $scope.escuela = escuela;
     };
   }).
   controller('EditDocenteCtrl', function ($scope, $http, $location, $routeParams) {
@@ -159,22 +176,23 @@ angular.module('myApp.controllers', []).
           telefono: escuela.telefono,
           email: escuela.email,
           domicilio: escuela.domicilio,
-          localidad: escuela.localidad,
+          localidad: escuela.nombre_localidad,
           cp: escuela.cp,
           sector: escuela.sector,
           distrito: escuela.distrito,
           ubicacion: escuela.ubicacion,
-          provincia: escuela.provincia,
+          provincia: escuela.nombre_provincia,
           observaciones: escuela.observaciones,
         });
       });
       $scope.escuelas = escuelas;
-      
     });
 
   }).
   controller('AddEscuelaCtrl', function ($scope, $http, $location) {
+    angular.element(document.querySelector('#cursos .box-footer')).css('display', 'none');
     $scope.form = {};
+    $scope.form.grados = [];
     $http.get('/api/provincias').
     success(function(data, status, headers, config) {
       var provincias = [];
@@ -204,11 +222,9 @@ angular.module('myApp.controllers', []).
         });
     };
     $scope.getLocalidades = function () {
-      console.log('localidades',$scope.form.provincia);
       $http.get('/api/localidades/' + $scope.form.provincia).
       success(function(data) {
         var localidades = [];
-        console.log(data);
         data.forEach(function (localidad, i) {
           localidades.push({
             id_localidad: localidad.id_localidad,
@@ -217,6 +233,41 @@ angular.module('myApp.controllers', []).
         });
         $scope.localidades = localidades;
       });
+    };
+    $scope.addCurso = function (id_grado, id_turno, id_escuela, cantidad) {
+      var grado = _.find($scope.grados, function(grado){return grado.id_grado == id_grado;});
+      var turno = _.find($scope.turnos, function(turno){return turno.id_turno == id_turno;});
+      $scope.form.grados.push({'id_curso': $scope.form.grados.length, 'id_escuela' : grado.id_escuela, 'id_grado' : grado.id_grado, 'descripcion_grado' : grado.descripcion_grado, 'id_turno' : turno.id_turno, 'descripcion_turno' : turno.descripcion_turno, 'cantidad_grado' : cantidad});
+      angular.element(document.querySelector('#cursos .box-footer')).css('display', 'none');
+    };
+    $scope.getCursos = function (id_grado, id_turno) {
+      $http.get('/api/grados').
+      success(function(data, status, headers, config) {
+        var grados = [];
+        data.forEach(function (grado, i) {
+          grados.push({
+            id_grado: grado.id,
+            descripcion_grado: grado.descripcion,
+          });
+        });
+        $scope.grados = grados;
+      });
+      $http.get('/api/turnos').
+      success(function(data, status, headers, config) {
+        var turnos = [];
+        data.forEach(function (turno, i) {
+          turnos.push({
+            id_turno: turno.id,
+            descripcion_turno: turno.descripcion,
+          });
+        });
+        $scope.turnos = turnos;
+      });
+      angular.element(document.querySelector('#cursos .box-footer')).css('display', 'block');
+    };
+    $scope.deleteCurso = function (id_curso){
+      $scope.form.grados.splice(id_curso,1);
+      console.log($scope.form.grados);
     };
   }).
   controller('EditEscuelaCtrl', function ($scope, $http, $location, $routeParams) {
@@ -252,7 +303,6 @@ angular.module('myApp.controllers', []).
   controller('ReadEscuelaCtrl', function ($scope, $http, $routeParams) {
     $http.get('/api/escuela/' + $routeParams.id).
     success(function(data) {
-      console.log(data);
       var escuela = {};
         escuela = {
           id: data[0].id,
@@ -269,7 +319,6 @@ angular.module('myApp.controllers', []).
           observaciones: data[0].observaciones
         }
       $scope.form = escuela;
-      console.log(escuela);
     });
   }).
   controller('DeleteEscuelaCtrl', function ($scope, $http, $location, $routeParams) {
