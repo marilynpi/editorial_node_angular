@@ -8,7 +8,7 @@ var Connection = (function(){
 						{ 
 							host: 'localhost', 
 							user: 'root',  
-							password: '', 
+							password: '123', 
 							database: 'editorial'
 						}
 					);		
@@ -323,23 +323,6 @@ var Connection = (function(){
 		}		
 	}
 
-	Connection.prototype.insertSchoolCourse = function(table_name,data,callback){				
-	
-		if (self.connection){			
-			
-			var query = 'INSERT INTO '+table_name+' SET ?';			
-			self.connection.query(query, data, function(error, result){
-				if(error){					
-					throw error;
-				}
-				else{
-					console.log(data, data.id);
-					callback(null,{"insertId" : data.id});
-				}
-			});		
-		}
-	}
-
 	Connection.prototype.getSchoolCourseByYear = function(school_id,callback){
 		if(self.connection){
 
@@ -359,6 +342,79 @@ var Connection = (function(){
 			});
 		}
 	}
+
+	Connection.prototype.getSchoolCourseInning = function(school_id,callback){
+		//escuelas+ciclos+grados+turnos
+		if(self.connection){
+
+			var query = 'SELECT e.id,e.nombre as "Escuela", t.descripcion as "Turno",c.descripcion as "Ciclo",'+
+						'g.descripcion as "Grado",ec.cantidad_grado as "Cantidad Grados" '+
+						'FROM escuela e '+ 
+						'INNER JOIN escuela_ciclo ec ON (e.id = ec.id_escuela) '+
+						'INNER JOIN ciclo c on (ec.id_ciclos = c.id) '+
+						'INNER JOIN grado g on (ec.id_grado = g.id) '+
+						'INNER JOIN turno t on (ec.id_turno = t.id) '+
+						'WHERE e.id ='+ self.connection.escape(school_id);
+			self.connection.query(query,function(error,row){
+
+				if(error){
+					throw error;
+				}else{
+					callback(null,row);
+				}
+			});
+		};
+	};
+
+	Connection.prototype.insertCourse = function(table_name,data,callback){
+
+		if(self.connection){
+
+			var query = "INSERT INTO "+table_name+' SET ?';
+			self.connection.query(query,data,function(error,result){
+				if(error){
+					throw error;
+				}else{
+					callback(null,{'insertId':data.id});
+				}
+			});
+		};
+	};
+
+	Connection.prototype.insertSchoolCourse = function(table_name,data,callback){				
+	
+		if (self.connection){			
+			
+			var query = 'INSERT INTO '+table_name+' SET ?';			
+			self.connection.query(query, data, function(error, result){
+				if(error){					
+					throw error;
+				}
+				else{
+					console.log(data, data.id);
+					callback(null,{"insertId" : data.id});
+				}
+			});		
+		}
+	}
+
+	Connection.prototype.insertSchoolYear = function(table_name,data,callback){
+
+		if(self.connection){
+
+			var query = 'INSERT INTO '+table_name+' SET ?';
+			var asd=self.connection.query(query,data,function(error,result){
+				if(error){
+					throw error;
+				}else{
+					callback(null,{'insertId':data.id});
+				}
+			});
+
+			cosole.log("QUERY QUERY"+asd.sql);
+		};
+	};
+
 	return Connection;
 })();
 

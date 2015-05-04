@@ -10,8 +10,8 @@ var ProvinciaModel = new State();
 var City = require('../models/localidad');
 var LocalidadModel = new City();
 
-var SchoolCourse = require('../models/escuela_grado');
-var EscuelaCursoModel = new SchoolCourse();
+var SchoolYear = require('../models/escuela_ciclo');
+var EscuelaCicloModel = new SchoolYear();
 
 var _ = require('underscore');
 
@@ -216,7 +216,6 @@ exports.localidad = function (req, res) {
 exports.escuelaCurso = function(req,res){
   //var school_id = req.param.school;
   var school_id = 5;
-  console.log("adasdasdasdasdasdasadsdas");
   data = EscuelaModel.getSchoolCourseByYear(school_id,function(error,data){
       if(typeof data !== 'undefined' && data.length > 0){
         console.log("asdasdasdasd"+data);
@@ -228,14 +227,14 @@ exports.escuelaCurso = function(req,res){
 };
 
 exports.grados = function (req, res){
-  data = EscuelaCursoModel.getGrados(function(error, data){
+  data = EscuelaCicloModel.getGrados(function(error, data){
       res.json(200,data);
     });
 };
 
 exports.grado = function (req, res) {
   var id = req.params.id;
-  data = EscuelaCursoModel.getGrado(id,function(error, data){    
+  data = EscuelaCicloModel.getGrado(id,function(error, data){    
     if (typeof data !== 'undefined' && data.length > 0){
       res.json(200,data);
     }    
@@ -245,15 +244,54 @@ exports.grado = function (req, res) {
   });
 };
 
+exports.addGrado = function(req,res){
+  
+  var data = {
+    'descripcion':req.param('descripcion'),
+    'id_ciclo': req.param('ciclo')
+  };
+
+  EscuelaCicloModel.insertGrado(data,function(error,data){
+      if(data && data.insertId){
+        res.redirect('/' + data.insertId);
+      }
+      else{
+        res.json(500,{'msg':'something went wrong'});
+      }
+  });
+};
+
+exports.escuelaCiclo = function(req,res){
+
+  var data ={
+    'id_escuela':666,//req.param('escuela'),
+    'id_ciclos':1,//req.param('ciclo'),
+    'id_turno':'JC',//req.param('turno'),
+    'id_grado':1,//req.param('grado'),
+    'cantidad_grado':6//req.param('cantidad')
+  };
+
+  EscuelaCicloModel.insertGrado(data,function(error,data){
+
+      console.log(data,data.insertId )
+      if(data && data.insertId){
+        res.redirect('/api/escuela' + data.insertId);
+      }
+      else{
+        res.json(500,{'msg':'something went wrong'});
+      }
+  });
+};
+
 exports.turnos = function (req, res){
-  data = EscuelaCursoModel.getTurnos(function(error, data){
+  data = EscuelaCicloModel.getTurnos(function(error, data){
       res.json(200,data);
     });
 };
 
 exports.turno = function (req, res) {
   var id = req.params.id;
-  data = EscuelaCursoModel.getTurno(id,function(error, data){    
+  data = EscuelaCicloModel.getTurno(id,function(error, data){    
     if (typeof data !== 'undefined' && data.length > 0){
       res.json(200,data);
     }    

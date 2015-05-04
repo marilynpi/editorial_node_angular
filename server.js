@@ -69,6 +69,8 @@ app.get('/api/grados', api.grados);
 app.get('/api/grado/:id', api.grado);
 app.get('/api/turnos', api.turnos);
 app.get('/api/turno/:id', api.turno);
+
+app.post('/api/testEscuelaCiclo', api.escuelaCiclo);
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);
 
