@@ -8,7 +8,7 @@ var Connection = (function(){
 						{ 
 							host: 'localhost', 
 							user: 'root',  
-							password: '', 
+							password: '123', 
 							database: 'editorial'
 						}
 					);		
@@ -366,8 +366,7 @@ var Connection = (function(){
 		};
 	};
 
-	Connection.prototype.insertCourse = function(table_name,data,callback){
-
+	Connection.prototype.insertCourse = function(table_name,data,callback){		
 		if(self.connection){
 
 			var query = "INSERT INTO "+table_name+' SET ?';
@@ -377,7 +376,7 @@ var Connection = (function(){
 				}else{
 					callback(null,{'insertId':data.id});
 				}
-			});
+			});			
 		};
 	};
 
@@ -398,20 +397,19 @@ var Connection = (function(){
 		}
 	}
 
-	Connection.prototype.insertSchoolYear = function(table_name,data,callback){
-
+	Connection.prototype.insertSchoolYear = function(table_name,data,callback){		
+		
 		if(self.connection){
 
 			var query = 'INSERT INTO '+table_name+' SET ?';
-			var asd=self.connection.query(query,data,function(error,result){
+			self.connection.query(query,data,function(error,result){
 				if(error){
 					throw error;
 				}else{
 					callback(null,{'insertId':data.id});
 				}
 			});
-
-			cosole.log("QUERY QUERY"+asd.sql);
+			
 		};
 	};
 

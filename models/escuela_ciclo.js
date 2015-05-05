@@ -42,7 +42,7 @@ var SchoolYear = (function(){
 	};
 
 	SchoolYear.prototype.insertEscuelaGrado = function(data,callback){
-		SchoolYear()
+		SchoolYear()		
 		connection.insertSchoolYear(self.table_name,data,callback);	
 	};
 	

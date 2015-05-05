@@ -264,18 +264,18 @@ exports.addGrado = function(req,res){
 exports.escuelaCiclo = function(req,res){
 
   var data ={
-    'id_escuela':req.param('escuela'),
-    'id_ciclos':req.param('ciclo'),
-    'id_turno':req.param('turno'),
-    'id_grado':req.param('grado'),
-    'cantidad_grado':req.param('cantidad')
+    'id_escuela':req.param('id_escuela'),
+    'id_ciclos':req.param('id_ciclos'),
+    'id_turno':req.param('id_turno'),
+    'id_grado':req.param('id_grado'),
+    'cantidad_grado':req.param('cantidad_grado')
   };
+  console.log(req.params.id_escuela);
 
-  EscuelaCicloModel.insertGrado(data,function(error,data){
-
-      console.log(data,data.insertId )
-      if(data && data.insertId){
-        res.redirect('/api/escuela' + data.insertId);
+  EscuelaCicloModel.insertEscuelaGrado(data,function(error,data){
+  
+      if(data){
+        res.redirect('/api/escuelas');
       }
       else{
         res.json(500,{'msg':'something went wrong'});
