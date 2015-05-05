@@ -263,15 +263,8 @@ exports.addGrado = function(req,res){
 
 exports.escuelaCiclo = function(req,res){
 
-  var data ={
-    'id_escuela':req.param('id_escuela'),
-    'id_ciclos':req.param('id_ciclos'),
-    'id_turno':req.param('id_turno'),
-    'id_grado':req.param('id_grado'),
-    'cantidad_grado':req.param('cantidad_grado')
-  };
-  console.log(req.params.id_escuela);
-
+  var data = JSON.parse(req.param('data'));
+        
   EscuelaCicloModel.insertEscuelaGrado(data,function(error,data){
   
       if(data){

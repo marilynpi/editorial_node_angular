@@ -397,19 +397,24 @@ var Connection = (function(){
 		}
 	}
 
-	Connection.prototype.insertSchoolYear = function(table_name,data,callback){		
+	Connection.prototype.insertSchoolYear = function(table_name,data,callback){				
 		
+		var res = [];	
 		if(self.connection){
 
-			var query = 'INSERT INTO '+table_name+' SET ?';
-			self.connection.query(query,data,function(error,result){
-				if(error){
-					throw error;
-				}else{
-					callback(null,{'insertId':data.id});
-				}
-			});
-			
+			for(var i = 0; i < data.length ;i++){
+				
+				var query = 'INSERT INTO '+table_name+' (id_escuela,id_ciclos,id_turno,id_grado,cantidad_grado) VALUES ('+data[i]['id_escuela']+','+data[i]['id_ciclo']+',"'+data[i]['id_turno']+'",'+data[i]['id_grado']+','+data[i]['cantidad_grado']+')';
+				self.connection.query(query,JSON.stringify(data[i]),function(error,result){
+					if(error){
+						throw error;
+					}else{
+						res.push(result);
+					}
+				});
+			}
+						
+			callback(null,res);			
 		};
 	};
 
