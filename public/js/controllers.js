@@ -98,6 +98,20 @@ angular.module('myApp.controllers', []).
       var escuela = _.find($scope.escuelas, function(escuela){return escuela.id == id; });
       $scope.escuela = escuela;
     };
+    $scope.getGradosTurnos = function (id_escuela){
+      $http.get('/api/gradosTurnos/' + id_escuela).
+      success(function(data) {
+        var grados = [];
+        data.forEach(function (grado, i) {
+          grados.push({
+            id_grado: grado.id_grado,
+            id_turno: grado.id_turno,
+          });
+        });
+        $scope.grados = grados;
+        console.log($scope.grados);
+      });
+  };
   }).
   controller('EditDocenteCtrl', function ($scope, $http, $location, $routeParams) {
     $scope.form = {};
@@ -241,17 +255,6 @@ angular.module('myApp.controllers', []).
       angular.element(document.querySelector('#cursos .box-footer')).css('display', 'none');
     };
     $scope.getCursos = function (id_grado, id_turno) {
-      $http.get('/api/grados').
-      success(function(data, status, headers, config) {
-        var grados = [];
-        data.forEach(function (grado, i) {
-          grados.push({
-            id_grado: grado.id,
-            descripcion_grado: grado.descripcion,
-          });
-        });
-        $scope.grados = grados;
-      });
       $http.get('/api/turnos').
       success(function(data, status, headers, config) {
         var turnos = [];
@@ -263,9 +266,34 @@ angular.module('myApp.controllers', []).
         });
         $scope.turnos = turnos;
       });
+      $http.get('/api/ciclos').
+      success(function(data, status, headers, config) {
+        var ciclos = [];
+        data.forEach(function (ciclo, i) {
+          ciclos.push({
+            id_ciclo: ciclo.id,
+            descripcion_ciclo: ciclo.descripcion,
+          });
+        });
+        $scope.ciclos = ciclos;
+      });
       angular.element(document.querySelector('#cursos .box-footer')).css('display', 'block');
     };
-    $scope.deleteCurso = function (id_curso){
+    $scope.getGrados = function (id_curso){
+      $http.get('/api/grados/' + id_curso).
+      success(function(data) {
+        var grados = [];
+        data.forEach(function (grado, i) {
+          grados.push({
+            id_grado: grado.id,
+            nombre_grado: grado.descripcion,
+          });
+        });
+        $scope.grados = grados;
+        console.log($scope.grados);
+      });
+  };
+  $scope.deleteCurso = function (id_curso){
       $scope.form.grados.splice(id_curso,1);
       console.log($scope.form.grados);
     };

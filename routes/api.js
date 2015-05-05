@@ -300,3 +300,42 @@ exports.turno = function (req, res) {
     }
   });
 };
+
+exports.ciclos = function (req, res){
+  data = EscuelaCicloModel.getCiclos(function(error, data){
+      res.json(200,data);
+    });
+};
+exports.ciclo = function (req, res) {
+  var id = req.params.id;
+  data = EscuelaCicloModel.getCiclo(id,function(error, data){    
+    if (typeof data !== 'undefined' && data.length > 0){
+      res.json(200,data);
+    }    
+    else{
+      res.json(404,{"msg":"notExist"});
+    }
+  });
+};
+exports.gradosCiclos = function (req, res) {
+  var id = req.params.id;
+  data = EscuelaCicloModel.getGradosPorCiclo(id,function(error, data){    
+    if (typeof data !== 'undefined' && data.length > 0){
+      res.json(200,data);
+    }    
+    else{
+      res.json(404,{"msg":"notExist"});
+    }
+  });
+};
+exports.gradosTurnosPorEscuela = function (req, res) {
+  var id = req.params.id;
+  data = EscuelaCicloModel.getGradosTurnosPorEscuela(id,function(error, data){    
+    if (typeof data !== 'undefined' && data.length > 0){
+      res.json(200,data);
+    }    
+    else{
+      res.json(404,{"msg":"notExist"});
+    }
+  });
+};

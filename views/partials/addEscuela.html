@@ -82,6 +82,11 @@
 							  </div><!-- /.box-body -->
 							  <div class="box-footer">
 							  	<div class="form-grado">
+							  		<label for="ciclo"> Ciclos:
+										<select ng-model="form.ciclo" name="ciclo" ng-change="getGrados(form.ciclo)">
+											<option ng-repeat="ciclo in ciclos"  value="{{ciclo.id_ciclo}}">{{ciclo.descripcion_ciclo}}</option>
+										</select>
+									</label>
 					            	<label for="grado"> Grado:
 										<select ng-model="form.grado" name="grado">
 											<option ng-repeat="grado in grados" value="{{grado.id_grado}}">{{grado.descripcion_grado}}</option>

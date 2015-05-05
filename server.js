@@ -64,12 +64,16 @@ app.get('/api/provincia/:id', api.provincia);
 app.get('/api/localidades/:id', api.localidades);
 app.get('/api/localidad/:id', api.localidad);
 
-// Grados y Turnos 
+// Grados Turnos Ciclos
 app.get('/api/grados', api.grados);
 app.get('/api/grado/:id', api.grado);
 app.get('/api/turnos', api.turnos);
 app.get('/api/turno/:id', api.turno);
+app.get('/api/ciclos', api.ciclos);
+app.get('/api/ciclo/:id', api.ciclo);
+app.get('/api/grados/:id', api.gradosCiclos);
 
+app.get('/api/gradosTurnos/:id', api.gradosTurnosPorEscuela);
 app.post('/api/testEscuelaCiclo', api.escuelaCiclo);
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);

@@ -280,6 +280,50 @@ var Connection = (function(){
 
 	Connection.prototype.getCourseById = function(table_name,table_pk,id,callback){
 		if (self.connection){
+			var sql = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
+			self.connection.query(sql, function(error, row){
+				if(error){
+					throw error;
+				}
+				else{
+					callback(null, row);
+				}
+			});
+		}		
+	}
+
+	Connection.prototype.getAllCicles = function(table_name,table_pk,callback){
+		if (self.connection){	
+			var query = 'SELECT * FROM '+table_name+' ORDER BY ' + table_pk;
+			self.connection.query(query, function(error, rows){
+				if(error){
+					throw error;
+				}
+				else{
+					console.log(rows);
+					callback(null, rows);
+				}
+			});
+		}			
+	}
+
+	Connection.prototype.getCicleById = function(table_name,table_pk,id,callback){
+		if (self.connection){
+
+			var sql = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
+			self.connection.query(sql, function(error, row){
+				if(error){
+					throw error;
+				}
+				else{
+					callback(null, row);
+				}
+			});
+		}		
+	}
+
+	Connection.prototype.getCoursesTurnsBySchool = function(table_name,table_pk,id,callback){
+		if (self.connection){
 
 			var sql = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
 			self.connection.query(sql, function(error, row){
