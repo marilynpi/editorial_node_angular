@@ -263,19 +263,12 @@ exports.addGrado = function(req,res){
 
 exports.escuelaCiclo = function(req,res){
 
-  var data =[{
-    'id_escuela': req.param('escuela'),
-    'id_ciclo': req.param('ciclo'),
-    'id_turno':req.param('turno'),
-    'id_grado':req.param('grado'),
-    'cantidad_grado':req.param('cantidad')
-  }];
-
-  EscuelaCicloModel.insertGrado(data,function(error,data){
-
-      console.log(data,data.insertId )
-      if(data && data.insertId){
-        res.redirect('/api/escuela' + data.insertId);
+  var data = JSON.parse(req.param('data'));
+        
+  EscuelaCicloModel.insertEscuelaGrado(data,function(error,data){
+  
+      if(data){
+        res.redirect('/api/escuelas');
       }
       else{
         res.json(500,{'msg':'something went wrong'});
