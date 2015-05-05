@@ -8,7 +8,7 @@ var Connection = (function(){
 						{ 
 							host: 'localhost', 
 							user: 'root',  
-							password: '123', 
+							password: '', 
 							database: 'editorial'
 						}
 					);		
