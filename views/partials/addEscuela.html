@@ -89,7 +89,7 @@
 									</label>
 					            	<label for="grado"> Grado:
 										<select ng-model="form.grado" name="grado">
-											<option ng-repeat="grado in grados" value="{{grado.id_grado}}">{{grado.descripcion_grado}}</option>
+											<option ng-model="form.grad" ng-repeat="grado in grados" value="{{grado.id_grado}}">{{grado.nombre_grado}}</option>
 										</select>
 									</label>
 									<label for="turno"> Turno:
@@ -101,7 +101,7 @@
 										<input ng-model="form.cantidad_grado" name="cantidad_grado">
 									</label>
 
-									<button class="btn-flat btn" type="button" ng-click="addCurso(form.grado, form.turno, form.id, form.cantidad_grado)" ><i class="fa fa-check"></i></button>
+									<button class="btn-flat btn" type="button" ng-click="addCurso()" ><i class="fa fa-check"></i></button>
 				            	</div>
 							  </div><!-- /.box-footer -->
 							</div><!-- /.box -->

@@ -29,7 +29,7 @@ var SchoolYear = (function(){
 
 	SchoolYear.prototype.getGradosPorCiclo = function(id,callback){
 		Course();
-		console.log(id);
+		self.table_pk = 'id_ciclo'
 		connection.getCourseById(self.table_name,self.table_pk,id,callback);
 	};
 
@@ -73,7 +73,6 @@ var SchoolYear = (function(){
 	};
 	SchoolYear.prototype.getGradosTurnosPorEscuela = function(id,callback){
 		SchoolYear();
-		console.log(id);
 		connection.getCoursesTurnsBySchool(self.table_name,self.table_pk[1],id,callback);
 	};
 

@@ -48,6 +48,7 @@ app.get('/api/docente/:id', api.docente);
 app.post('/api/docente/:id', api.docente);
 app.put('/api/docente/:id', api.editDocente);
 app.delete('/api/docente/:id', api.deleteDocente);
+app.get('/api/cargos', api.cargos);
 // Escuelas
 app.get('/api/escuelas', api.escuelas);
 app.post('/api/escuela', api.addEscuela);
@@ -74,7 +75,7 @@ app.get('/api/ciclo/:id', api.ciclo);
 app.get('/api/grados/:id', api.gradosCiclos);
 
 app.get('/api/gradosTurnos/:id', api.gradosTurnosPorEscuela);
-app.post('/api/testEscuelaCiclo', api.escuelaCiclo);
+app.post('/api/escuelaCiclo/:data', api.escuelaCiclo);
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);
 
