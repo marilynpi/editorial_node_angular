@@ -9,6 +9,11 @@ var Teacher = (function(){
 		self.table_pk = 'dni';
 	};
 
+	function Charge(){
+		self.table_name = 'cargo';
+		self.table_pk = 'id';
+	};
+
 	Teacher.prototype.getPersonas = function(callback){
 		Teacher();
 		console.log(self.table_name);
@@ -38,6 +43,11 @@ var Teacher = (function(){
 		connection.deleteTeacher(self.table_name,self.table_pk,id,callback);
 	}
 
+	Teacher.prototype.getCargos = function(callback)
+	{
+		Charge()
+		connection.getAllCharges(self.table_name,self.table_pk,callback);
+	}
 	return Teacher;
 })();
 

@@ -8,7 +8,7 @@ var Connection = (function(){
 						{ 
 							host: 'localhost', 
 							user: 'root',  
-							password: '123', 
+							password: '', 
 							database: 'editorial'
 						}
 					);		
@@ -56,7 +56,6 @@ var Connection = (function(){
 					throw error;
 				}
 				else{
-					console.log(data, data.id);
 					callback(null,{"insertId" : data.id});
 				}
 			});		
@@ -206,6 +205,20 @@ var Connection = (function(){
 			});
 		}	
 	}
+	Connection.prototype.getAllCharges = function(table_name,table_pk,callback){
+		if (self.connection){
+
+			var query = 'SELECT * FROM '+table_name+' ORDER BY '+table_pk;
+			self.connection.query(query, function(error, rows) {
+				if(error){
+					throw error;
+				}
+				else{
+					callback(null, rows);
+				}
+			});
+		}
+	};
 
 	Connection.prototype.getAllStates = function(table_name,table_pk,callback){
 		if (self.connection){	
@@ -280,7 +293,7 @@ var Connection = (function(){
 
 	Connection.prototype.getCourseById = function(table_name,table_pk,id,callback){
 		if (self.connection){
-			var sql = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
+			var sql = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + id;
 			self.connection.query(sql, function(error, row){
 				if(error){
 					throw error;
@@ -300,7 +313,6 @@ var Connection = (function(){
 					throw error;
 				}
 				else{
-					console.log(rows);
 					callback(null, rows);
 				}
 			});
@@ -347,7 +359,6 @@ var Connection = (function(){
 					throw error;
 				}
 				else{
-					console.log(rows);
 					callback(null, rows);
 				}
 			});
@@ -394,10 +405,10 @@ var Connection = (function(){
 		if(self.connection){
 
 			var query = 'SELECT e.id,e.nombre as "Escuela", t.descripcion as "Turno",c.descripcion as "Ciclo",'+
-						'g.descripcion as "Grado",ec.cantidad_grado as "Cantidad Grados" '+
+						'g.descripcion as "Grado",ec.cantidad_grado as "Cantidad Grados", ec.id_grado, ec.id_turno, ec.id_escuela '+
 						'FROM escuela e '+ 
 						'INNER JOIN escuela_ciclo ec ON (e.id = ec.id_escuela) '+
-						'INNER JOIN ciclo c on (ec.id_ciclos = c.id) '+
+						'INNER JOIN ciclo c on (ec.id_ciclo = c.id) '+
 						'INNER JOIN grado g on (ec.id_grado = g.id) '+
 						'INNER JOIN turno t on (ec.id_turno = t.id) '+
 						'WHERE e.id ='+ self.connection.escape(school_id);
@@ -436,7 +447,6 @@ var Connection = (function(){
 					throw error;
 				}
 				else{
-					console.log(data, data.id);
 					callback(null,{"insertId" : data.id});
 				}
 			});		
@@ -444,13 +454,12 @@ var Connection = (function(){
 	}
 
 	Connection.prototype.insertSchoolYear = function(table_name,data,callback){				
-		
 		var res = [];	
 		if(self.connection){
 
 			for(var i = 0; i < data.length ;i++){
 				
-				var query = 'INSERT INTO '+table_name+' (id_escuela,id_ciclos,id_turno,id_grado,cantidad_grado) VALUES ('+data[i]['id_escuela']+','+data[i]['id_ciclo']+',"'+data[i]['id_turno']+'",'+data[i]['id_grado']+','+data[i]['cantidad_grado']+')';
+				var query = 'INSERT INTO '+table_name+' (id_escuela,id_ciclo,id_turno,id_grado,cantidad_grado) VALUES ('+data[i]['id_escuela']+','+data[i]['id_ciclo']+',"'+data[i]['id_turno']+'",'+data[i]['id_grado']+','+data[i]['cantidad_grado']+')';
 				self.connection.query(query,JSON.stringify(data[i]),function(error,result){
 					if(error){
 						throw error;

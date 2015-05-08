@@ -130,7 +130,6 @@ exports.addEscuela = function (req, res) {
         observaciones: req.param('observaciones')
   }
   EscuelaModel.insertEscuela(datos,function(error, data){      
-      console.log(data,data.insertId )
       if(data && data.insertId){
         res.redirect("/api/escuela/" + data.insertId);
       }
@@ -218,7 +217,6 @@ exports.escuelaCurso = function(req,res){
   var school_id = 5;
   data = EscuelaModel.getSchoolCourseByYear(school_id,function(error,data){
       if(typeof data !== 'undefined' && data.length > 0){
-        console.log("asdasdasdasd"+data);
         res.json(200,data);
       }else{
         res.json(404,{'msg':'something went wrong'});
@@ -262,12 +260,9 @@ exports.addGrado = function(req,res){
 };
 
 exports.escuelaCiclo = function(req,res){
-
-  var data = JSON.parse(req.param('data'));
-        
-  EscuelaCicloModel.insertEscuelaGrado(data,function(error,data){
-  
-      if(data){
+  var data = JSON.parse(req.param('data'));     
+  EscuelaCicloModel.insertEscuelaGrado(data,function(error,datos){
+      if(datos){
         res.redirect('/api/escuelas');
       }
       else{
@@ -310,6 +305,11 @@ exports.ciclo = function (req, res) {
     }
   });
 };
+exports.cargos = function (req, res){
+  data = DocenteModel.getCargos(function(error, data){
+      res.json(200,data);
+    });
+};
 exports.gradosCiclos = function (req, res) {
   var id = req.params.id;
   data = EscuelaCicloModel.getGradosPorCiclo(id,function(error, data){    
@@ -323,7 +323,7 @@ exports.gradosCiclos = function (req, res) {
 };
 exports.gradosTurnosPorEscuela = function (req, res) {
   var id = req.params.id;
-  data = EscuelaCicloModel.getGradosTurnosPorEscuela(id,function(error, data){    
+  data = EscuelaCicloModel.getEscuelaTurnoCiclo(id,function(error, data){    
     if (typeof data !== 'undefined' && data.length > 0){
       res.json(200,data);
     }    

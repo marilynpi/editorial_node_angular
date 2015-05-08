@@ -83,6 +83,19 @@
 					            	<div class="form-group">
 					            		<label ng-model="escuela.provincia">Provincia: {{escuela.provincia}} </label>
 					            	</div>
+					            	<label for="cargo"> Cargo:
+										<select ng-model="form.cargo" name="cargo" ng-change="getCursos()">
+											<option ng-model="form.cargo" ng-repeat="cargo in cargos" value="{{cargo.id_cargo}}">{{cargo.descripcion_cargo}}</option>
+										</select>
+									</label>
+									<div ng-if="form.cursos.length > 0">
+										  	<label>Cursos</label>
+										    <div class="form-group">
+										        <label class="checkbox-inline" ng-repeat="curso in cursos">
+										            <input type="checkbox" name="curso" checklist-model="form.cursos" checklist-value="curso.id_curso"> {{curso.Grado + curso.Turno}}
+										        </label>
+										    </div>
+									</div>
 				            	</div>
 							  </div><!-- /.box-body -->
 							</div><!-- /.box -->
