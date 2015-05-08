@@ -8,6 +8,7 @@
     "express": "*",
     "jade": "~0.31.2",
     "method-override": "^1.0.0",
-    "morgan": "^1.0.0"
+    "morgan": "^1.0.0",
+    "passport": "^0.2.1"
   }
 }

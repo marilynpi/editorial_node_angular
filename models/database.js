@@ -326,7 +326,7 @@ var Connection = (function(){
 		if (self.connection){
 
 			var sql = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
-			self.connection.query(sql, function(error, row){
+			var asd = self.connection.query(sql, function(error, row){
 				if(error){
 					throw error;
 				}
@@ -334,6 +334,8 @@ var Connection = (function(){
 					callback(null, row);
 				}
 			});
+
+			console.log('adsasda'+asd.sql)
 		}		
 	}
 

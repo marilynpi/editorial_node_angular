@@ -6,7 +6,7 @@ var SchoolYear = (function(){
 
 	function SchoolYear(){
 		self.table_name = 'escuela_ciclo';
-		self.table_pk = ['id_escuela', 'id_ciclo', 'id_turno', 'id_grado']; 
+		self.table_pk = ['id_escuela', 'id_ciclos', 'id_turno', 'id_grado']; 
 	};
 	function Course(){
 		self.table_name = 'grado';

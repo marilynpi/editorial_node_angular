@@ -8,6 +8,7 @@ var express = require('express'),
   errorHandler = require('error-handler'),
   morgan = require('morgan'),
   routes = require('./routes'),
+  passport = require('passport'),
   api = require('./routes/api'),
   http = require('http'),
   path = require('path');
@@ -31,6 +32,38 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 var env = process.env.NODE_ENV || 'development';
+
+/**
+*Login stuffs
+*/
+
+function restrict(req,res,next){
+  if(req.session.user){
+    next();
+  }else{
+    req.session.error = 'Access denied!';
+    res.redirect('/login');
+  }
+};
+
+app.get('/api/login',function(req,res){
+  var username = request.body.username;
+  var password = request.body.password;
+
+  if(username == 'demo' && password == 'demo'){
+      request.session.regenerate(function(){
+      request.session.user = username;
+      response.redirect('/restricted');
+      });
+  }
+  else {
+     res.redirect('login');
+  }  
+});
+
+app.get('/restricted', restrict, function(request, response){
+  response.send('This is the restricted area! Hello ' + request.session.user + '! click <a href="/logout">here to logout</a>');
+});
 
 /**
  * Routes
@@ -73,7 +106,7 @@ app.get('/api/ciclos', api.ciclos);
 app.get('/api/ciclo/:id', api.ciclo);
 app.get('/api/grados/:id', api.gradosCiclos);
 
-app.get('/api/gradosTurnos/:id', api.gradosTurnosPorEscuela);
+app.get('/api/gradosTurnos/', api.gradosTurnosPorEscuela);
 app.post('/api/testEscuelaCiclo', api.escuelaCiclo);
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);
