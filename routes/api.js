@@ -271,6 +271,18 @@ exports.escuelaCiclo = function(req,res){
   });
 };
 
+exports.docenteGrado = function(req,res){
+  var data = JSON.parse(req.param('data'));     
+  DocenteModel.insertPersonaGrado(data,function(error,datos){
+      if(datos){
+        res.redirect('/api/docentes');
+      }
+      else{
+        res.json(500,{'msg':'something went wrong'});
+      }
+  });
+};
+
 exports.turnos = function (req, res){
   data = EscuelaCicloModel.getTurnos(function(error, data){
       res.json(200,data);
@@ -324,6 +336,16 @@ exports.gradosCiclos = function (req, res) {
 exports.gradosTurnosPorEscuela = function (req, res) {
   var id = req.params.id;
   data = EscuelaCicloModel.getEscuelaTurnoCiclo(id,function(error, data){    
+    if (typeof data !== 'undefined' && data.length > 0){
+      res.json(200,data);
+    }    
+    else{
+      res.json(404,{"msg":"notExist"});
+    }
+  });
+};
+exports.gradosTurnos = function (req, res) {
+  data = EscuelaCicloModel.getAllEscuelaTurnoCiclo(function(error, data){    
     if (typeof data !== 'undefined' && data.length > 0){
       res.json(200,data);
     }    

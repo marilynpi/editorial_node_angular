@@ -421,6 +421,28 @@ var Connection = (function(){
 		};
 	};
 
+	Connection.prototype.getAllSchoolCourseInning = function(callback){
+		//escuelas+ciclos+grados+turnos
+		if(self.connection){
+
+			var query = 'SELECT e.*, ec.*, t.descripcion as "turno", c.descripcion as "ciclo", g.descripcion as "grado", ec.cantidad_grado as "cantidad-grados" '+
+						'FROM escuela e '+ 
+						'INNER JOIN escuela_ciclo ec ON (e.id = ec.id_escuela) '+
+						'INNER JOIN ciclo c on (ec.id_ciclo = c.id) '+
+						'INNER JOIN grado g on (ec.id_grado = g.id) '+
+						'INNER JOIN turno t on (ec.id_turno = t.id) '+
+						'ORDER BY e.id';
+			self.connection.query(query,function(error,row){
+
+				if(error){
+					throw error;
+				}else{
+					callback(null,row);
+				}
+			});
+		};
+	};
+
 	Connection.prototype.insertCourse = function(table_name,data,callback){		
 		if(self.connection){
 
@@ -469,7 +491,42 @@ var Connection = (function(){
 						
 			callback(null,res);			
 		};
-	};
+	}
+
+	Connection.prototype.insertPersonCourse = function(table_name,data,callback){				
+		var res = [];	
+		if(self.connection){
+
+			for(var i = 0; i < data.length ;i++){
+				console.log(data[i].cursos.length);
+				if( data[i].cursos.length > 0)
+				{
+					for(var k = 0; k < data[i].cursos.length ;k++){
+						var query = 'INSERT INTO '+table_name+' (dni,id_escuela,id_turno,id_grado,id_cargo) VALUES ('+data[i]['dni']+','+data[i]['id']+',"'+data[i].cursos[k]['id_turno']+'",'+data[i].cursos[k]['id_grado']+','+data[i]['cargo']+')';
+						self.connection.query(query,JSON.stringify(data[i]),function(error,result){
+							if(error){
+								throw error;
+							}else{
+								res.push(result);
+							}
+						});
+					}
+				}else{
+					var query = 'INSERT INTO '+table_name+' (dni,id_escuela,id_turno,id_grado,id_cargo) VALUES ('+data[i]['dni']+','+data[i]['id']+'," ",14,'+data[i]['cargo']+')';
+						self.connection.query(query,JSON.stringify(data[i]),function(error,result){
+							if(error){
+								throw error;
+							}else{
+								res.push(result);
+							}
+						});
+				}
+				
+			}
+						
+			callback(null,res);			
+		};
+	}
 
 	return Connection;
 })();

@@ -71,6 +71,9 @@ var SchoolYear = (function(){
 	SchoolYear.prototype.getEscuelaTurnoCiclo = function(data,callback){
 		connection.getSchoolCourseInning(data,callback);	
 	};
+	SchoolYear.prototype.getAllEscuelaTurnoCiclo = function(callback){
+		connection.getAllSchoolCourseInning(callback);	
+	};
 	SchoolYear.prototype.getGradosTurnosPorEscuela = function(id,callback){
 		SchoolYear();
 		connection.getCoursesTurnsBySchool(self.table_name,self.table_pk[1],id,callback);

@@ -75,7 +75,8 @@ app.get('/api/ciclo/:id', api.ciclo);
 app.get('/api/grados/:id', api.gradosCiclos);
 
 app.get('/api/gradosTurnos/:id', api.gradosTurnosPorEscuela);
-app.post('/api/escuelaCiclo/:data', api.escuelaCiclo);
+app.get('/api/gradosTurnos', api.gradosTurnos);
+app.post('/api/docenteGrado/:data', api.docenteGrado);
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);
 
