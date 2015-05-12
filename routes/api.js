@@ -354,3 +354,15 @@ exports.gradosTurnos = function (req, res) {
     }
   });
 };
+
+exports.docentesEscuelas = function (req, res) {
+  data = DocenteModel.getAllPersonaEscuela(function(error, data){
+    console.log(data);    
+    if (typeof data !== 'undefined' && data.length > 0){
+      res.json(200,data);
+    }    
+    else{
+      res.json(404,{"msg":"notExist"});
+    }
+  });
+};

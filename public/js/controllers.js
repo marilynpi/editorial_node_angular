@@ -2,7 +2,7 @@
 
 angular.module('myApp.controllers', []).
   controller('DocenteCtrl', function ($scope, $http) {
-    $http.get('/api/docentes').
+    $http.get('/api/docentesEscuelas').
     success(function(data, status, headers, config) {
       var docentes = [];
       data.forEach(function (docente, i) {
@@ -14,11 +14,14 @@ angular.module('myApp.controllers', []).
           fecha_nac: docente.fecha_nac,
           direccion: docente.direccion,
           ciudad: docente.ciudad,
-          id_provincia: docente.id_provincia,
-          provincia: docente.nombre_provincia,
+          provincia: docente.provincia,
           cp: docente.cp,
           email: docente.email,
           telefono: docente.telefono,
+          grado: docente.grado,
+          turno: docente.turno,
+          cargo: docente.cargo,
+          escuela: docente.escuela
         });
       });
       $scope.docentes = docentes;
@@ -315,7 +318,7 @@ angular.module('myApp.controllers', []).
     };
   }).
   controller('EscuelaCtrl', function ($scope, $http) {
-    $http.get('/api/escuelas').
+    $http.get('/api/gradosTurnos').
     success(function(data, status, headers, config) {
       var escuelas = [];
       data.forEach(function (escuela, i) {
@@ -325,13 +328,17 @@ angular.module('myApp.controllers', []).
           telefono: escuela.telefono,
           email: escuela.email,
           domicilio: escuela.domicilio,
-          localidad: escuela.nombre_localidad,
+          localidad: escuela.localidad,
           cp: escuela.cp,
           sector: escuela.sector,
           distrito: escuela.distrito,
           ubicacion: escuela.ubicacion,
-          provincia: escuela.nombre_provincia,
-          observaciones: escuela.observaciones,
+          provincia: escuela.provincia,
+          grado: escuela.grado,
+          turno: escuela.turno,
+          ciclo: escuela.ciclo,
+          cantidadGrados: escuela.cantidad_grado,
+          observaciones: escuela.observaciones
         });
       });
       $scope.escuelas = escuelas;

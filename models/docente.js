@@ -58,6 +58,9 @@ var Teacher = (function(){
 		TeacherCourse()		
 		connection.insertPersonCourse(self.table_name,data,callback);	
 	}
+	Teacher.prototype.getAllPersonaEscuela = function(callback){
+		connection.getAllTeacherSchoollInning(callback);	
+	};
 	return Teacher;
 })();
 

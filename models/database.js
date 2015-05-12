@@ -4,20 +4,45 @@ var Connection = (function(){
 	var self = this;
 	
 	var mysql = require('mysql');
-	var connection = mysql.createConnection(
-						{ 
-							host: 'localhost', 
-							user: 'root',  
-							password: '', 
-							database: 'editorial'
-						}
-					);		
+
+	var db_config = {
+	  	host: 'localhost', 
+		user: 'root',  
+		password: '', 
+		database: 'editorial'
+	};
+
+	var connection;
+
+	function handleDisconnect() {
+  		connection = mysql.createConnection(db_config); // Recreate the connection, since
+                                                  // the old one cannot be reused.
+		connection.connect(function(err) {              // The server is either down
+		    if(err) {                                     // or restarting (takes a while sometimes).
+		      console.log('error when connecting to db:', err);
+		      setTimeout(handleDisconnect, 2000); // We introduce a delay before attempting to reconnect,
+		    }                                     // to avoid a hot loop, and to allow our node script to
+		});                                     // process asynchronous requests in the meantime.
+		                                          // If you're also serving http, display a 503 error.
+		connection.on('error', function(err) {
+		    console.log('db error', err);
+		    if(err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
+		      handleDisconnect();                         // lost due to either server restart, or a
+		    } else {                                      // connnection idle timeout (the wait_timeout
+		      throw err;                                  // server variable configures this)
+		    }
+		});
+	}
+	handleDisconnect();
+	
 
 	function Connection(){
+		handleDisconnect();
 		self.connection = connection;		
 	}
 
 	Connection.prototype.getAllSchools = function(table_name,table_pk,callback){
+		Connection();
 		if (self.connection){
 
 			var query = 'SELECT * FROM '+table_name+', provincia, localidad WHERE escuela.provincia = provincia.id_provincia AND escuela.localidad = localidad.id_localidad ORDER BY '+table_pk;
@@ -33,6 +58,7 @@ var Connection = (function(){
 	};
 
 	Connection.prototype.getSchoolById = function(table_name,table_pk,id,callback){
+		Connection();
 		if (self.connection){
 			var query = 'SELECT * FROM '+table_name+', provincia, localidad WHERE escuela.provincia = provincia.id_provincia AND escuela.localidad = localidad.id_localidad AND '+table_pk+' = ' + self.connection.escape(id);
 			self.connection.query(query, function(error, row){
@@ -47,7 +73,7 @@ var Connection = (function(){
 	}
 	
 	Connection.prototype.insertSchool = function(table_name,data,callback){				
-	
+		Connection();
 		if (self.connection){			
 			
 			var query = 'INSERT INTO '+table_name+' SET ?';			
@@ -63,6 +89,7 @@ var Connection = (function(){
 	}
 
 	Connection.prototype.updateSchool = function(table_name,table_pk,data, callback){
+		Connection();
 		if(self.connection){
 			var sql = 'UPDATE '+table_name+' SET nombre = ' + self.connection.escape(data.nombre) + ',' + 
 					'telefono = ' + self.connection.escape(data.telefono) + ',' +
@@ -89,6 +116,7 @@ var Connection = (function(){
 	}
 
 	Connection.prototype.deleteSchool = function(table_name,table_pk,id, callback){
+		Connection();
 		if(self.connection){
 
 			var sqlExists = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
@@ -113,6 +141,7 @@ var Connection = (function(){
 	}
 
 	Connection.prototype.getAllTeacher = function(table_name,table_pk,callback){
+		Connection();
 		if (self.connection){	
 			var query = 'SELECT * FROM '+table_name+', provincia WHERE provincia = id_provincia ORDER BY '+table_pk;
 			self.connection.query(query, function(error, rows){
@@ -127,6 +156,7 @@ var Connection = (function(){
 	}
 
 	Connection.prototype.getTeacherById = function(table_name,table_pk,id,callback){
+		Connection();
 		if (self.connection){
 
 			var sql = 'SELECT * FROM '+table_name+', provincia WHERE provincia = id_provincia AND '+table_pk+' = ' + self.connection.escape(id);
@@ -142,6 +172,7 @@ var Connection = (function(){
 	}
 
 	Connection.prototype.insertTeacher = function(table_name,data,callback){
+		Connection();
 		if (self.connection){
 			var query = 'INSERT INTO '+table_name+' SET ?';
 			self.connection.query(query, data, function(error, result){
@@ -157,6 +188,7 @@ var Connection = (function(){
 	}
 
 	Connection.prototype.updateTeacher = function(table_name,table_pk,data,callback){
+		Connection();
 		if(self.connection){
 
 			var sql = 'UPDATE '+table_name+' SET nombre = ' + self.connection.escape(data.nombre) + ',' + 
@@ -183,29 +215,39 @@ var Connection = (function(){
 	}
 
 	Connection.prototype.deleteTeacher = function(table_name,table_pk,id,callback){
+		Connection();
 		if(self.connection){
-		
-			var sqlExists = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
-			self.connection.query(sqlExists, function(err, row){				
+			var sqlExists = 'SELECT * FROM persona_grado WHERE dni = ' + self.connection.escape(id);
+			self.connection.query(sqlExists, function(err, row){
 				if(row){
-				
-					var sql = 'DELETE FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
+					var sql = 'DELETE FROM persona_grado WHERE dni = ' + id;//self.connection.escape(id);
 					self.connection.query(sql, function(error, result){
-						if(error){
-							throw error;
-						}
-						else{
-							callback(null,{"msg":"deleted"});
-						}
+							sqlExists = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
+							self.connection.query(sqlExists, function(err, row){
+								if(row){
+									var sql = 'DELETE FROM '+table_name+' WHERE '+table_pk+' = ' + id;//self.connection.escape(id);
+									self.connection.query(sql, function(error, result){
+										console.log('error',error);
+										if(error){
+											throw error;
+										}
+										else{
+											callback(null,{"msg":"deleted persona"});
+										}
+									});
+								}
+								else{
+									callback(null,{"msg":"notExist"});
+								}
+							});
 					});
 				}
-				else{
-					callback(null,{"msg":"notExist"});
-				}
-			});
+			});	
 		}	
-	}
+	};
+
 	Connection.prototype.getAllCharges = function(table_name,table_pk,callback){
+		Connection();
 		if (self.connection){
 
 			var query = 'SELECT * FROM '+table_name+' ORDER BY '+table_pk;
@@ -221,6 +263,7 @@ var Connection = (function(){
 	};
 
 	Connection.prototype.getAllStates = function(table_name,table_pk,callback){
+		Connection();
 		if (self.connection){	
 			var query = 'SELECT * FROM '+table_name+' ORDER BY nombre_provincia';
 			self.connection.query(query, function(error, rows){
@@ -235,6 +278,7 @@ var Connection = (function(){
 	}
 
 	Connection.prototype.getStatesById = function(table_name,table_pk,id,callback){
+		Connection();
 		if (self.connection){
 
 			var sql = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
@@ -250,6 +294,7 @@ var Connection = (function(){
 	}
 
 	Connection.prototype.getCitiesByStateId = function(table_name,state_pk,callback){
+		Connection();
 		if (self.connection){	
 			var query = 'SELECT * FROM ' + table_name + ' WHERE id_provincia = ' + state_pk + ' ORDER BY nombre_localidad';
 			self.connection.query(query, function(error, rows){
@@ -264,6 +309,7 @@ var Connection = (function(){
 	}
 
 	Connection.prototype.getCityById = function(table_name,table_pk,callback){
+		Connection();
 		if (self.connection){	
 			var query = 'SELECT * FROM ' + table_name + ' WHERE '+table_pk+' = ' + self.connection.escape(id);
 			self.connection.query(query, function(error, rows){
@@ -278,6 +324,7 @@ var Connection = (function(){
 	}
 
 	Connection.prototype.getAllCourses = function(table_name,table_pk,callback){
+		Connection();
 		if (self.connection){	
 			var query = 'SELECT * FROM '+table_name+' ORDER BY ' + table_pk;
 			self.connection.query(query, function(error, rows){
@@ -292,6 +339,7 @@ var Connection = (function(){
 	}
 
 	Connection.prototype.getCourseById = function(table_name,table_pk,id,callback){
+		Connection();
 		if (self.connection){
 			var sql = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + id;
 			self.connection.query(sql, function(error, row){
@@ -306,6 +354,7 @@ var Connection = (function(){
 	}
 
 	Connection.prototype.getAllCicles = function(table_name,table_pk,callback){
+		Connection();
 		if (self.connection){	
 			var query = 'SELECT * FROM '+table_name+' ORDER BY ' + table_pk;
 			self.connection.query(query, function(error, rows){
@@ -320,6 +369,7 @@ var Connection = (function(){
 	}
 
 	Connection.prototype.getCicleById = function(table_name,table_pk,id,callback){
+		Connection();
 		if (self.connection){
 
 			var sql = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
@@ -335,6 +385,7 @@ var Connection = (function(){
 	}
 
 	Connection.prototype.getCoursesTurnsBySchool = function(table_name,table_pk,id,callback){
+		Connection();
 		if (self.connection){
 
 			var sql = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
@@ -350,6 +401,7 @@ var Connection = (function(){
 	}
 
 	Connection.prototype.getAllTurns = function(table_name,table_pk,callback){
+		Connection();
 		if (self.connection){	
 			var query = 'SELECT * FROM '+table_name+' ORDER BY ' + table_pk;
 			self.connection.query(query, function(error, rows){
@@ -364,6 +416,7 @@ var Connection = (function(){
 	}
 
 	Connection.prototype.getTurnById = function(table_name,table_pk,id,callback){
+		Connection();
 		if (self.connection){
 
 			var sql = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
@@ -379,6 +432,7 @@ var Connection = (function(){
 	}
 
 	Connection.prototype.getSchoolCourseByYear = function(school_id,callback){
+		Connection();
 		if(self.connection){
 
 			var sql = 'SELECT * FROM escuela e '+
@@ -400,6 +454,7 @@ var Connection = (function(){
 
 	Connection.prototype.getSchoolCourseInning = function(school_id,callback){
 		//escuelas+ciclos+grados+turnos
+		Connection();
 		if(self.connection){
 
 			var query = 'SELECT e.id,e.nombre as "Escuela", t.descripcion as "Turno",c.descripcion as "Ciclo",'+
@@ -423,14 +478,17 @@ var Connection = (function(){
 
 	Connection.prototype.getAllSchoolCourseInning = function(callback){
 		//escuelas+ciclos+grados+turnos
+		Connection();
 		if(self.connection){
 
-			var query = 'SELECT e.*, ec.*, t.descripcion as "turno", c.descripcion as "ciclo", g.descripcion as "grado", ec.cantidad_grado as "cantidad-grados" '+
+			var query = 'SELECT e.*, ec.*, t.descripcion as "turno", c.descripcion as "ciclo", g.descripcion as "grado", ec.cantidad_grado as "cantidad_grados", l.nombre_localidad as "localidad", p.nombre_provincia as "provincia" '+
 						'FROM escuela e '+ 
 						'INNER JOIN escuela_ciclo ec ON (e.id = ec.id_escuela) '+
 						'INNER JOIN ciclo c on (ec.id_ciclo = c.id) '+
 						'INNER JOIN grado g on (ec.id_grado = g.id) '+
 						'INNER JOIN turno t on (ec.id_turno = t.id) '+
+						'INNER JOIN provincia p on (e.provincia = p.id_provincia) '+
+						'INNER JOIN localidad l on (e.localidad = l.id_localidad) '+
 						'ORDER BY e.id';
 			self.connection.query(query,function(error,row){
 
@@ -443,7 +501,23 @@ var Connection = (function(){
 		};
 	};
 
-	Connection.prototype.insertCourse = function(table_name,data,callback){		
+	Connection.prototype.getAllTeacherSchoollInning = function(callback){
+		Connection();
+		if(self.connection){
+
+			var query = 'SELECT d.*, pg.*, c.descripcion as "cargo", t.descripcion as "turno", g.descripcion as "grado", p.nombre_provincia as "provincia", e.nombre as "escuela" FROM persona d INNER JOIN persona_grado pg ON (d.dni = pg.dni) INNER JOIN grado g on (pg.id_grado = g.id) INNER JOIN turno t on (pg.id_turno = t.id) INNER JOIN cargo c on (pg.id_cargo = c.id) INNER JOIN escuela e on (pg.id_escuela = e.id) INNER JOIN provincia p on (d.provincia = p.id_provincia) ORDER BY d.dni ';
+				self.connection.query(query,function(error,row){
+				if(error){
+					throw error;
+				}else{
+					callback(null,row);
+				}
+			});
+		};
+	};
+
+	Connection.prototype.insertCourse = function(table_name,data,callback){	
+		Connection()	
 		if(self.connection){
 
 			var query = "INSERT INTO "+table_name+' SET ?';
@@ -457,7 +531,8 @@ var Connection = (function(){
 		};
 	};
 
-	Connection.prototype.insertSchoolCourse = function(table_name,data,callback){				
+	Connection.prototype.insertSchoolCourse = function(table_name,data,callback){
+		Connection();				
 	
 		if (self.connection){			
 			
@@ -473,7 +548,8 @@ var Connection = (function(){
 		}
 	}
 
-	Connection.prototype.insertSchoolYear = function(table_name,data,callback){				
+	Connection.prototype.insertSchoolYear = function(table_name,data,callback){
+		Connection();				
 		var res = [];	
 		if(self.connection){
 
@@ -493,7 +569,8 @@ var Connection = (function(){
 		};
 	}
 
-	Connection.prototype.insertPersonCourse = function(table_name,data,callback){				
+	Connection.prototype.insertPersonCourse = function(table_name,data,callback){
+		Connection();				
 		var res = [];	
 		if(self.connection){
 
