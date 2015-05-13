@@ -423,6 +423,22 @@ var Connection = (function(){
 		};
 	};
 
+	Connection.prototype.getUser = function(table_name,user_id,user_pass,callback){
+
+		if(self.connection){
+
+			var query = 'SELECT * FROM '+table_name+' WHERE id_usuario LIKE '+user_id+' AND password LIKE '+user_pass;
+
+			var asd = self.connection.query(query,function(error,row){
+				if(error){
+					throw error;
+				}else{
+					callback(null,true);
+				}
+			});
+		}
+	};
+
 	Connection.prototype.insertCourse = function(table_name,data,callback){		
 		if(self.connection){
 

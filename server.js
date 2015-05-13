@@ -14,6 +14,7 @@ var express = require('express'),
   path = require('path');
 
 var app = express();
+require('./models/passport')(passport);
 
 app.engine('html', require('ejs').renderFile);
 
@@ -37,33 +38,16 @@ var env = process.env.NODE_ENV || 'development';
 *Login stuffs
 */
 
-function restrict(req,res,next){
-  if(req.session.user){
-    next();
-  }else{
-    req.session.error = 'Access denied!';
-    res.redirect('/login');
-  }
+app.use(passport.initialize());
+app.use(passport.session());
+
+function isLoggedIn(req, res, next) {
+  // if user is authenticated in the session, carry on
+  if (req.isAuthenticated()) return next();
+  
+  // if they aren't redirect them to the home page
+  res.redirect('/');
 };
-
-app.get('/api/login',function(req,res){
-  var username = request.body.username;
-  var password = request.body.password;
-
-  if(username == 'demo' && password == 'demo'){
-      request.session.regenerate(function(){
-      request.session.user = username;
-      response.redirect('/restricted');
-      });
-  }
-  else {
-     res.redirect('login');
-  }  
-});
-
-app.get('/restricted', restrict, function(request, response){
-  response.send('This is the restricted area! Hello ' + request.session.user + '! click <a href="/logout">here to logout</a>');
-});
 
 /**
  * Routes
@@ -110,8 +94,20 @@ app.get('/api/grados/:id', api.gradosCiclos);
 
 app.get('/api/gradosTurnos/:id', api.gradosTurnosPorEscuela);
 app.post('/api/escuelaCiclo/:data', api.escuelaCiclo);
+
+//LOGIN
+app.get('/api/login', api.login);
+app.get('/api/test', isLoggedIn, api.test);
+app.post('/api/auth', passport.authenticate(
+                        'local-login',{
+                          successRedirect:'/api/test',
+                          failureRedirect:'/api/login',
+                          failureFlash : true
+                        }), api.authentication);
+
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);
+
 
 /**
  * Start Server

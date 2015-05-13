@@ -15,7 +15,6 @@ var EscuelaCicloModel = new SchoolYear();
 
 var _ = require('underscore');
 
-
 exports.docentes = function (req, res) {
   data = DocenteModel.getPersonas(function(error, data){
   		res.json(200,data);
@@ -310,6 +309,7 @@ exports.cargos = function (req, res){
       res.json(200,data);
     });
 };
+
 exports.gradosCiclos = function (req, res) {
   var id = req.params.id;
   data = EscuelaCicloModel.getGradosPorCiclo(id,function(error, data){    
@@ -321,6 +321,7 @@ exports.gradosCiclos = function (req, res) {
     }
   });
 };
+
 exports.gradosTurnosPorEscuela = function (req, res) {
   var id = req.params.id;
   data = EscuelaCicloModel.getEscuelaTurnoCiclo(id,function(error, data){    
@@ -332,3 +333,28 @@ exports.gradosTurnosPorEscuela = function (req, res) {
     }
   });
 };
+
+// =========================================================================
+// LOGIN URLS ==============================================================
+// =========================================================================
+
+//This one should be return the login page
+exports.login = function(req,res){
+  res.json({'lala':'login'});
+};
+
+exports.test = function(req,res){
+  res.json({'LOGIN':'estas logueado guachin'});
+};
+
+exports.authentication = function(req,res){
+
+  if (req.body.remember) {
+    console.log('te pelo');
+    req.session.cookie.maxAge = 1000 * 60 * 3;
+  } else {
+    req.session.cookie.expires = false;
+  }
+  //{"username":"admin","password":123}
+};
+
