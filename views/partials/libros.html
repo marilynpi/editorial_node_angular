@@ -1,0 +1,58 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+	<h1>Libros<small>Panel de control</small></h1>
+</section>
+<section class="content">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Lista de Libros</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>ISBN</th>
+                        <th>Título</th>
+                        <th>Colección</th>
+                        <th>Cantidad de páginas</th>
+                        <th>Peso</th>
+                        <th>Precio</th>
+                        <th>Autores</th>
+                        <th>Formato</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="libro in libros">
+                      	<td><p>{{libro.isbn}}</p></td>
+                       	<td><p>{{libro.titulo}}</p></td>
+                        <td><p>{{libro.coleccion}}</p></td>
+                        <td><p>{{libro.paginas}}</p></td>
+                        <td><p>{{libro.peso}}</p></td>
+                        <td><p>{{libro.precio}}</p></td>
+                        <td><p>{{libro.autores}}</p></td>
+                        <td><p>{{libro.formato}}</p></td>
+                        <td><p><a href="/libro/editar/{{libro.isbn}}" ><i class="fa fa-edit"></i>Editar</a><br>
+                        	<a href="/libro/borrar/{{libro.isbn}}" ><i class="fa fa-ban"></i>Borrar</a>
+                        </p></td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>ISBN</th>
+                        <th>Título</th>
+                        <th>Colección</th>
+                        <th>Cantidad de páginas</th>
+                        <th>Peso</th>
+                        <th>Precio</th>
+                        <th>Autores</th>
+                        <th>Formato</th> 
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+        </div><!-- col-xs-12 -->
+    </div><!-- /.row (main row) -->
+</section><!-- /.content -->
