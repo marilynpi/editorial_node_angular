@@ -513,4 +513,158 @@ angular.module('myApp.controllers', []).
     $scope.home = function () {
       $location.url('/escuelas');
     };
+  }).
+  controller('LibroCtrl', function ($scope, $http) {
+    $http.get('/api/libros').
+    success(function(data, status, headers, config) {
+      var libros = [];
+      data.forEach(function (libro, i) {
+        libros.push({
+          isbn:libro.isbn,
+          titulo: libro.titulo,
+          id_col: libro.id_col,
+          coleccion: libro.descripcion,
+          paginas: libro.paginas,
+          peso: libro.peso,
+          precio: libro.precio,
+          autores:libro.autores,
+          formato: libro.formato
+        });
+      });
+      $scope.libros = libros;
+      
+    });
+
+  }).
+  controller('AddLibroCtrl', function ($scope, $http, $location) {
+    $scope.form = {};
+    $http.get('/api/colecciones').
+    success(function(data, status, headers, config) {
+      var colecciones = [];
+      data.forEach(function (coleccion, i) {
+        colecciones.push({
+          id: coleccion.id_coleccion,
+          descripcion: coleccion.descripcion,
+        });
+      });
+      $scope.colecciones = colecciones;
+    });
+    $scope.submitLibro = function () {
+      $http.post('/api/libro', $scope.form).
+        success(function(data) {
+          $location.path('/libros');
+        });
+    };
+  }).
+  controller('EditLibroCtrl', function ($scope, $http, $location, $routeParams) {
+    $scope.form = {};
+    $http.get('/api/libro/' + $routeParams.id).
+      success(function(data) {
+        console.log(data)
+        var libro = {};
+        libro = {
+            isbn: data[0].isbn,
+            titulo: data[0].titulo,
+            id_col: data[0].id_col,
+            paginas: data[0].paginas,
+            peso: data[0].peso,
+            precio: data[0].precio,
+            autores:data[0].autores,
+            formato: data[0].formato
+        }
+      $scope.form = libro;
+      });
+    $http.get('/api/colecciones').
+    success(function(data, status, headers, config) {
+      var colecciones = [];
+      data.forEach(function (coleccion, i) {
+        colecciones.push({
+          id: coleccion.id_coleccion,
+          descripcion: coleccion.descripcion,
+        });
+      });
+      $scope.colecciones = colecciones;
+    });
+    $scope.editLibro = function () {
+      console.log($routeParams.id, $scope.form)
+      $http.put('/api/libro/' + $routeParams.id, $scope.form).
+        success(function(data) {
+          $location.url('/libros');
+        });
+    };
+  }).
+  controller('DeleteLibroCtrl', function ($scope, $http, $location, $routeParams) {
+    $http.get('/api/libro/' + $routeParams.id).
+    success(function(data) {
+      $scope.libro = data[0];
+    });
+
+    $scope.deleteLibro = function () {
+      $http.delete('/api/libro/' + $routeParams.id).
+        success(function(data) {
+          $location.url('/libros');
+        });
+    };
+    $scope.home = function () {
+      $location.url('/libros');
+    };
+  }).
+  controller('ColeccionCtrl', function ($scope, $http) {
+    $http.get('/api/colecciones').
+    success(function(data, status, headers, config) {
+      var colecciones = [];
+      data.forEach(function (coleccion, i) {
+        colecciones.push({
+          id:coleccion.id_coleccion,
+          descripcion: coleccion.descripcion
+        });
+      });
+      $scope.colecciones = colecciones;
+      
+    });
+
+  }).
+  controller('AddColeccionCtrl', function ($scope, $http, $location) {
+    $scope.form = {};
+    $scope.submitColeccion = function () {
+      console.log($scope.form)
+      $http.post('/api/coleccion', $scope.form).
+        success(function(data) {
+          $location.path('/colecciones');
+        });
+    };
+  }).
+  controller('EditColeccionCtrl', function ($scope, $http, $location, $routeParams) {
+    $scope.form = {};
+    $http.get('/api/coleccion/' + $routeParams.id).
+      success(function(data) {
+        var coleccion = {};
+        coleccion = {
+            id: data[0].id_coleccion,
+            descripcion: data[0].descripcion,
+        }
+      $scope.form = coleccion;
+    });
+    $scope.editColeccion = function () {
+      console.log($routeParams.id, $scope.form);
+      $http.put('/api/coleccion/' + $routeParams.id, $scope.form).
+        success(function(data) {
+          $location.url('/colecciones');
+        });
+    };
+  }).
+  controller('DeleteColeccionCtrl', function ($scope, $http, $location, $routeParams) {
+    $http.get('/api/coleccion/' + $routeParams.id).
+    success(function(data) {
+      $scope.coleccion = data[0];
+    });
+    $scope.deleteColeccion = function () {
+      $http.delete('/api/coleccion/' + $routeParams.id).
+        success(function(data) {
+          $location.url('/colecciones');
+        });
+    };
+    $scope.home = function () {
+      $location.url('/colecciones');
+    };
   });

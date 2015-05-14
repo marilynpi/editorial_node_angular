@@ -5,6 +5,8 @@ var Connection = (function(){
 	
 	var mysql = require('mysql');
 
+
+
 	var db_config = {
 	  	host: 'localhost', 
 		user: 'root',  
@@ -122,6 +124,127 @@ var Connection = (function(){
 			var sqlExists = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
 			self.connection.query(sqlExists, function(err, row){
 				if(row){
+					var sqlExists = 'SELECT * FROM persona_grado WHERE '+table_pk+' = ' + self.connection.escape(id);
+					self.connection.query(sqlExists, function(err, r){
+						if(r){
+							var sql2 = 'DELETE FROM persona_grado WHERE '+table_pk+' = ' + id;
+								self.connection.query(sql2, function(error2, result2){
+								if(error2){
+									console.log('error baja docente');
+									throw error2;
+									
+								}
+								else{
+									var sql = 'DELETE FROM '+table_name+' WHERE '+table_pk+' = ' + id;
+									self.connection.query(sql, function(error, result){
+										if(error){
+											console.log('error baja persona_escuela')
+											throw error;
+										}
+										else{
+											callback(null,{"msg":"deleted persona and persona_escuela"});
+										}
+									});
+								}
+							});
+						}
+						else{
+							var sql = 'DELETE FROM '+table_name+' WHERE '+table_pk+' = ' + id;
+							self.connection.query(sql, function(error, result){
+								if(error){
+									console.log('error baja docente');
+									throw error;
+								}
+								else{
+									callback(null,{"msg":"deleted persona"});
+								}
+					
+							});
+						}
+					});
+				}
+			});
+		}
+	}
+
+	Connection.prototype.getAllBook = function(table_name,table_pk,callback){
+		Connection();
+		if (self.connection){	
+			var query = 'SELECT * FROM '+table_name+', coleccion WHERE id_col = id_coleccion ORDER BY '+table_pk;
+			self.connection.query(query, function(error, rows){
+				if(error){
+					throw error;
+				}
+				else{
+					callback(null, rows);
+				}
+			});
+		}			
+	}
+
+	Connection.prototype.getBookById = function(table_name,table_pk,id,callback){
+		Connection();
+		if (self.connection){
+
+			var sql = 'SELECT * FROM '+table_name+', coleccion WHERE id_col = id_coleccion AND '+table_pk+' = ' + id;
+			self.connection.query(sql, function(error, row){
+				if(error){
+					throw error;
+				}
+				else{
+					callback(null, row);
+				}
+			});
+		}		
+	}
+
+	Connection.prototype.insertBook = function(table_name,data,callback){
+		Connection();
+		if (self.connection){
+			var query = 'INSERT INTO '+table_name+' SET ?';
+			self.connection.query(query, data, function(error, result){
+				if(error){
+					throw error;
+				}
+				else{
+					//devolvemos la última id insertada
+					callback(null,{"insertId" : data.isbn});
+				}
+			});
+		}		
+	}
+
+	Connection.prototype.updateBook = function(table_name,table_pk,data,callback){
+		Connection();
+		if(self.connection){
+
+			var sql = 'UPDATE '+table_name+' SET titulo = ' + self.connection.escape(data.titulo) + ',' + 
+					'paginas = ' + self.connection.escape(data.paginas) + ',' +
+					'peso = ' + self.connection.escape(data.peso) + ',' + 
+					'precio = ' + self.connection.escape(data.precio) + ',' +
+					'autores = ' + self.connection.escape(data.autores) + ',' +
+					'formato = ' + self.connection.escape(data.formato) + ',' +
+					'id_col = ' + self.connection.escape(data.id_col) +
+					' WHERE '+table_pk+' = ' + data.isbn;
+
+			self.connection.query(sql, function(error, result){
+				if(error){
+					throw error;
+				}
+				else{
+					callback(null,{"msg":"success"});
+				}
+			});
+		}		
+	}
+
+	Connection.prototype.deleteBook = function(table_name,table_pk,id,callback){
+		Connection();
+		if(self.connection){
+
+			var sqlExists = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
+			self.connection.query(sqlExists, function(err, row){
+				if(row){
 					var sql = 'DELETE FROM '+table_name+' WHERE '+table_pk+' = ' + id;//self.connection.escape(id);
 					
 					self.connection.query(sql, function(error, result){
@@ -139,6 +262,96 @@ var Connection = (function(){
 			});
 		}
 	}
+
+	Connection.prototype.getAllCollection = function(table_name,table_pk,callback){
+		Connection();
+		if (self.connection){	
+			var query = 'SELECT * FROM '+table_name+' ORDER BY '+table_pk;
+			self.connection.query(query, function(error, rows){
+				if(error){
+					throw error;
+				}
+				else{
+					callback(null, rows);
+				}
+			});
+		}			
+	}
+
+	Connection.prototype.getCollectionById = function(table_name,table_pk,id,callback){
+		Connection();
+		if (self.connection){
+
+			var sql = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + id;
+			self.connection.query(sql, function(error, row){
+				if(error){
+					throw error;
+				}
+				else{
+					callback(null, row);
+				}
+			});
+		}		
+	}
+
+	Connection.prototype.insertCollection = function(table_name,data,callback){
+		Connection();
+		if (self.connection){
+			console.log(data);
+			var query = 'INSERT INTO '+table_name+' SET ?';
+			self.connection.query(query, data, function(error, result){
+				if(error){
+					throw error;
+				}
+				else{
+					//devolvemos la última id insertada
+					callback(null,{"insertId" : data.isbn});
+				}
+			});
+		}		
+	}
+
+	Connection.prototype.updateCollection = function(table_name,table_pk,data,callback){
+		Connection();
+		if(self.connection){
+
+			var sql = 'UPDATE '+table_name+' SET descripcion = ' + self.connection.escape(data.descripcion) + ' WHERE '+table_pk+' = ' + data.id;
+
+			self.connection.query(sql, function(error, result){
+				if(error){
+					throw error;
+				}
+				else{
+					callback(null,{"msg":"success"});
+				}
+			});
+		}		
+	}
+
+	Connection.prototype.deleteCollection = function(table_name,table_pk,id,callback){
+		Connection();
+		if(self.connection){
+
+			var sqlExists = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
+			self.connection.query(sqlExists, function(err, row){
+				if(row){
+					var sql = 'DELETE FROM '+table_name+' WHERE '+table_pk+' = ' + id;//self.connection.escape(id);
+					
+					self.connection.query(sql, function(error, result){
+						if(error){
+							throw error;
+						}
+						else{
+							callback(null,{"msg":"deleted"});
+						}
+					});
+				}
+				else{
+					callback(null,{"msg":"notExist"});
+				}
+			});
+		}
+	}	
 
 	Connection.prototype.getAllTeacher = function(table_name,table_pk,callback){
 		Connection();
@@ -215,35 +428,54 @@ var Connection = (function(){
 	}
 
 	Connection.prototype.deleteTeacher = function(table_name,table_pk,id,callback){
+
 		Connection();
 		if(self.connection){
-			var sqlExists = 'SELECT * FROM persona_grado WHERE dni = ' + self.connection.escape(id);
+
+			var sqlExists = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
 			self.connection.query(sqlExists, function(err, row){
 				if(row){
-					var sql = 'DELETE FROM persona_grado WHERE dni = ' + id;//self.connection.escape(id);
-					self.connection.query(sql, function(error, result){
-							sqlExists = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
-							self.connection.query(sqlExists, function(err, row){
-								if(row){
-									var sql = 'DELETE FROM '+table_name+' WHERE '+table_pk+' = ' + id;//self.connection.escape(id);
+					var sqlExists = 'SELECT * FROM persona_grado WHERE '+table_pk+' = ' + self.connection.escape(id);
+					self.connection.query(sqlExists, function(err, r){
+						if(r){
+							var sql2 = 'DELETE FROM persona_grado WHERE '+table_pk+' = ' + id;
+								self.connection.query(sql2, function(error2, result2){
+								if(error2){
+									console.log('error baja docente');
+									throw error2;
+									
+								}
+								else{
+									var sql = 'DELETE FROM '+table_name+' WHERE '+table_pk+' = ' + id;
 									self.connection.query(sql, function(error, result){
-										console.log('error',error);
 										if(error){
+											console.log('error baja persona_escuela')
 											throw error;
 										}
 										else{
-											callback(null,{"msg":"deleted persona"});
+											callback(null,{"msg":"deleted persona and persona_escuela"});
 										}
 									});
 								}
-								else{
-									callback(null,{"msg":"notExist"});
-								}
 							});
+						}
+						else{
+							var sql = 'DELETE FROM '+table_name+' WHERE '+table_pk+' = ' + id;
+							self.connection.query(sql, function(error, result){
+								if(error){
+									console.log('error baja docente');
+									throw error;
+								}
+								else{
+									callback(null,{"msg":"deleted persona"});
+								}
+					
+							});
+						}
 					});
 				}
-			});	
-		}	
+			});
+		}
 	};
 
 	Connection.prototype.getAllCharges = function(table_name,table_pk,callback){

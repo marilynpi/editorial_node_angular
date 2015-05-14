@@ -49,6 +49,7 @@ app.post('/api/docente/:id', api.docente);
 app.put('/api/docente/:id', api.editDocente);
 app.delete('/api/docente/:id', api.deleteDocente);
 app.get('/api/cargos', api.cargos);
+
 // Escuelas
 app.get('/api/escuelas', api.escuelas);
 app.post('/api/escuela', api.addEscuela);
@@ -58,6 +59,22 @@ app.get('/api/escuela/:id', api.escuelaCurso);
 app.post('/api/escuela/:id', api.escuela);
 app.put('/api/escuela/:id', api.editEscuela);
 app.delete('/api/escuela/:id', api.deleteEscuela);
+
+//Libros
+app.get('/api/libros', api.libros);
+app.get('/api/libro', api.libro);
+app.get('/api/libro/:id', api.libro);
+app.post('/api/libro', api.addLibro);
+app.put('/api/libro/:id', api.editLibro);
+app.delete('/api/libro/:id', api.deleteLibro);
+
+//Colecciones
+app.get('/api/colecciones', api.colecciones);
+app.get('/api/coleccion', api.coleccion);
+app.get('/api/coleccion/:id', api.coleccion);
+app.post('/api/coleccion', api.addColeccion);
+app.put('/api/coleccion/:id', api.editColeccion);
+app.delete('/api/coleccion/:id', api.deleteColeccion);
 
 // Provincias y Localidades
 app.get('/api/provincias', api.provincias);

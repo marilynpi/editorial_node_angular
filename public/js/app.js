@@ -52,6 +52,38 @@ config(function ($routeProvider, $locationProvider) {
         templateUrl: 'partials/docenteAddEscuela',
         controller: 'AddDocenteEscuelaCtrl'
     }).
+    when('/libros', {
+      templateUrl: 'partials/libros',
+      controller: 'LibroCtrl'
+    }).
+    when('/libro/borrar/:id', {
+      templateUrl: 'partials/deleteLibro',
+      controller: 'DeleteLibroCtrl'
+    }).
+    when('/libro/agregar', {
+        templateUrl: 'partials/addLibro',
+        controller: 'AddLibroCtrl'
+    }).
+    when('/libro/editar/:id', {
+      templateUrl: 'partials/editLibro',
+      controller: 'EditLibroCtrl'
+    }).
+    when('/colecciones', {
+      templateUrl: 'partials/colecciones',
+      controller: 'ColeccionCtrl'
+    }).
+    when('/coleccion/borrar/:id', {
+      templateUrl: 'partials/deleteColeccion',
+      controller: 'DeleteColeccionCtrl'
+    }).
+    when('/coleccion/agregar', {
+        templateUrl: 'partials/addColeccion',
+        controller: 'AddColeccionCtrl'
+    }).
+    when('/coleccion/editar/:id', {
+      templateUrl: 'partials/editColeccion',
+      controller: 'EditColeccionCtrl'
+    }).
     otherwise({
       redirectTo: '/'
     });
