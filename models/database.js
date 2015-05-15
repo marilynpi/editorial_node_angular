@@ -8,7 +8,7 @@ var Connection = (function(){
 	var db_config = {
 	  	host: 'localhost', 
 		user: 'root',  
-		password: '', 
+		password: '123', 
 		database: 'editorial'
 	};
 
@@ -720,8 +720,8 @@ var Connection = (function(){
                     return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
                 }
                 // if the user is found but the password is wrong
-                if (!( rows[0].password == password)){                	
-                    return done(null, false); // create the loginMessage and save it to session as flashdata
+                if (!( rows[0].password == password)){                	                    
+                    return done(null, false); // create the loginMessage and save it to session as flashdata         
                 }
                 // all is well, return successful user
 

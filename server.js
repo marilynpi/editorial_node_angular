@@ -125,7 +125,6 @@ app.get('/api/test', isLoggedIn, api.test);
 app.post('/api/auth', passport.authenticate(
                         'local-login',{
                           successRedirect:'/api/test',
-
                           failureRedirect:'/api/login',
                           failureFlash : true
                         }), api.authentication);
