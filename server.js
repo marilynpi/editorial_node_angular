@@ -41,9 +41,10 @@ var env = process.env.NODE_ENV || 'development';
 */
 //app.use(express.cookieParser());
 //app.use(session({secret:'ireallyhatevegans'})); // session secret
-app.use(flash());
+
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 function isLoggedIn(req, res, next) {
   // if user is authenticated in the session, carry on
