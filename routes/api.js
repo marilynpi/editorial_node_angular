@@ -348,13 +348,13 @@ exports.test = function(req,res){
 };
 
 exports.authentication = function(req,res){
-
   if (req.body.remember) {
     console.log('te pelo');
     req.session.cookie.maxAge = 1000 * 60 * 3;
   } else {
     req.session.cookie.expires = false;
   }
-  //{"username":"admin","password":123}
+  console.log('asdasdasd');
+  //res.redirect('/');
 };
 

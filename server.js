@@ -11,10 +11,12 @@ var express = require('express'),
   passport = require('passport'),
   api = require('./routes/api'),
   http = require('http'),
-  path = require('path');
+  path = require('path'),
+  session = require('express-session'),
+  flash = require('connect-flash');
 
-var app = express();
 require('./models/passport')(passport);
+var app = express();
 
 app.engine('html', require('ejs').renderFile);
 
@@ -37,7 +39,9 @@ var env = process.env.NODE_ENV || 'development';
 /**
 *Login stuffs
 */
-
+//app.use(express.cookieParser());
+//app.use(session({secret:'ireallyhatevegans'})); // session secret
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 

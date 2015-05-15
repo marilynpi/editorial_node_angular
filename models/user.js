@@ -9,9 +9,9 @@ var User = (function(){
 		self.table_pk = 'id_usuario'; 
 	};
 
-	User.prototype.getUser = function(user_id,user_pass,callback){
+	User.prototype.getUser = function(user_id,user_pass,callback,req){
 		User()
-		connection.getUser(self.table_name,user_id,user_pass,callback);
+		connection.getUser(self.table_name,user_id,user_pass,callback,req);
 	};
 
 	return User;
