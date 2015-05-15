@@ -8,6 +8,10 @@ angular.module('myApp', [
 ]).
 config(function ($routeProvider, $locationProvider) {
   $routeProvider.
+    when('/', {
+      templateUrl: 'partials/login',
+      controller: 'LoginCtrl'
+    }).
     when('/docentes', {
       templateUrl: 'partials/docentes',
       controller: 'DocenteCtrl'
