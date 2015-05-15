@@ -2,7 +2,7 @@
 
 angular.module('myApp.controllers', []).
   controller('DocenteCtrl', function ($scope, $http) {
-    $http.get('/api/docentes').
+    $http.get('/api/docentesEscuelas').
     success(function(data, status, headers, config) {
       var docentes = [];
       data.forEach(function (docente, i) {
@@ -14,11 +14,14 @@ angular.module('myApp.controllers', []).
           fecha_nac: docente.fecha_nac,
           direccion: docente.direccion,
           ciudad: docente.ciudad,
-          id_provincia: docente.id_provincia,
-          provincia: docente.nombre_provincia,
+          provincia: docente.provincia,
           cp: docente.cp,
           email: docente.email,
           telefono: docente.telefono,
+          grado: docente.grado,
+          turno: docente.turno,
+          cargo: docente.cargo,
+          escuela: docente.escuela
         });
       });
       $scope.docentes = docentes;
@@ -27,34 +30,11 @@ angular.module('myApp.controllers', []).
 
   }).
   controller('AddDocenteCtrl', function ($scope, $http, $location) {
-    $scope.form = {};
-    $http.get('/api/provincias').
-    success(function(data, status, headers, config) {
-      var provincias = [];
-      data.forEach(function (provincia, i) {
-        provincias.push({
-          id_provincia: provincia.id_provincia,
-          nombre_provincia: provincia.nombre_provincia,
-        });
-      });
-      $scope.provincias = provincias;
-    });
-    $scope.submitDocente = function () {
-      $http.post('/api/docente', $scope.form).
-        success(function(data) {
-          $location.path('/docentes');
-        });
-    };
-    $scope.submitAndAddEscuela = function () {
-      $http.post('/api/docente', $scope.form).
-        success(function(data) {
-          $location.path('/docenteAddEscuela');
-        });
-    };
-  }).
-  controller('AddDocenteEscuelaCtrl', function ($scope, $http, $location, _) {
     angular.element(document.querySelector('#escuelas')).css('display', 'none');
     $scope.form = {};
+    $scope.listaEscuelas = [];
+    $scope.cursoShow = false;
+    $scope.dataEscuelaShow = false;
     $http.get('/api/provincias').
     success(function(data, status, headers, config) {
       var provincias = [];
@@ -69,16 +49,15 @@ angular.module('myApp.controllers', []).
     $scope.submitDocente = function () {
       $http.post('/api/docente', $scope.form).
         success(function(data) {
-          $location.path('/docentes');
+          console.log('usuario alta');
+          $http.post('/api/docenteGrado/'+ JSON.stringify($scope.listaEscuelas)).
+             success(function(data) {
+               $location.url('/docentes');
+            });
         });
     };
-    $scope.submitAndAddEscuela = function () {
-      $http.post('/api/docente', $scope.form).
-        success(function(data) {
-          $location.path('/docenteAddEscuela');
-        });
-    };
-    $scope.addEscuela = function () {
+    $scope.addEscuela = function (e) {
+      angular.element(e.target).css('display', 'none');
       $http.get('/api/escuelas').
       success(function(data, status, headers, config) {
         var escuelas = [];
@@ -95,9 +74,34 @@ angular.module('myApp.controllers', []).
       });
       angular.element(document.querySelector('#escuelas')).css('display', 'block');
     };
+    $scope.clearEscuela = function () {
+      $scope.form.escuela = "";
+      $scope.form.cargo = "";
+      $scope.cursoShow = false;
+      $scope.dataEscuelaShow = false;
+    };
+    $scope.deleteEscuela = function (id_escuela){
+      $scope.listaEscuelas = _.filter($scope.listaEscuelas, function(escuela){ return escuela.id !== id_escuela; });
+      console.log($scope.listaEscuelas);
+    };
+    $scope.addCursoEscuela= function () {
+      var escuela = _.find($scope.escuelas, function(escuela){return escuela.id == $scope.form.escuela });
+      escuela.cargo = $scope.form.cargo;
+      escuela.dni = $scope.form.id;
+      if(escuela.cargo === '6'){
+        escuela.cursos = (_.filter($scope.cursos, function(curso){ return curso.selected == 'true'; }));
+      }else{
+        escuela.cursos = [];
+      }
+      
+      $scope.listaEscuelas.push(escuela);
+      console.log($scope.listaEscuelas);
+      $scope.clearEscuela();
+    },
     $scope.getDataEscuela = function (id) {
       var escuela = _.find($scope.escuelas, function(escuela){return escuela.id == id; });
       $scope.escuela = escuela;
+      $scope.dataEscuelaShow = true;
       
     };
     $scope.getGradosTurnos = function (id_escuela){
@@ -107,6 +111,7 @@ angular.module('myApp.controllers', []).
         console.log(data);
         data.forEach(function (curso, i) {
           curso.id_curso = i
+          curso.selected = false
           cursos.push(curso);
         });
         $scope.cursos = cursos;
@@ -116,6 +121,118 @@ angular.module('myApp.controllers', []).
     $scope.getCursos = function (){
       console.log($scope.form.cargo, $scope.form.escuela)
       if($scope.form.cargo == 6){
+        $scope.cursoShow = true;
+          $scope.getGradosTurnos($scope.form.escuela);
+      }
+    };
+    $scope.getCargos = function (){
+      $http.get('/api/cargos').
+      success(function(data) {
+        var cargos = [];
+        console.log(data);
+        data.forEach(function (cargo, i) {
+          cargos.push({
+            id_cargo: cargo.id,
+            descripcion_cargo: cargo.descripcion,
+          });
+        });
+        $scope.cargos = cargos;
+      });
+    };
+  }).
+  controller('AddDocenteEscuelaCtrl', function ($scope, $http, $location, _) {
+    angular.element(document.querySelector('#escuelas')).css('display', 'none');
+    $scope.form = {};
+    $scope.listaEscuelas = [];
+    $scope.cursoShow = false;
+    $scope.dataEscuelaShow = false;
+    $http.get('/api/provincias').
+    success(function(data, status, headers, config) {
+      var provincias = [];
+      data.forEach(function (provincia, i) {
+        provincias.push({
+          id_provincia: provincia.id_provincia,
+          nombre_provincia: provincia.nombre_provincia,
+        });
+      });
+      $scope.provincias = provincias;
+    });
+    $scope.submitDocente = function () {
+      $http.post('/api/docente', $scope.form).
+        success(function(data) {
+          console.log('usuario alta');
+          $http.post('/api/docenteGrado/'+ JSON.stringify($scope.listaEscuelas)).
+             success(function(data) {
+               $location.url('/docentes');
+            });
+        });
+    };
+    $scope.addEscuela = function (e) {
+      angular.element(e.target).css('display', 'none');
+      $http.get('/api/escuelas').
+      success(function(data, status, headers, config) {
+        var escuelas = [];
+        data.forEach(function (escuela, i) {
+          escuelas.push({
+            id: escuela.id,
+            nombre: escuela.nombre,
+            localidad: escuela.nombre_localidad,
+            provincia: escuela.nombre_provincia
+          });
+        });
+        $scope.escuelas = escuelas;
+        $scope.getCargos();
+      });
+      angular.element(document.querySelector('#escuelas')).css('display', 'block');
+    };
+    $scope.clearEscuela = function () {
+      $scope.form.escuela = "";
+      $scope.form.cargo = "";
+      $scope.cursoShow = false;
+      $scope.dataEscuelaShow = false;
+    };
+    $scope.deleteEscuela = function (id_escuela){
+      $scope.listaEscuelas = _.filter($scope.listaEscuelas, function(escuela){ return escuela.id !== id_escuela; });
+      console.log($scope.listaEscuelas);
+    };
+    $scope.addCursoEscuela= function () {
+      var escuela = _.find($scope.escuelas, function(escuela){return escuela.id == $scope.form.escuela });
+      escuela.cargo = $scope.form.cargo;
+      escuela.dni = $scope.form.id;
+      if(escuela.cargo === '6'){
+        escuela.cursos = (_.filter($scope.cursos, function(curso){ return curso.selected == 'true'; }));
+      }else{
+        escuela.cursos = [];
+      }
+      
+      $scope.listaEscuelas.push(escuela);
+      console.log($scope.listaEscuelas);
+      $scope.clearEscuela();
+    },
+    $scope.getDataEscuela = function (id) {
+      var escuela = _.find($scope.escuelas, function(escuela){return escuela.id == id; });
+      $scope.escuela = escuela;
+      $scope.dataEscuelaShow = true;
+      
+    };
+    $scope.getGradosTurnos = function (id_escuela){
+      $http.get('/api/gradosTurnos/' + id_escuela).
+      success(function(data) {
+        var cursos = [];
+        console.log(data);
+        data.forEach(function (curso, i) {
+          curso.id_curso = i
+          curso.selected = false
+          cursos.push(curso);
+        });
+        $scope.cursos = cursos;
+        console.log($scope.cursos);
+      });
+    };
+    $scope.getCursos = function (){
+      console.log($scope.form.cargo, $scope.form.escuela)
+      if($scope.form.cargo == 6){
+        $scope.cursoShow = true;
           $scope.getGradosTurnos($scope.form.escuela);
       }
     };
@@ -201,7 +318,7 @@ angular.module('myApp.controllers', []).
     };
   }).
   controller('EscuelaCtrl', function ($scope, $http) {
-    $http.get('/api/escuelas').
+    $http.get('/api/gradosTurnos').
     success(function(data, status, headers, config) {
       var escuelas = [];
       data.forEach(function (escuela, i) {
@@ -211,13 +328,17 @@ angular.module('myApp.controllers', []).
           telefono: escuela.telefono,
           email: escuela.email,
           domicilio: escuela.domicilio,
-          localidad: escuela.nombre_localidad,
+          localidad: escuela.localidad,
           cp: escuela.cp,
           sector: escuela.sector,
           distrito: escuela.distrito,
           ubicacion: escuela.ubicacion,
-          provincia: escuela.nombre_provincia,
-          observaciones: escuela.observaciones,
+          provincia: escuela.provincia,
+          grado: escuela.grado,
+          turno: escuela.turno,
+          ciclo: escuela.ciclo,
+          cantidadGrados: escuela.cantidad_grado,
+          observaciones: escuela.observaciones
         });
       });
       $scope.escuelas = escuelas;
@@ -391,5 +512,159 @@ angular.module('myApp.controllers', []).
 
     $scope.home = function () {
       $location.url('/escuelas');
+    };
+  }).
+  controller('LibroCtrl', function ($scope, $http) {
+    $http.get('/api/libros').
+    success(function(data, status, headers, config) {
+      var libros = [];
+      data.forEach(function (libro, i) {
+        libros.push({
+          isbn:libro.isbn,
+          titulo: libro.titulo,
+          id_col: libro.id_col,
+          coleccion: libro.descripcion,
+          paginas: libro.paginas,
+          peso: libro.peso,
+          precio: libro.precio,
+          autores:libro.autores,
+          formato: libro.formato
+        });
+      });
+      $scope.libros = libros;
+      
+    });
+
+  }).
+  controller('AddLibroCtrl', function ($scope, $http, $location) {
+    $scope.form = {};
+    $http.get('/api/colecciones').
+    success(function(data, status, headers, config) {
+      var colecciones = [];
+      data.forEach(function (coleccion, i) {
+        colecciones.push({
+          id: coleccion.id_coleccion,
+          descripcion: coleccion.descripcion,
+        });
+      });
+      $scope.colecciones = colecciones;
+    });
+    $scope.submitLibro = function () {
+      $http.post('/api/libro', $scope.form).
+        success(function(data) {
+          $location.path('/libros');
+        });
+    };
+  }).
+  controller('EditLibroCtrl', function ($scope, $http, $location, $routeParams) {
+    $scope.form = {};
+    $http.get('/api/libro/' + $routeParams.id).
+      success(function(data) {
+        console.log(data)
+        var libro = {};
+        libro = {
+            isbn: data[0].isbn,
+            titulo: data[0].titulo,
+            id_col: data[0].id_col,
+            paginas: data[0].paginas,
+            peso: data[0].peso,
+            precio: data[0].precio,
+            autores:data[0].autores,
+            formato: data[0].formato
+        }
+      $scope.form = libro;
+      });
+    $http.get('/api/colecciones').
+    success(function(data, status, headers, config) {
+      var colecciones = [];
+      data.forEach(function (coleccion, i) {
+        colecciones.push({
+          id: coleccion.id_coleccion,
+          descripcion: coleccion.descripcion,
+        });
+      });
+      $scope.colecciones = colecciones;
+    });
+    $scope.editLibro = function () {
+      console.log($routeParams.id, $scope.form)
+      $http.put('/api/libro/' + $routeParams.id, $scope.form).
+        success(function(data) {
+          $location.url('/libros');
+        });
+    };
+  }).
+  controller('DeleteLibroCtrl', function ($scope, $http, $location, $routeParams) {
+    $http.get('/api/libro/' + $routeParams.id).
+    success(function(data) {
+      $scope.libro = data[0];
+    });
+
+    $scope.deleteLibro = function () {
+      $http.delete('/api/libro/' + $routeParams.id).
+        success(function(data) {
+          $location.url('/libros');
+        });
+    };
+    $scope.home = function () {
+      $location.url('/libros');
+    };
+  }).
+  controller('ColeccionCtrl', function ($scope, $http) {
+    $http.get('/api/colecciones').
+    success(function(data, status, headers, config) {
+      var colecciones = [];
+      data.forEach(function (coleccion, i) {
+        colecciones.push({
+          id:coleccion.id_coleccion,
+          descripcion: coleccion.descripcion
+        });
+      });
+      $scope.colecciones = colecciones;
+      
+    });
+
+  }).
+  controller('AddColeccionCtrl', function ($scope, $http, $location) {
+    $scope.form = {};
+    $scope.submitColeccion = function () {
+      console.log($scope.form)
+      $http.post('/api/coleccion', $scope.form).
+        success(function(data) {
+          $location.path('/colecciones');
+        });
+    };
+  }).
+  controller('EditColeccionCtrl', function ($scope, $http, $location, $routeParams) {
+    $scope.form = {};
+    $http.get('/api/coleccion/' + $routeParams.id).
+      success(function(data) {
+        var coleccion = {};
+        coleccion = {
+            id: data[0].id_coleccion,
+            descripcion: data[0].descripcion,
+        }
+      $scope.form = coleccion;
+    });
+    $scope.editColeccion = function () {
+      console.log($routeParams.id, $scope.form);
+      $http.put('/api/coleccion/' + $routeParams.id, $scope.form).
+        success(function(data) {
+          $location.url('/colecciones');
+        });
+    };
+  }).
+  controller('DeleteColeccionCtrl', function ($scope, $http, $location, $routeParams) {
+    $http.get('/api/coleccion/' + $routeParams.id).
+    success(function(data) {
+      $scope.coleccion = data[0];
+    });
+    $scope.deleteColeccion = function () {
+      $http.delete('/api/coleccion/' + $routeParams.id).
+        success(function(data) {
+          $location.url('/colecciones');
+        });
+    };
+    $scope.home = function () {
+      $location.url('/colecciones');
     };
   });

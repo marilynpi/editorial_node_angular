@@ -13,7 +13,144 @@ var LocalidadModel = new City();
 var SchoolYear = require('../models/escuela_ciclo');
 var EscuelaCicloModel = new SchoolYear();
 
+var Book = require('../models/libro');
+var LibroModel = new Book();
+
 var _ = require('underscore');
+
+exports.libros = function (req, res){
+  data = LibroModel.getLibros(function(error, data){
+      res.json(200,data);
+    });
+};
+
+exports.libro = function (req, res) {
+  var id = req.params.id;
+  data = LibroModel.getLibro(id,function(error, data){    
+    if (typeof data !== 'undefined' && data.length > 0){
+      res.json(200,data);
+    }    
+    else{
+      res.json(404,{"msg":"notExist"});
+    }
+  });
+};
+// POST
+exports.addLibro = function (req, res) {
+  //var id = req.params.id;
+  var datos = {
+        isbn:req.param('isbn'),
+        titulo:req.param('titulo'),
+        id_col:req.param('id_col'),
+        paginas:req.param('paginas'),
+        peso: req.param('peso'),
+        precio: req.param('precio'),
+        autores: req.param('autores'),
+        formato: req.param('formato')
+  }
+  LibroModel.insertLibro(datos,function(error, data){      
+      if(data && data.insertId){
+        res.redirect("/api/libro/" + data.insertId);
+      }
+      else{
+        res.json(500,{"msg":"Error"});
+      }
+    });
+};
+
+exports.editLibro= function (req, res) { 
+  var data = {
+              isbn:req.param('isbn'),
+              titulo:req.param('titulo'),
+              id_col:req.param('id_col'),
+              paginas:req.param('paginas'),
+              peso: req.param('peso'),
+              precio: req.param('precio'),
+              autores: req.param('autores'),
+              formato: req.param('formato')
+            }
+    LibroModel.updateLibro(data,function(error, data){    
+      if(data && data.msg){
+        res.json(200,data);
+      }
+      else{
+        res.json(500,{"msg":"Error"});
+      }
+    });
+};
+
+exports.deleteLibro = function (req, res) {
+  var id = req.params.id;
+  LibroModel.deleteLibro(id,function(error, data){
+      if(data && data.msg === "deleted" || data.msg === "notExist"){
+        res.json(200,data);
+      }
+      else{
+        res.json(500,{"msg":"Error"});
+      }
+    });
+};
+
+exports.colecciones = function (req, res){
+  data = LibroModel.getColecciones(function(error, data){
+      res.json(200,data);
+    });
+};
+
+exports.coleccion = function (req, res) {
+  var id = req.params.id;
+  data = LibroModel.getColeccion(id,function(error, data){    
+    if (typeof data !== 'undefined' && data.length > 0){
+      res.json(200,data);
+    }    
+    else{
+      res.json(404,{"msg":"notExist"});
+    }
+  });
+};
+// POST
+exports.addColeccion = function (req, res) {
+  //var id = req.params.id;
+  var datos = {
+        id_coleccion:req.param('id_coleccion'),
+        descripcion:req.param('descripcion')
+  }
+  LibroModel.insertColeccion(datos,function(error, data){      
+      if(data){
+        res.json(200,data);
+      }
+      else{
+        res.json(500,{"msg":"Error"});
+      }
+    });
+};
+
+exports.editColeccion= function (req, res) { 
+  var data = {
+              id:req.param('id'),
+              descripcion:req.param('descripcion')
+            }
+    LibroModel.updateColeccion(data,function(error, data){    
+      if(data && data.msg){
+        res.json(200,data);
+      }
+      else{
+        res.json(500,{"msg":"Error"});
+      }
+    });
+};
+
+exports.deleteColeccion = function (req, res) {
+  var id = req.params.id;
+  LibroModel.deleteColecciones(id,function(error, data){
+      if(data && data.msg === "deleted" || data.msg === "notExist"){
+        res.json(200,data);
+      }
+      else{
+        res.json(500,{"msg":"Error"});
+      }
+    });
+};
 
 exports.docentes = function (req, res) {
   data = DocenteModel.getPersonas(function(error, data){
@@ -32,7 +169,6 @@ exports.docente = function (req, res) {
     }
   });
 };
-// POST
 exports.addDocente = function (req, res) {
   var id = req.params.id;
   var datos = {
@@ -111,7 +247,7 @@ exports.escuela = function (req, res) {
     }
   });
 };
-// POST
+
 exports.addEscuela = function (req, res) {
   //var id = req.params.id;
   var datos = {
@@ -270,6 +406,18 @@ exports.escuelaCiclo = function(req,res){
   });
 };
 
+exports.docenteGrado = function(req,res){
+  var data = JSON.parse(req.param('data'));     
+  DocenteModel.insertPersonaGrado(data,function(error,datos){
+      if(datos){
+        res.redirect('/api/docentes');
+      }
+      else{
+        res.json(500,{'msg':'something went wrong'});
+      }
+  });
+};
+
 exports.turnos = function (req, res){
   data = EscuelaCicloModel.getTurnos(function(error, data){
       res.json(200,data);
@@ -334,6 +482,7 @@ exports.gradosTurnosPorEscuela = function (req, res) {
   });
 };
 
+
 // =========================================================================
 // LOGIN URLS ==============================================================
 // =========================================================================
@@ -357,4 +506,27 @@ exports.authentication = function(req,res){
   console.log('asdasdasd');
   //res.redirect('/');
 };
+//END LOGIN
 
+exports.gradosTurnos = function (req, res) {
+  data = EscuelaCicloModel.getAllEscuelaTurnoCiclo(function(error, data){    
+    if (typeof data !== 'undefined' && data.length > 0){
+      res.json(200,data);
+    }    
+    else{
+      res.json(404,{"msg":"notExist"});
+    }
+  });
+};
+
+exports.docentesEscuelas = function (req, res) {
+  data = DocenteModel.getAllPersonaEscuela(function(error, data){
+    console.log(data);    
+    if (typeof data !== 'undefined' && data.length > 0){
+      res.json(200,data);
+    }    
+    else{
+      res.json(404,{"msg":"notExist"});
+    }
+  });
+};

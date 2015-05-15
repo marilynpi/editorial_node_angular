@@ -69,6 +69,18 @@
 							    <h3 class="box-title">Escuelas:</h3>
 							    <div class="box-tools pull-right">
 							    </div><!-- /.box-tools -->
+							    <div class="box-body" id="lista-escuelas" ng-if="listaEscuelas.length > 0">
+							  		<div ng-repeat="listaEscuela in listaEscuelas" class="form-group">
+							            <label>Escuela:{{listaEscuela.nombre}}</label>
+										
+										<ul>
+											<li ng-repeat="listaCurso in listaEscuela.cursos">
+												<label>{{listaCurso.Grado}} {{listaCurso.Turno}}</label>
+											</li>
+										</ul>
+										<button class="btn-flat btn" type="button" ng-click="deleteEscuela(listaEscuela.id)" ><i class="fa fa-close"></i></button>
+							 	 	</div>
+							  </div>
 							  </div><!-- /.box-header -->
 							  <div class="box-body">
 							  	<div class="form-escuela">
@@ -77,30 +89,33 @@
 											<option ng-repeat="escuela in escuelas" value="{{escuela.id}}">{{escuela.nombre}}</option>
 										</select>
 									</label>
-									<div class="form-group">
-					            		<label ng-model="escuela.localidad">Localidad: {{escuela.localidad}} </label>
-					            	</div>
-					            	<div class="form-group">
-					            		<label ng-model="escuela.provincia">Provincia: {{escuela.provincia}} </label>
-					            	</div>
-					            	<label for="cargo"> Cargo:
-										<select ng-model="form.cargo" name="cargo" ng-change="getCursos()">
-											<option ng-model="form.cargo" ng-repeat="cargo in cargos" value="{{cargo.id_cargo}}">{{cargo.descripcion_cargo}}</option>
-										</select>
-									</label>
-									<div ng-if="form.cursos.length > 0">
-										  	<label>Cursos</label>
-										    <div class="form-group">
-										        <label class="checkbox-inline" ng-repeat="curso in cursos">
-										            <input type="checkbox" name="curso" checklist-model="form.cursos" checklist-value="curso.id_curso"> {{curso.Grado + curso.Turno}}
-										        </label>
-										    </div>
+									<div class="data-escuela" ng-show="dataEscuelaShow">
+										<div class="form-group">
+						            		<label ng-model="escuela.localidad">Localidad: {{escuela.localidad}} </label>
+						            	</div>
+						            	<div class="form-group">
+						            		<label ng-model="escuela.provincia">Provincia: {{escuela.provincia}} </label>
+						            	</div>
+						            	<label for="cargo"> Cargo:
+											<select ng-model="form.cargo" name="cargo" ng-change="getCursos()">
+												<option ng-model="form.cargo" ng-repeat="cargo in cargos" value="{{cargo.id_cargo}}">{{cargo.descripcion_cargo}}</option>
+											</select>
+										</label>
+										<div ng-show="cursoShow">
+											  	<label>Cursos</label>
+											    <div class="form-group">
+											        <label class="checkbox-inline" ng-repeat="curso in cursos">
+											            <input type="checkbox" name="curso" ng-model="curso.selected" ng-true-value="true" ng-false-value="false" value="curso.id_curso"> {{curso.Grado + curso.Turno}}
+											        </label>
+											    </div>
+										</div>
 									</div>
+									<button class="btn-flat btn" type="button" ng-click="addCursoEscuela()" ><i class="fa fa-plus"></i></button>
 				            	</div>
 							  </div><!-- /.box-body -->
 							</div><!-- /.box -->
-				            <button class="btn-flat btn" type="button" ng-click="addEscuela()" >
-							  <i class="fa fa-university"></i> Asignar escuela
+				            <button class="btn-flat btn" type="button" ng-click="addEscuela($event)" >
+							  <i class="fa fa-university"></i> Asignar escuelas
 							</button>
 
 				            <div class="box-footer">

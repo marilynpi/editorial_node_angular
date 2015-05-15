@@ -1,0 +1,30 @@
+<section class="content-header">
+	<h1>Colección<small>Panel de control</small></h1>
+</section>
+<section class="content">
+          <div class="row">
+            <div class="col-xs-12">
+            	<div class="box">
+				    <div class="box-header">
+				        <h3 class="box-title">Nueva colección</h3>
+				    </div><!-- /.box-header -->
+				    <div class="box-body">
+				        <form role="form">
+				        	<div class="form-group">
+				                <label  for="id_coleccion">ID:</label>
+								<input ng-model="form.id_coleccion" name="id_coleccion">
+				            </div>
+				            <div class="form-group">
+				                <label  for="descripcion">Nombre:</label>
+								<input ng-model="form.descripcion" name="descripcion">
+				            </div>
+				            
+				            <div class="box-footer">
+						        <button ng-click="submitColeccion()" class="btn btn-primary">Guardar</button>
+						    </div>
+						</form>
+				    </div><!-- /.box-body -->
+				</div><!-- /.box -->
+        </div><!-- col-xs-12 -->
+    </div><!-- /.row (main row) -->
+</section><!-- /.content -->						

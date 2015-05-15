@@ -14,6 +14,11 @@ var Teacher = (function(){
 		self.table_pk = 'id';
 	};
 
+	function TeacherCourse(){
+		self.table_name = 'persona_grado';
+		self.table_pk = ['id_escuela', 'dni', 'id_turno', 'id_grado']; 
+	};
+
 	Teacher.prototype.getPersonas = function(callback){
 		Teacher();
 		console.log(self.table_name);
@@ -48,6 +53,14 @@ var Teacher = (function(){
 		Charge()
 		connection.getAllCharges(self.table_name,self.table_pk,callback);
 	}
+
+	Teacher.prototype.insertPersonaGrado = function(data,callback){
+		TeacherCourse()		
+		connection.insertPersonCourse(self.table_name,data,callback);	
+	}
+	Teacher.prototype.getAllPersonaEscuela = function(callback){
+		connection.getAllTeacherSchoollInning(callback);	
+	};
 	return Teacher;
 })();
 
