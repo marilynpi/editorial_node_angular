@@ -709,25 +709,37 @@ var Connection = (function(){
 	};
 
 	Connection.prototype.getUser = function(table_name,username,password,done,req){
-
+		Connection();
 		if(self.connection){
-			console.log(username,password, 'u');		
+			
 			var query = 'SELECT * FROM '+table_name+' WHERE id_usuario = "' + username+ '"';        
 
           	connection.query(query,function(err,rows){   			         
                 if (err) return done(err);
                 if (!rows.length) {
                 	console.log('NO HAY USUARIO NO');
-                    return done(null, false); // req.flash is the way to set flashdata using connect-flash
+                    return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
                 }
                 // if the user is found but the password is wrong
-                if (!( rows[0].password == password)){                	                    
-                    return done(null, false); // create the loginMessage and save it to session as flashdata         
+                if (!( rows[0].password == password)){
+                	console.log('MAL PASS');                	                    
+                    return done(null, false, req.flash('loginMessage', 'No user found.')); // create the loginMessage and save it to session as flashdata         
                 }
                 // all is well, return successful user
-
+                console.log('HAY USUARIO');
                 return done(null, rows[0]);
         	});           	
+		}
+	};
+
+	Connection.prototype.getUserByName = function(table_name, username, done){
+		Connection();
+		if(self.connection){	
+	        var query = 'SELECT * FROM '+table_name+' WHERE id_usuario = "'+username+'"';
+        
+	        connection.query(query,function(err,rows){	          	            	            
+	            done(err, rows[0]);
+	        });	        
 		}
 	};
 

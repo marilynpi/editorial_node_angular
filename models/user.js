@@ -10,8 +10,13 @@ var User = (function(){
 	};
 
 	User.prototype.getUser = function(user_id,user_pass,callback,req){
-		User()
+		User();
 		connection.getUser(self.table_name,user_id,user_pass,callback,req);
+	};
+
+	User.prototype.getUserByName = function(username,done){
+		User();
+		connection.getUserByName(self.table_name, username, done);
 	};
 
 	return User;
