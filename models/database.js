@@ -119,48 +119,51 @@ var Connection = (function(){
 		Connection();
 		if(self.connection){
 
-			var sqlExists = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
-			self.connection.query(sqlExists, function(err, row){
-				if(row){
-					var sqlExists = 'SELECT * FROM persona_grado WHERE '+table_pk+' = ' + self.connection.escape(id);
-					self.connection.query(sqlExists, function(err, r){
-						if(r){
-							var sql2 = 'DELETE FROM persona_grado WHERE '+table_pk+' = ' + id;
-								self.connection.query(sql2, function(error2, result2){
-								if(error2){
-									console.log('error baja docente');
-									throw error2;
-									
-								}
-								else{
-									var sql = 'DELETE FROM '+table_name+' WHERE '+table_pk+' = ' + id;
-									self.connection.query(sql, function(error, result){
-										if(error){
-											console.log('error baja persona_escuela')
-											throw error;
-										}
-										else{
-											callback(null,{"msg":"deleted persona and persona_escuela"});
-										}
-									});
-								}
-							});
-						}
-						else{
-							var sql = 'DELETE FROM '+table_name+' WHERE '+table_pk+' = ' + id;
-							self.connection.query(sql, function(error, result){
-								if(error){
-									console.log('error baja docente');
-									throw error;
-								}
-								else{
-									callback(null,{"msg":"deleted persona"});
-								}
-					
-							});
-						}
-					});
-				}
+			connection.beginTransaction(function(err) {
+
+				if (err) throw err;
+				  
+				var delete_persona_grado = 'DELETE FROM persona_grado WHERE '+table_pk+' = ' + id;
+				connection.query(delete_persona_grado, function(err, result) {
+
+				    if (err) { 
+				      console.log('error baja docente');
+				      connection.rollback(function(){
+				      throw err;
+				      });
+				    };
+				 
+				   var delete_escuela_ciclo = 'DELETE FROM escuela_ciclo WHERE '+table_pk+' = ' + id;
+				   connection.query(delete_escuela_ciclo, function(err, result){
+				      if (err) {
+				        console.log('error baja escuela_ciclo');
+				        connection.rollback(function(){
+				          throw err;
+				        });
+				      }  
+				    
+				      var delet_escuela = 'DELETE FROM '+table_name+' WHERE '+table_pk+' = ' + id;
+				      connection.query(delete_escuela, function(err, result){
+				        
+				        if(err){
+				          console.log('error baja escuela');
+				          connection.rollback(function() {
+				              throw err;
+				            });
+				        }
+				        connection.commit(function(err){
+				          if (err) { 
+				            connection.rollback(function() {
+				              throw err;
+				            });
+				          }
+				        
+				          console.log('Transaction Complete.');
+				          connection.end();
+				        });        
+				      });
+				    });
+				});
 			});
 		}
 	}

@@ -40,7 +40,7 @@ var env = process.env.NODE_ENV || 'development';
 *Login stuffs
 */
 //app.use(express.cookieParser());
-//app.use(session({secret:'ireallyhatevegans'})); // session secret
+app.use(session({secret:'ireallyhatevegans',saveUninitialized: true, resave: true})); // session secret
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -48,8 +48,9 @@ app.use(flash());
 
 function isLoggedIn(req, res, next) {
   // if user is authenticated in the session, carry on
-  if (req.isAuthenticated()) return next();
-  
+  if (req.isAuthenticated()){    
+    return next();
+  }
   // if they aren't redirect them to the home page
   res.redirect('/');
 };
