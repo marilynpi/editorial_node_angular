@@ -165,6 +165,7 @@ var Connection = (function(){
 				    });
 				});
 			});
+		callback(null,{"msg":"School deleted"});
 		}
 	}
 
@@ -242,25 +243,44 @@ var Connection = (function(){
 	Connection.prototype.deleteBook = function(table_name,table_pk,id,callback){
 		Connection();
 		if(self.connection){
+			connection.beginTransaction(function(err) {
 
-			var sqlExists = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
-			self.connection.query(sqlExists, function(err, row){
-				if(row){
-					var sql = 'DELETE FROM '+table_name+' WHERE '+table_pk+' = ' + id;//self.connection.escape(id);
-					
-					self.connection.query(sql, function(error, result){
-						if(error){
-							throw error;
-						}
-						else{
-							callback(null,{"msg":"deleted"});
-						}
-					});
-				}
-				else{
-					callback(null,{"msg":"notExist"});
-				}
+			 	 if (err) throw err;
+			    
+			 	var delete_libro_persona = 'DELETE FROM libro_persona WHERE isbn = ' + id;
+			  	connection.query(delete_libro_persona, function(err, result) {
+
+			      if (err) { 
+			        console.log('error baja delete_libro_persona');
+			        connection.rollback(function(){
+			        throw err;
+			        });
+			      };
+			   
+			    var delete_book = 'DELETE FROM '+table_name+' WHERE '+table_pk+' = ' + id;
+			    connection.query(delete_book, function(err, result){
+			      
+			      if(err){
+			        console.log('error baja boook');
+			        connection.rollback(function() {
+			            throw err;
+			          });
+			      }
+			      connection.commit(function(err){
+			        if (err) { 
+			          connection.rollback(function() {
+			            throw err;
+			          });
+			        }
+			      
+			        console.log('Transaction Complete.');
+			        connection.end();
+			      });        
+			    });
+     
+			  });
 			});
+			callback(null,{"msg":"deleted"});
 		}
 	}
 
@@ -454,7 +474,7 @@ var Connection = (function(){
 	                  throw err;
 	                });
 	              } 
-	              	            
+
 	              var delete_teacher = 'DELETE FROM '+table_name+' WHERE '+table_pk+' = ' + id;
 	              connection.query(delete_teacher, function(err, result){
 	                
@@ -478,7 +498,8 @@ var Connection = (function(){
 	            });
 	        });
 	      });
-
+		
+		callback(null,{"msg":"teacher deleted"});
 		}
 	};
 
