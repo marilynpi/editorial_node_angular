@@ -669,7 +669,7 @@ angular.module('myApp.controllers', []).
     };
   }).
   controller('LoginCtrl', function ($scope, $http, $location) {
-    $scope.form = {usuario:'1', password:'123'};
+    $scope.form = {usuario:'admin', password:'123'};
     $scope.submit = function () {
       console.log($scope.form)
       $http.post('/api/auth', $scope.form).
