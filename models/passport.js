@@ -24,11 +24,7 @@ module.exports = function(passport) {
      
     // used to deserialize the user
     passport.deserializeUser(function(username, done) {
-        var query = 'SELECT * FROM usuario WHERE id_usuario = '+username;
-
-        connection.query(query,function(err,rows){
-            done(err, rows[0]);
-        });
+        user.getUserByName(username,done);
     });
      
     // =========================================================================
@@ -88,7 +84,8 @@ module.exports = function(passport) {
             passReqToCallback : true // allows us to pass back the entire request to the callback
         },
         function(req, username, password, done) { // callback with username and password from our form        
-        return user.getUser(username, password, done,req);
+        
+        user.getUser(username, password, done,req);
     })); 
  
 }; 

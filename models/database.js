@@ -8,7 +8,7 @@ var Connection = (function(){
 	var db_config = {
 	  	host: 'localhost', 
 		user: 'root',  
-		password: '', 
+		password: '123', 
 		database: 'editorial'
 	};
 
@@ -119,48 +119,51 @@ var Connection = (function(){
 		Connection();
 		if(self.connection){
 
-			var sqlExists = 'SELECT * FROM '+table_name+' WHERE '+table_pk+' = ' + self.connection.escape(id);
-			self.connection.query(sqlExists, function(err, row){
-				if(row){
-					var sqlExists = 'SELECT * FROM persona_grado WHERE '+table_pk+' = ' + self.connection.escape(id);
-					self.connection.query(sqlExists, function(err, r){
-						if(r){
-							var sql2 = 'DELETE FROM persona_grado WHERE '+table_pk+' = ' + id;
-								self.connection.query(sql2, function(error2, result2){
-								if(error2){
-									console.log('error baja docente');
-									throw error2;
-									
-								}
-								else{
-									var sql = 'DELETE FROM '+table_name+' WHERE '+table_pk+' = ' + id;
-									self.connection.query(sql, function(error, result){
-										if(error){
-											console.log('error baja persona_escuela')
-											throw error;
-										}
-										else{
-											callback(null,{"msg":"deleted persona and persona_escuela"});
-										}
-									});
-								}
-							});
-						}
-						else{
-							var sql = 'DELETE FROM '+table_name+' WHERE '+table_pk+' = ' + id;
-							self.connection.query(sql, function(error, result){
-								if(error){
-									console.log('error baja docente');
-									throw error;
-								}
-								else{
-									callback(null,{"msg":"deleted persona"});
-								}
-					
-							});
-						}
-					});
-				}
+			connection.beginTransaction(function(err) {
+
+				if (err) throw err;
+				  
+				var delete_persona_grado = 'DELETE FROM persona_grado WHERE id_escuela = ' + id;
+				connection.query(delete_persona_grado, function(err, result) {
+
+				    if (err) { 
+				      console.log('error baja docente');
+				      connection.rollback(function(){
+				      throw err;
+				      });
+				    };
+				 
+				   var delete_escuela_ciclo = 'DELETE FROM escuela_ciclo WHERE id_escuela = ' + id;
+				   connection.query(delete_escuela_ciclo, function(err, result){
+				      if (err) {
+				        console.log('error baja escuela_ciclo');
+				        connection.rollback(function(){
+				          throw err;
+				        });
+				      }  
+				    
+				      var delete_escuela = 'DELETE FROM '+table_name+' WHERE '+table_pk+' = ' + id;
+				      connection.query(delete_escuela, function(err, result){
+				        
+				        if(err){
+				          console.log('error baja escuela');
+				          connection.rollback(function() {
+				              throw err;
+				            });
+				        }
+				        connection.commit(function(err){
+				          if (err) { 
+				            connection.rollback(function() {
+				              throw err;
+				            });
+				          }
+				        
+				          console.log('Transaction Complete.');
+				          connection.end();
+				        });        
+				      });
+				    });
+				});
 			});
 		}
 	}
@@ -709,25 +712,37 @@ var Connection = (function(){
 	};
 
 	Connection.prototype.getUser = function(table_name,username,password,done,req){
-
+		Connection();
 		if(self.connection){
-			console.log(username,password, 'u');		
+			
 			var query = 'SELECT * FROM '+table_name+' WHERE id_usuario = "' + username+ '"';        
 
           	connection.query(query,function(err,rows){   			         
                 if (err) return done(err);
                 if (!rows.length) {
                 	console.log('NO HAY USUARIO NO');
-                    return done(null, false); // req.flash is the way to set flashdata using connect-flash
+                    return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
                 }
                 // if the user is found but the password is wrong
-                if (!( rows[0].password == password)){                	
-                    return done(null, false); // create the loginMessage and save it to session as flashdata
+                if (!( rows[0].password == password)){
+                	console.log('MAL PASS');                	                    
+                    return done(null, false, req.flash('loginMessage', 'No user found.')); // create the loginMessage and save it to session as flashdata         
                 }
                 // all is well, return successful user
-
+                console.log('HAY USUARIO');
                 return done(null, rows[0]);
         	});           	
+		}
+	};
+
+	Connection.prototype.getUserByName = function(table_name, username, done){
+		Connection();
+		if(self.connection){	
+	        var query = 'SELECT * FROM '+table_name+' WHERE id_usuario = "'+username+'"';
+        
+	        connection.query(query,function(err,rows){	          	            	            
+	            done(err, rows[0]);
+	        });	        
 		}
 	};
 

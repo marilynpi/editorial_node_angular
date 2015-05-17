@@ -300,7 +300,7 @@ exports.editEscuela = function (req, res) {
 };
 
 exports.deleteEscuela = function (req, res) {
-  var id = req.params.id;
+  var id = req.params.id;  
   EscuelaModel.deleteEscuelas(id,function(error, data){
       if(data && data.msg === "deleted" || data.msg === "notExist"){
         res.json(200,data);
@@ -489,10 +489,13 @@ exports.gradosTurnosPorEscuela = function (req, res) {
 
 //This one should be return the login page
 exports.login = function(req,res){
+  console.log('ENTRO AL FAIL FAIL');
+  
   res.json({'lala':'login'});
 };
 
 exports.test = function(req,res){
+  console.log('ADASDASDASDASDASDASBFDHFGJFG');
   res.json({'LOGIN':'estas logueado guachin'});
 };
 
