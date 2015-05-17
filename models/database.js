@@ -123,7 +123,7 @@ var Connection = (function(){
 
 				if (err) throw err;
 				  
-				var delete_persona_grado = 'DELETE FROM persona_grado WHERE '+table_pk+' = ' + id;
+				var delete_persona_grado = 'DELETE FROM persona_grado WHERE id_escuela = ' + id;
 				connection.query(delete_persona_grado, function(err, result) {
 
 				    if (err) { 
@@ -133,7 +133,7 @@ var Connection = (function(){
 				      });
 				    };
 				 
-				   var delete_escuela_ciclo = 'DELETE FROM escuela_ciclo WHERE '+table_pk+' = ' + id;
+				   var delete_escuela_ciclo = 'DELETE FROM escuela_ciclo WHERE id_escuela = ' + id;
 				   connection.query(delete_escuela_ciclo, function(err, result){
 				      if (err) {
 				        console.log('error baja escuela_ciclo');
@@ -142,7 +142,7 @@ var Connection = (function(){
 				        });
 				      }  
 				    
-				      var delet_escuela = 'DELETE FROM '+table_name+' WHERE '+table_pk+' = ' + id;
+				      var delete_escuela = 'DELETE FROM '+table_name+' WHERE '+table_pk+' = ' + id;
 				      connection.query(delete_escuela, function(err, result){
 				        
 				        if(err){

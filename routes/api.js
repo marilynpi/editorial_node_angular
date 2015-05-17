@@ -300,7 +300,7 @@ exports.editEscuela = function (req, res) {
 };
 
 exports.deleteEscuela = function (req, res) {
-  var id = req.params.id;
+  var id = req.params.id;  
   EscuelaModel.deleteEscuelas(id,function(error, data){
       if(data && data.msg === "deleted" || data.msg === "notExist"){
         res.json(200,data);
