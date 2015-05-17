@@ -760,7 +760,7 @@ var Connection = (function(){
 		Connection();
 		if(self.connection){
 
-			var query = 'SELECT d.*, pg.*, c.descripcion as "cargo", t.descripcion as "turno", g.descripcion as "grado", p.nombre_provincia as "provincia", e.nombre as "escuela" FROM persona d INNER JOIN persona_grado pg ON (d.dni = pg.dni) INNER JOIN grado g on (pg.id_grado = g.id) INNER JOIN turno t on (pg.id_turno = t.id) INNER JOIN cargo c on (pg.id_cargo = c.id) INNER JOIN escuela e on (pg.id_escuela = e.id) INNER JOIN provincia p on (d.provincia = p.id_provincia) ORDER BY d.dni ';
+			var query = 'SELECT d.*, pg.*, c.descripcion as "cargo", t.descripcion as "turno", g.descripcion as "grado", p.nombre_provincia as "provincia", e.nombre as "escuela" FROM persona d INNER JOIN persona_grado pg ON (d.dni = pg.dni) INNER JOIN grado g on (pg.id_grado = g.id) INNER JOIN turno t on (pg.id_turno = t.id) INNER JOIN cargo c on (pg.id_cargo = c.id) INNER JOIN escuela e on (pg.id_escuela = e.id) INNER JOIN provincia p on (d.provincia = p.id_provincia) ORDER BY d.dni, e.id ';
 				self.connection.query(query,function(error,row){
 				if(error){
 					throw error;

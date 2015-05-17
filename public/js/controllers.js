@@ -1,7 +1,7 @@
 /* Controllers */
 
 angular.module('myApp.controllers', []).
-  controller('DocenteCtrl', function ($scope, $http) {
+  controller('DocenteCtrl', function ($scope, $http, $cookies) {
     $http.get('/api/docentesEscuelas').
     success(function(data, status, headers, config) {
       var docentes = [];
@@ -19,13 +19,15 @@ angular.module('myApp.controllers', []).
           email: docente.email,
           telefono: docente.telefono,
           grado: docente.grado,
-          turno: docente.turno,
+          turno: docente.id_turno,
           cargo: docente.cargo,
           escuela: docente.escuela
         });
       });
       $scope.docentes = docentes;
-      
+      $cookies.nombrecookie = "unodepiera";
+      //para acceder
+      console.log($cookies.nombrecookie);
     });
 
   }).
@@ -87,6 +89,7 @@ angular.module('myApp.controllers', []).
     $scope.addCursoEscuela= function () {
       var escuela = _.find($scope.escuelas, function(escuela){return escuela.id == $scope.form.escuela });
       escuela.cargo = $scope.form.cargo;
+      escuela.cargo_nombre = _.find($scope.cargos, function(cargo){return cargo.id_cargo == escuela.cargo }).descripcion_cargo;
       escuela.dni = $scope.form.id;
       if(escuela.cargo === '6'){
         escuela.cursos = (_.filter($scope.cursos, function(curso){ return curso.selected == 'true'; }));
@@ -335,7 +338,7 @@ angular.module('myApp.controllers', []).
           ubicacion: escuela.ubicacion,
           provincia: escuela.provincia,
           grado: escuela.grado,
-          turno: escuela.turno,
+          turno: escuela.id_turno,
           ciclo: escuela.ciclo,
           cantidadGrados: escuela.cantidad_grado,
           observaciones: escuela.observaciones
@@ -668,13 +671,41 @@ angular.module('myApp.controllers', []).
       $location.url('/colecciones');
     };
   }).
-  controller('LoginCtrl', function ($scope, $http, $location) {
-    $scope.form = {usuario:'1', password:'123'};
+  controller('LoginCtrl', function ($scope, $http, $location, auth) {
+    //$scope.form = {usuario:'1', password:'123'};
+    angular.element(document.querySelector('.main-header')).css('display', 'none');
+    angular.element(document.querySelector('.main-sidebar')).css('display', 'none');
+    angular.element(document.querySelector('.content-wrapper')).css('margin-left', '0');
+    angular.element(document.querySelector('.main-footer')).css('margin-left', '0');
     $scope.submit = function () {
-      console.log($scope.form)
-      $http.post('/api/auth', $scope.form).
+      console.log($scope.form);
+        var log = auth.login($scope.form.username, $scope.form.password);
+        if (log !== 'OK'){
+          $scope.msg = log;
+        } 
+        if (log === 'OK'){
+          $location.url("/docentes");
+          angular.element(document.querySelector('.main-header')).attr('style', '');
+          angular.element(document.querySelector('.main-sidebar')).attr('style', '');
+          angular.element(document.querySelector('.content-wrapper')).attr('style', '');
+          angular.element(document.querySelector('.main-footer')).attr('style', '');
+        }
+      /*$http.post('/api/auth', $scope.form).
         success(function(data) {
           console.log('ok')
-        });
+        });*/
     };
-  });
+  }).
+  controller('homeCtrl', function($scope, $cookies, auth) 
+  {
+    //devolvemos a la vista el nombre del usuario
+    $scope.username = $cookies.username;
+    $scope.password = $cookies.password;
+    //la función logout que llamamos en la vista llama a la función
+    //logout de la factoria auth
+    $scope.logout = function()
+    {
+        auth.logout();
+    }
+
+});

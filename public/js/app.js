@@ -4,31 +4,24 @@ angular.module('myApp', [
   'myApp.filters',
   'myApp.services',
   'myApp.directives',
-  'underscore'
+  'underscore',
+  'ngCookies'
 ]).
 config(function ($routeProvider, $locationProvider) {
   $routeProvider.
-    when('/', {
-      templateUrl: 'partials/login',
-      controller: 'LoginCtrl'
-    }).
     when('/docentes', {
       templateUrl: 'partials/docentes',
       controller: 'DocenteCtrl'
     }).
-    when('/deleteDocente/:id', {
+    when('/docente/borrar/:id', {
       templateUrl: 'partials/deleteDocente',
       controller: 'DeleteDocenteCtrl'
     }).
-    when('/addDocente', {
+    when('/docente/agregar', {
         templateUrl: 'partials/addDocente',
         controller: 'AddDocenteCtrl'
     }).
-    when('/readDocente/:id', {
-      templateUrl: 'partials/readDocente',
-      controller: 'ReadDocenteCtrl'
-    }).
-    when('/editDocente/:id', {
+    when('/docente/editar/:id', {
       templateUrl: 'partials/editDocente',
       controller: 'EditDocenteCtrl'
     }).
@@ -36,23 +29,19 @@ config(function ($routeProvider, $locationProvider) {
       templateUrl: 'partials/escuelas',
       controller: 'EscuelaCtrl'
     }).
-    when('/deleteEscuela/:id', {
+    when('/escuela/borrar/:id', {
       templateUrl: 'partials/deleteEscuela',
       controller: 'DeleteEscuelaCtrl'
     }).
-    when('/addEscuela', {
+    when('/escuela/agregar', {
         templateUrl: 'partials/addEscuela',
         controller: 'AddEscuelaCtrl'
     }).
-    when('/readEscuela/:id', {
-      templateUrl: 'partials/readEscuela',
-      controller: 'ReadEscuelaCtrl'
-    }).
-    when('/editEscuela/:id', {
+    when('/escuela/editar/:id', {
       templateUrl: 'partials/editEscuela',
       controller: 'EditEscuelaCtrl'
     }).
-    when('/docenteAddEscuela', {
+    when('/docente/escuela/agregar', {
         templateUrl: 'partials/docenteAddEscuela',
         controller: 'AddDocenteEscuelaCtrl'
     }).
@@ -87,6 +76,14 @@ config(function ($routeProvider, $locationProvider) {
     when('/coleccion/editar/:id', {
       templateUrl: 'partials/editColeccion',
       controller: 'EditColeccionCtrl'
+    }).
+    when('/', {
+      templateUrl: 'partials/login',
+      controller: 'LoginCtrl'
+    }).
+    when("/home", {
+        controller : "homeCtrl",
+        templateUrl : "partials/home"
     }).
     otherwise({
       redirectTo: '/'
