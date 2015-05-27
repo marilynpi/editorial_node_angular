@@ -899,6 +899,26 @@ var Connection = (function(){
 		};
 	}
 
+	Connection.prototype.insertNewBookTeacher = function(table_name, data, callback){
+		
+		if(self.connection){			
+			var query = 'INSERT INTO '+table_name+' (isbn, dni, fecha) VALUES ('+data.isbn+','+data.dni+',NOW() )';
+			
+			self.connection.query(query,data,function(error,result){
+				if(error) throw error;				
+				callback(null,{"insertedId":result})
+			});			
+		}
+	};
+
+	Connection.prototype.deleteBookTeacher = function(table_name, table_id, callback){
+		if(self.connection){
+
+			var query = 'DELETE FROM '+table_name+' WHERE '+table_id[0]+ ' = '+data[0]+' AND '+table_id[1]+' = '+ data[1];
+			console.log(query);
+		}
+	};
+
 	return Connection;
 })();
 

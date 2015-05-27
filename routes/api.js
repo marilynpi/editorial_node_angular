@@ -16,6 +16,9 @@ var EscuelaCicloModel = new SchoolYear();
 var Book = require('../models/libro');
 var LibroModel = new Book();
 
+var BookTeacher = require('../models/libro_persona');
+var bookTeacher = new BookTeacher();
+
 var _ = require('underscore');
 
 exports.libros = function (req, res){
@@ -531,5 +534,36 @@ exports.docentesEscuelas = function (req, res) {
     else{
       res.json(404,{"msg":"notExist"});
     }
+  });
+};
+
+exports.libroDocente = function(req, res){
+  var newObject = {
+                  'isbn': req.param('isbn'),
+                  'dni': req.param('dni')
+                  };
+  
+  bookTeacher.insertNewBookTeacher(newObject,function(error,data){
+    //borro  && data.length > 0 del if, porque no tiene la propeidad lenght
+    if (typeof data !== 'undefined'){
+      res.json(200,data);
+    }    
+    else{
+      res.json(404,{"msg":"something went wrong"});
+    } 
+  });
+};
+
+exports.deleteLibroDocente = function(req, res){
+  
+  data = req.params.data;
+  
+  bookTeacher.deleteBookTeacher(data,function(error,data){    
+    if (typeof data !== 'undefined' && data.length > 0){
+      res.json(200,data);
+    }    
+    else{
+      res.json(404,{"msg":"notDeleted"});
+    } 
   });
 };

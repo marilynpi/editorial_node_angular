@@ -119,6 +119,11 @@ app.get('/api/gradosTurnos/:id', api.gradosTurnosPorEscuela);
 app.post('/api/escuelaCiclo/:data', api.escuelaCiclo);
 app.get('/api/gradosTurnos', api.gradosTurnos);
 app.get('/api/docentesEscuelas', api.docentesEscuelas);
+
+// LibroDocentes
+app.post('/api/libroDocente/',api.libroDocente);
+//app.delete('/api/libroDocente/:id',api.deleteLibroDocente);
+
 app.get('*', routes.index);
 
 //LOGIN
