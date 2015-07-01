@@ -1,1 +1,3 @@
-# editorial_node_angular
+# sails
+
+a [Sails](http://sailsjs.org) application
