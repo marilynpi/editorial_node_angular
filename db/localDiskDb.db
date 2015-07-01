@@ -1,0 +1,356 @@
+{
+  "data": {
+    "ciclo": [
+      {
+        "descripcion": "Inicial",
+        "id": 1
+      },
+      {
+        "descripcion": "1 a 3",
+        "id": 3
+      },
+      {
+        "descripcion": "4 a 7",
+        "id": 4
+      },
+      {
+        "descripcion": "3er ciclo",
+        "id": 5
+      },
+      {
+        "descripcion": "esb",
+        "id": 6
+      }
+    ],
+    "escuela": [
+      {
+        "nombre": "Colegio 1",
+        "telefono": 4700000,
+        "email": "mail@mail.com",
+        "domicilio": "direccion 123",
+        "localidad": 8,
+        "cp": 5000,
+        "sector": "Cordoba",
+        "distrito": "Cordoba",
+        "ubicacion": "Cordoba capital",
+        "provincia": 4,
+        "observaciones": "Descripcion del colegio",
+        "id": 1
+      }
+    ],
+    "escuela_ciclo": [
+      {
+        "id_escuela": 1,
+        "id_ciclos": 1,
+        "id_turno": "M",
+        "id_grado": "1",
+        "cantidad_grado": "20",
+        "id": 1
+      }
+    ],
+    "grado": [
+      {
+        "descripcion": "Jardín",
+        "id_ciclo": 1,
+        "id": 2
+      },
+      {
+        "descripcion": "1er Grado",
+        "id_ciclo": 3,
+        "id": 6
+      }
+    ],
+    "persona": [
+      {
+        "dni": 33976192,
+        "nombre": "alexis",
+        "apellido": "escudero",
+        "tipo_dni": "dni",
+        "fecha_nac": "1988-12-05T00:00:00.000Z",
+        "direccion": "direccion 1",
+        "ciudad": "cordoba",
+        "provincia": 1,
+        "cp": 5000,
+        "email": "alexisescudero1@gmail.com",
+        "telefono": 4700993,
+        "fecha_alta": "2015-06-22T00:00:00.000Z",
+        "password": "$2a$10$nhSUARCDnca8ypNrVOErkuHf4YHT8Dzaag4LbbsOqv4.1aaGLGS0u",
+        "rol": 1
+      },
+      {
+        "dni": 33976193,
+        "nombre": "demo",
+        "apellido": "demo",
+        "tipo_dni": "dni",
+        "fecha_nac": "1988-12-05T00:00:00.000Z",
+        "direccion": "direccion 2",
+        "ciudad": "cordoba",
+        "provincia": 1,
+        "cp": 5000,
+        "email": "demo@demo.com",
+        "telefono": 4700993,
+        "fecha_alta": "2015-06-22T00:00:00.000Z",
+        "password": "$2a$10$nhSUARCDnca8ypNrVOErkuHf4YHT8Dzaag4LbbsOqv4.1aaGLGS0u",
+        "rol": 2
+      }
+    ],
+    "rol": [
+      {
+        "nombre": "Docente",
+        "descripcion": "Rol",
+        "id": 1,
+        "createdAt": "2015-06-26T14:21:47.068Z",
+        "updatedAt": "2015-06-26T14:21:47.068Z"
+      },
+      {
+        "nombre": "Promotor",
+        "descripcion": "Rol",
+        "id": 2,
+        "createdAt": "2015-06-26T14:21:47.068Z",
+        "updatedAt": "2015-06-26T14:21:47.068Z"
+      }
+    ],
+    "turno": [
+      {
+        "id": "JC",
+        "descripcion": "Jornada Completa"
+      },
+      {
+        "id": "M",
+        "descripcion": "Mañana"
+      },
+      {
+        "id": "MT",
+        "descripcion": "Mañana"
+      },
+      {
+        "id": "T",
+        "descripcion": "Tarde"
+      }
+    ],
+    "chat": []
+  },
+  "schema": {
+    "ciclo": {
+      "descripcion": {
+        "type": "string"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      }
+    },
+    "escuela": {
+      "nombre": {
+        "type": "string"
+      },
+      "telefono": {
+        "type": "integer"
+      },
+      "email": {
+        "type": "string"
+      },
+      "domicilio": {
+        "type": "string"
+      },
+      "localidad": {
+        "type": "integer",
+        "model": "localidad",
+        "foreignKey": true,
+        "alias": "localidad"
+      },
+      "cp": {
+        "type": "integer"
+      },
+      "sector": {
+        "type": "string"
+      },
+      "distrito": {
+        "type": "string"
+      },
+      "ubicacion": {
+        "type": "string"
+      },
+      "provincia": {
+        "type": "integer",
+        "model": "provincia",
+        "foreignKey": true,
+        "alias": "provincia"
+      },
+      "observaciones": {
+        "type": "string"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      }
+    },
+    "escuela_ciclo": {
+      "id_escuela": {
+        "type": "integer",
+        "model": "escuela",
+        "foreignKey": true,
+        "alias": "id_escuela"
+      },
+      "id_ciclos": {
+        "type": "integer",
+        "model": "ciclo",
+        "foreignKey": true,
+        "alias": "id_ciclos"
+      },
+      "id_turno": {
+        "type": "string",
+        "model": "turno",
+        "foreignKey": true,
+        "alias": "id_turno"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      }
+    },
+    "grado": {
+      "descripcion": {
+        "type": "string"
+      },
+      "id_ciclo": {
+        "type": "integer",
+        "model": "ciclo",
+        "foreignKey": true,
+        "alias": "id_ciclo"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      }
+    },
+    "persona": {
+      "dni": {
+        "type": "integer",
+        "primaryKey": true,
+        "unique": true
+      },
+      "nombre": {
+        "type": "string"
+      },
+      "apellido": {
+        "type": "string"
+      },
+      "tipo_dni": {
+        "type": "string"
+      },
+      "fecha_nac": {
+        "type": "date"
+      },
+      "direccion": {
+        "type": "string"
+      },
+      "ciudad": {
+        "type": "string"
+      },
+      "provincia": {
+        "type": "integer"
+      },
+      "cp": {
+        "type": "integer"
+      },
+      "email": {
+        "type": "string",
+        "unique": true
+      },
+      "telefono": {
+        "type": "integer"
+      },
+      "fecha_alta": {
+        "type": "date"
+      },
+      "password": {
+        "type": "string"
+      },
+      "rol": {
+        "type": "integer",
+        "model": "rol",
+        "foreignKey": true,
+        "alias": "rol"
+      }
+    },
+    "rol": {
+      "nombre": {
+        "type": "string"
+      },
+      "descripcion": {
+        "type": "string"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "turno": {
+      "id": {
+        "type": "string",
+        "primaryKey": true,
+        "unique": true
+      },
+      "descripcion": {
+        "type": "string"
+      }
+    },
+    "chat": {
+      "usuario": {
+        "type": "string"
+      },
+      "mensaje": {
+        "type": "string"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    }
+  },
+  "counters": {
+    "chat": {},
+    "persona": {},
+    "rol": {
+      "id": 2
+    },
+    "escuela": {
+      "id": 1
+    },
+    "ciclo": {
+      "id": 6
+    },
+    "escuela_ciclo": {
+      "id": 1
+    },
+    "turno": {},
+    "grado": {
+      "id": 6
+    }
+  }
+}

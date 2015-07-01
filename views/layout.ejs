@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>New Sails App</title>
+
+    <!-- Viewport mobile tag for sensible mobile support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+    <!--  
+        Stylesheets and Preprocessors
+        ==============================
+
+        You can always bring in CSS files manually with `<link>` tags, or asynchronously
+        using a solution like AMD (RequireJS).  Or, if you like, you can take advantage 
+        of Sails' conventional asset pipeline (boilerplate Gruntfile).
+
+        By default, stylesheets from your `assets/styles` folder are included
+        here automatically (between STYLES and STYLES END). Both CSS (.css) and LESS (.less)
+        are supported. In production, your styles will be minified and concatenated into
+        a single file.
+        
+        To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
+        For example, here are a few things you could do:
+            
+            + Change the order of your CSS files
+            + Import stylesheets from other directories
+            + Use a different or additional preprocessor, like SASS, SCSS or Stylus
+    -->
+
+    <!--STYLES-->
+    <link rel="stylesheet" href="/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/custom.css">
+    <link rel="stylesheet" href="/styles/importer.css">
+    <!--STYLES END-->
+  </head>
+
+  <body>
+    <%- body %>
+
+
+
+    <!--
+        Client-side Templates
+        ========================
+
+        HTML templates are important prerequisites of modern, rich client applications.
+        To work their magic, frameworks like Backbone, Angular, Ember, and Knockout require
+        that you load these templates client-side.
+
+        By default, your Gruntfile is configured to automatically load and precompile
+        client-side JST templates in your `assets/templates` folder, then
+        include them here automatically (between TEMPLATES and TEMPLATES END).
+        
+        To customize this behavior to fit your needs, just edit `tasks/pipeline.js`.
+        For example, here are a few things you could do:
+
+            + Import templates from other directories
+            + Use a different template engine (handlebars, jade, dust, etc.)
+            + Internationalize your client-side templates using a server-side
+              stringfile before they're served.
+    -->
+
+    <!--TEMPLATES-->
+    
+    <!--TEMPLATES END-->
+
+
+    <!--
+
+      Client-side Javascript
+      ========================
+
+      You can always bring in JS files manually with `script` tags, or asynchronously
+      on the client using a solution like AMD (RequireJS).  Or, if you like, you can 
+      take advantage of Sails' conventional asset pipeline (boilerplate Gruntfile).
+
+      By default, files in your `assets/js` folder are included here
+      automatically (between SCRIPTS and SCRIPTS END).  Both JavaScript (.js) and
+      CoffeeScript (.coffee) are supported. In production, your scripts will be minified
+      and concatenated into a single file.
+      
+      To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
+      For example, here are a few things you could do:
+          
+          + Change the order of your scripts
+          + Import scripts from other directories
+          + Use a different preprocessor, like TypeScript
+
+    -->
+
+    <!--SCRIPTS-->
+    <script src="/js/dependencies/sails.io.js"></script>
+    <script src="/js/angular-cookies.js"></script>
+    <script src="/js/angular-underscore-module.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/app.min.js"></script>
+    <script src="/js/controllers.js"></script>
+    <script src="/js/demo.js"></script>
+    <script src="/js/directives.js"></script>
+    <script src="/js/filters.js"></script>
+    <script src="/js/lib/angular/angular-bootstrap-prettify.js"></script>
+    <script src="/js/lib/angular/angular-bootstrap-prettify.min.js"></script>
+    <script src="/js/lib/angular/angular-bootstrap.js"></script>
+    <script src="/js/lib/angular/angular-bootstrap.min.js"></script>
+    <script src="/js/lib/angular/angular-cookies.min.js"></script>
+    <script src="/js/lib/angular/angular-loader.js"></script>
+    <script src="/js/lib/angular/angular-loader.min.js"></script>
+    <script src="/js/lib/angular/angular-mocks.js"></script>
+    <script src="/js/lib/angular/angular-resource.js"></script>
+    <script src="/js/lib/angular/angular-resource.min.js"></script>
+    <script src="/js/lib/angular/angular-sanitize.js"></script>
+    <script src="/js/lib/angular/angular-sanitize.min.js"></script>
+    <script src="/js/lib/angular/angular-scenario.js"></script>
+    <script src="/js/lib/angular/angular.js"></script>
+    <script src="/js/lib/angular/angular.min.js"></script>
+    <script src="/js/lib/angular/cookies.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_af-na.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_af-za.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_af.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_am-et.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_am.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ar-001.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ar-ae.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ar-bh.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ar-dz.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ar-eg.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ar-iq.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ar-jo.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ar-kw.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ar-lb.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ar-ly.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ar-ma.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ar-om.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ar-qa.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ar-sa.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ar-sd.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ar-sy.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ar-tn.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ar-ye.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ar.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_bg-bg.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_bg.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_bn-bd.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_bn-in.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_bn.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ca-ad.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ca-es.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ca.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_chr.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_cs-cz.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_cs.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_cy.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_da-dk.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_da.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_de-at.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_de-be.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_de-ch.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_de-de.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_de-li.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_de-lu.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_de.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_el-cy.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_el-gr.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_el-polyton.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_el.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-as.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-au.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-bb.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-be.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-bm.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-bw.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-bz.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-ca.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-dsrt-us.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-dsrt.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-fm.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-gb.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-gu.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-gy.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-hk.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-ie.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-in.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-iso.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-jm.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-mh.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-mp.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-mt.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-mu.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-na.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-nz.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-ph.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-pk.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-pr.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-pw.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-sg.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-tc.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-tt.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-um.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-us.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-vg.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-vi.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-za.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-zw.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en-zz.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_en.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-419.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-ar.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-bo.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-cl.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-co.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-cr.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-do.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-ea.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-ec.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-es.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-gq.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-gt.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-hn.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-ic.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-mx.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-ni.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-pa.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-pe.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-pr.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-py.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-sv.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-us.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-uy.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es-ve.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_es.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_et-ee.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_et.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_eu-es.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_eu.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fa-af.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fa-ir.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fa.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fi-fi.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fi.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fil-ph.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fil.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-be.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-bf.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-bi.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-bj.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-bl.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-ca.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-cd.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-cf.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-cg.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-ch.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-ci.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-cm.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-dj.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-fr.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-ga.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-gf.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-gn.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-gp.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-gq.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-km.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-lu.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-mc.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-mf.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-mg.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-ml.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-mq.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-ne.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-re.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-rw.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-sn.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-td.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-tg.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr-yt.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_fr.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_gl-es.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_gl.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_gsw-ch.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_gsw.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_gu-in.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_gu.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_haw.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_he-il.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_he.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_hi-in.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_hi.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_hr-hr.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_hr.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_hu-hu.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_hu.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_id-id.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_id.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_in.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_is-is.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_is.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_it-ch.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_it-it.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_it-sm.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_it.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_iw.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ja-jp.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ja.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_kn-in.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_kn.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ko-kr.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ko.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ln-cd.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ln-cg.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ln.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_lt-lt.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_lt.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_lv-lv.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_lv.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ml-in.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ml.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_mo.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_mr-in.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_mr.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ms-bn.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ms-my.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ms.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_mt-mt.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_mt.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_nl-aw.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_nl-be.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_nl-cw.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_nl-nl.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_nl-sx.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_nl.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_no.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_or-in.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_or.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_pl-pl.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_pl.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_pt-ao.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_pt-br.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_pt-gw.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_pt-mz.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_pt-pt.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_pt-st.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_pt.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ro-md.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ro-ro.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ro.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ru-md.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ru-ru.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ru-ua.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ru.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_sk-sk.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_sk.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_sl-si.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_sl.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_sq-al.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_sq.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_sr-cyrl-ba.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_sr-cyrl-me.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_sr-cyrl-rs.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_sr-cyrl.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_sr-latn-ba.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_sr-latn-me.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_sr-latn-rs.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_sr-latn.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_sr-rs.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_sr.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_sv-fi.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_sv-se.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_sv.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_sw-ke.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_sw-tz.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_sw.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ta-in.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ta-lk.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ta.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_te-in.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_te.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_th-th.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_th.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_tl-ph.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_tl.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_tr-tr.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_tr.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_uk-ua.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_uk.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ur-in.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ur-pk.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_ur.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_vi-vn.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_vi.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_zh-cn.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_zh-hans-cn.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_zh-hans-hk.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_zh-hans-mo.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_zh-hans-sg.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_zh-hans.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_zh-hant-hk.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_zh-hant-mo.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_zh-hant-tw.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_zh-hant.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_zh-hk.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_zh-tw.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_zh.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_zu-za.js"></script>
+    <script src="/js/lib/angular/i18n/angular-locale_zu.js"></script>
+    <script src="/js/pages/dashboard.js"></script>
+    <script src="/js/pages/dashboard2.js"></script>
+    <script src="/js/services.js"></script>
+    <script src="/js/underscore.js"></script>
+    <!--SCRIPTS END-->
+  </body>
+</html>

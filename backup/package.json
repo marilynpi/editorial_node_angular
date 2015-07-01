@@ -1,0 +1,17 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "body-parser": "*",
+    "connect-flash": "^0.1.1",
+    "error-handler": "^0.1.4",
+    "express": "*",
+    "express-session": "^1.11.2",
+    "jade": "~0.31.2",
+    "method-override": "^1.0.0",
+    "morgan": "^1.0.0",
+    "passport": "^0.2.1",
+    "passport-local": "^1.0.0"
+  }
+}

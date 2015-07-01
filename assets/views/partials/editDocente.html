@@ -1,0 +1,67 @@
+<section class="content-header">
+	<h1>Docentes<small>Panel de control</small></h1>
+</section>
+<section class="content">
+          <div class="row">
+            <div class="col-xs-12">
+            	<div class="box">
+				    <div class="box-header">
+				        <h3 class="box-title">Editar docente {{form.nombre}}</h3>
+				    </div><!-- /.box-header -->
+				    <div class="box-body">
+				        <form role="form">
+				        	<div class="form-group">
+				            </div>
+				            <div class="form-group">
+				                <label>Nombre:</label>
+				                <input ng-model="form.nombre" name="nombre" value="{{form.nombre}}">
+				            </div>
+				            <div class="form-group">
+				            	<label for="apellido">Apellido:</label>
+							<input ng-model="form.apellido" name="apellido" value="{{form.apellido}}">
+				            </div>
+				            <div class="form-group">
+				            	<label for="tipoDni">Tipo de documento:</label>
+							<input ng-model="form.tipo_dni" name="tipo_dni" value="{{form.tipo_dni}}"
+				            </div>
+				            <div class="form-group">
+				            	<label for="dni">Nro de documento:</label>
+							<input ng-model="form.id" name="id" value="{{form.id}}">
+				            </div>
+				            <div class="form-group">
+				            	<label for="fecha_nac">Fecha de Nacimiento:</label>
+							<input ng-model="form.fecha_nac" name="fecha_nac" value="{{form.fecha_nac}}">
+				            </div>
+				            <div class="form-group">
+				            	<label for="direccion">Dirección:</label>
+							<input ng-model="form.direccion" name="direccion" value="{{form.direccion}}">
+				            </div>
+				            <div class="form-group">
+				            	<label for="ciudad">Ciudad:</label>
+							<input ng-model="form.ciudad" name="ciudad" value="{{form.ciudad}}">
+				            </div>
+				            <div class="form-group">
+				            	<label for="cp">CP:</label>
+							<input ng-model="form.cp" name="cp" value="{{form.cp}}">
+				            </div>
+				            <div class="form-group">
+				            	<label for="email">E-mail:</label>
+							<input ng-model="form.email" name="email" value="{{form.email}}">
+				            </div>
+				            <div class="form-group">
+				            	<label for="telefono">Teléfono:</label>
+							<input ng-model="form.telefono" name="telefono" value="{{form.telefono}}">
+				            </div>
+				            <div class="form-group">
+				            	<label for="provincia">Provincia:</label>
+							<input ng-model="form.provincia" name="provincia" value="{{form.provincia}}">
+				            </div>
+							<div class="box-footer">
+							    <button ng-click="editDocente()" class="btn btn-primary">Guardar</button>
+							</div>
+						</form>
+				    </div><!-- /.box-body -->
+				</div><!-- /.box -->
+        </div><!-- col-xs-12 -->
+    </div><!-- /.row (main row) -->
+</section><!-- /.content -->	

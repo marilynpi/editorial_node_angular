@@ -1,0 +1,29 @@
+<!-- Content Header (Page header) -->
+
+<section class="content login">
+          <div class="row">
+            <div class="col-xs-4">
+              <h3 class="box-title">Letra Impresa Admin</h3>
+              <div class="box">
+                <div class="box-header">
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                   <form role="form" name="login">
+                    <div class="form-group" ng-class='{"has-error":login.username.$error.required && !login.username.$pristine}'>
+                      <label for="username" class="control-label">Usuario</label>
+                      <input type='text' class="form-control" ng-model="form.username" name="username" required>
+                      <span data-ng-show="login.username.$error.required && !login.username.$pristine" class="control-label" >Ingrese usuario</span>
+                    </div>
+                    <div class="form-group" ng-class='{"has-error":login.password.$error.required && !login.password.$pristine}'>
+                      <label for="password" class="control-label">Contraseña</label>
+                      <input type='password' class="form-control" ng-model="form.password" name="password" required>
+                      <span data-ng-show="login.password.$error.required && !login.password.$pristine" class="control-label" >Ingrese la contraseña</span>
+                    </div>
+                    <div ng-show="msg" class="alert alert-danger" role="alert">{{msg}}</div>
+                    <button class="btn btn-default" ng-disabled="!login.$valid" ng-click="submit()">Ingresar</button>
+                  </form>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+        </div><!-- col-xs-12 -->
+    </div><!-- /.row (main row) -->
+</section><!-- /.content -->
