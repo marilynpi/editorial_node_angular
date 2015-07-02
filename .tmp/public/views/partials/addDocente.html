@@ -1,0 +1,152 @@
+<section class="content-header">
+	<h1>Docentes<small>Panel de control</small></h1>
+</section>
+<section class="content">
+          <div class="row">
+            <div class="col-xs-12">
+
+            	<div class="box box-primary">
+				    <div class="box-header">
+				        <h3 class="box-title">Nuevo docente</h3>
+				    </div><!-- /.box-header -->
+				    <div class="box-body">
+				    	<div class="col-md-6">
+				        <form role="form" name="docente">
+				           <div class="form-group" ng-class='{"has-error":docente.nombre.$error.required && !docente.nombre.$pristine}'>
+				            	<label for="nombre" class="control-label">Nombre</label>
+								<input type='text' class="form-control" ng-model="form.nombre" name="nombre" required>
+								<span data-ng-show="docente.nombre.$error.required && !docente.nombre.$pristine" class="control-label" >Nombre es requerido</span>
+				           </div>
+				           <div class="form-group" ng-class='{"has-error":docente.apellido.$error.required && !docente.apellido.$pristine}'>
+				            	<label for="apellido" class="control-label" >Apellido</label>
+								<input type='text' class="form-control" ng-model="form.apellido" name="apellido" required>
+								<span data-ng-show="docente.nombre.$error.required && !docente.apellido.$pristine" class="control-label" >Apellido es requerido.</span>
+				           </div>
+				           <div class="form-group" ng-class='{"has-error": docente.tipo_dni.$error.required && !docente.tipo_dni.$pristine}'>
+				            	<label class="control-label"> Tipo de documento
+									<select class="form-control" ng-model="form.tipo_dni" name="tipo_dni" required>
+										<option value="DNI">DNI</option>
+										<option value="LC">LC</option>
+									</select>
+									<span data-ng-show="docente.tipo_dni.$error.required && !docente.tipo_dni.$pristine" class="control-label" >Tipo de documento es requerido.</span>
+								</label>
+				           </div>
+				           <div class="form-group" ng-class='{"has-error": docente.id.$error.required && !docente.id.$pristine}'>
+				            	<label for="id" class="control-label">Nro de documento</label>
+								<input type='number' class="form-control" ng-model="form.id" name="id" required>
+								<span data-ng-show="docente.id.$error.required && !docente.id.$pristine" class="control-label" >Nro de documento es requerido.</span>
+				            </div>
+				            <div class="form-group" ng-class='{"has-error": docente.fecha_nac.$error.required && !docente.fecha_nac.$pristine, "has-warning": !docente.$pristine && docente.fecha_nac.$error.date}'>
+				            	<label for="fecha_nac" class="control-label" >Fecha de Nacimiento</label>
+			                    <div class="input-group">
+			                      <div class="input-group-addon">
+			                        <i class="fa fa-calendar"></i>
+			                      </div>
+			                      <input id="fecha_nac" ng-model="form.fecha_nac" name="fecha_nac" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask required/>
+			                      <span data-ng-show="docente.fecha_nac.$error.required && !docente.fecha_nac.$pristine" class="control-label" >Fecha de nacimiento es requerida.</span>
+								<span data-ng-show="!docente.pristine && docente.fecha_nac.$error.number" class="control-label">Fecha de nacimiento solo admite fecha con formato dd/mm/aaaa.</span>
+			                    </div><!-- /.input group -->
+				            </div>
+
+				            <div class="form-group" ng-class='{"has-error": docente.direccion.$error.required && !docente.direccion.$pristine}'>
+				            	<label for="direccion" class="control-label">Dirección</label>
+								<input type='text' class="form-control" ng-model="form.direccion" name="direccion" required>
+								<span data-ng-show="docente.direccion.$error.required && !docente.direccion.$pristine" class="control-label" >Dirección es requerida.</span>
+				            </div>
+				            <div class="form-group" ng-class='{"has-error": docente.ciudad.$error.required && !docente.ciudad.$pristine}'>
+				            	<label for="ciudad" class="control-label">Ciudad</label>
+								<input type='text' class="form-control" ng-model="form.ciudad" name="ciudad" required>
+								<span data-ng-show="docente.ciudad.$error.required && !docente.ciudad.$pristine" class="control-label" >Ciudad es requerida.</span>
+				            </div>
+				            <div class="form-group" ng-class='{"has-error": docente.provincia.$error.required && !docente.provincia.$pristine}'>
+				            	<label for="provincia" class="control-label"> Provincia
+									<select class="form-control" ng-model="form.provincia" name="provincia" required>
+										<option ng-repeat="provincia in provincias" value="{{provincia.id_provincia}}">{{provincia.nombre_provincia}}</option>
+									</select>
+								</label>
+								<span data-ng-show="docente.provincia.$error.required && !docente.provincia.$pristine" class="control-label" >Provincia es requerida.</span>
+				            </div>
+				            <div class="form-group" ng-class='{"has-error": docente.cp.$error.required && !docente.cp.$pristine}'>
+				            	<label for="cp" class="control-label">CP</label>
+								<input type='number' class="form-control" ng-model="form.cp" name="cp" required>
+								<span data-ng-show="docente.cp.$error.required && !docente.cp.$pristine" class="control-label" >CP es requerida.</span>
+				            </div>
+				            <div class="form-group" ng-class='{ "has-error": docente.email.$error.required && !docente.email.$pristine, "has-warning": docente.email.$error.email }'>
+				            	<label for="email" class="control-label">E-mail</label>
+								<input type="email" class="form-control" ng-model="form.email" name="email" required >
+								<span data-ng-show="docente.email.$error.required && !docente.email.$pristine" class="control-label" >E-mail es requerido.</span>
+								<span data-ng-show=" docente.email.$error.email"  class="control-label">Ingrese un e-mail válido</span>
+				            </div>
+				            <div class="form-group" ng-class='{"has-error": docente.telefono.$error.required && !docente.telefono.$pristine}'>
+				            	<label for="telefono" class="control-label">Teléfono</label>
+								<input class="form-control" ng-model="form.telefono" name="telefono" required>
+								<span data-ng-show="docente.telefono.$error.required && !docente.telefono.$pristine" class="control-label" >Teléfono es requerido.</span>
+				            </div>
+				            <div class="box-footer">
+						        <button ng-click="submitDocente()" class="btn btn-primary">Guardar</button>
+						    </div>
+				        </form>
+				    </div><!-- col 6 -->
+				    <div class="col-md-6">
+				        <form role="form">
+				        	<button class="btn-flat btn" type="button" ng-click="addEscuela($event)" >
+							  <i class="fa fa-university"></i> Asignar escuelas
+							</button>
+					     	<div id="escuelas" class="box box-default">
+								  <div class="box-header with-border">
+								    <h3 class="box-title">Escuelas</h3>
+								    <div class="box-tools pull-right">
+								    </div><!-- /.box-tools -->
+								    <div class="box-body" id="lista-escuelas" ng-if="listaEscuelas.length > 0">
+								  		<div ng-repeat="listaEscuela in listaEscuelas" class="form-group">
+								  			<div class="form-group info">
+							            		<div>{{listaEscuela.nombre}} </div>
+							            		<div>{{listaEscuela.cargo_nombre}} </div>
+												<ul>
+													<li ng-repeat="listaCurso in listaEscuela.cursos">
+														<div>{{listaCurso.Grado}} {{listaCurso.Turno}}</div>
+													</li>
+												</ul>
+												<button class="btn-flat btn btn-cerrar" type="button" ng-click="deleteEscuela(listaEscuela.id)" title="Quitar Escuela"><i class="fa fa-close"></i></button>
+											</div>
+								 	 	</div>
+								  </div>
+								  </div><!-- /.box-header -->
+								  <div class="box-body">
+								  	<div class="form-escuela">
+						            	<label for="escuela"> Escuela
+											<select class="form-control" ng-model="form.escuela" name="escuela" ng-change="getDataEscuela(form.escuela)">
+												<option ng-repeat="escuela in escuelas" value="{{escuela.id}}">{{escuela.nombre}}</option>
+											</select>
+										</label>
+										<div class="data-escuela" ng-show="dataEscuelaShow" ng-class='{"has-error": docente.cargo.$error.required && !docente.cargo.$pristine}'>
+											<div class="form-group info">
+							            		<span ng-model="escuela.localidad">{{escuela.localidad}} - </span>
+							            		<span ng-model="escuela.provincia">{{escuela.provincia}} </span>
+							            	</div>
+							            	<label for="cargo" class="control-label"> Cargo
+												<select class="form-control" ng-model="form.cargo" name="cargo" ng-change="getCursos()">
+													<option ng-model="form.cargo" ng-repeat="cargo in cargos" value="{{cargo.id_cargo}}">{{cargo.descripcion_cargo}}</option>
+												</select>
+												<span data-ng-show="docente.cargo.$error.required && !docente.cargo.$pristine" class="control-label" >Cargo es requerido.</span>
+											</label>
+											<div ng-show="cursoShow">
+												<label>Cursos</label>
+												  <div class="form-group">
+												        <label class="checkbox-inline" ng-repeat="curso in cursos">
+												            <input type="checkbox" name="curso" ng-model="curso.selected" ng-true-value="true" ng-false-value="false" value="curso.id_curso"> {{curso.Grado}} {{curso.Turno}}
+												        </label>
+												    </div>
+											</div>
+										</div>
+										<button class="btn-flat btn" type="button" ng-click="addCursoEscuela()" ><i class="fa fa-plus"></i> Agregar</button>
+					            	</div>
+								  </div><!-- /.box-body -->
+							</div><!-- escuela -->
+		  				</form>
+				    	</div><!-- col 6 -->
+				    </div><!-- /.box-body -->
+				</div><!-- /.box -->
+        </div><!-- col-xs-12 -->
+    </div><!-- /.row (main row) -->
+</section><!-- /.content -->

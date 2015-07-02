@@ -1,0 +1,328 @@
+{
+  "data": {
+    "attempt": [
+      {
+        "user": 1,
+        "successful": true,
+        "ip": "10.240.213.116",
+        "port": "44477",
+        "createdAt": "2015-06-22T13:54:11.169Z",
+        "updatedAt": "2015-06-22T13:54:11.169Z",
+        "id": 1
+      }
+    ],
+    "auth": [
+      {
+        "password": "$2a$10$T..5eQJIEH1WkGQgz.B3F.p2xYHgBsrHxx82B63vafawoc5PEdLLq",
+        "email": "admin@admin.com",
+        "createdAt": "2015-06-22T13:54:10.987Z",
+        "updatedAt": "2015-06-22T13:54:11.011Z",
+        "id": 1,
+        "user": 1
+      }
+    ],
+    "jwt": [],
+    "resettoken": [],
+    "use": [],
+    "user": [
+      {
+        "auth": 1,
+        "createdAt": "2015-06-22T13:54:11.007Z",
+        "updatedAt": "2015-06-22T13:54:11.007Z",
+        "id": 1
+      }
+    ],
+    "chat": [
+      {
+        "usuario": "Usuario",
+        "mensaje": "test",
+        "id": 1,
+        "createdAt": "2015-06-22T15:50:54.368Z",
+        "updatedAt": "2015-06-22T15:50:54.368Z"
+      },
+      {
+        "usuario": "Usuario2",
+        "mensaje": "Hola",
+        "id": 2,
+        "createdAt": "2015-06-22T15:54:33.366Z",
+        "updatedAt": "2015-06-22T15:54:33.366Z"
+      },
+      {
+        "usuario": "Usuario",
+        "mensaje": "123",
+        "id": 3,
+        "createdAt": "2015-06-22T15:54:40.497Z",
+        "updatedAt": "2015-06-22T15:54:40.497Z"
+      },
+      {
+        "usuario": "Usuario3",
+        "mensaje": "test",
+        "id": 4,
+        "createdAt": "2015-06-22T17:28:46.778Z",
+        "updatedAt": "2015-06-22T17:28:46.778Z"
+      }
+    ],
+    "persona": [
+      {
+        "email": "admin@admin.com",
+        "encryptedPassword": "$2a$10$gB6p2jor5HGWJbYCZZ9W0OoBq3VwBfFBmjYZ/huzUy6fuaYksKUGu",
+        "createdAt": "2015-06-23T15:30:42.422Z",
+        "updatedAt": "2015-06-23T15:30:42.422Z"
+      },
+      {
+        "email": "alexisescudero1@gmail.com",
+        "encryptedPassword": "$2a$10$Mbdzzpn1uleafbtcDXfEVOuhAexfVjb9xCTX2YxX5orMXun7ckUzC",
+        "createdAt": "2015-06-23T18:26:15.730Z",
+        "updatedAt": "2015-06-23T18:26:15.730Z"
+      }
+    ]
+  },
+  "schema": {
+    "attempt": {
+      "user": {
+        "type": "integer",
+        "model": "user",
+        "foreignKey": true,
+        "alias": "user"
+      },
+      "successful": {
+        "type": "boolean",
+        "defaultsTo": false
+      },
+      "ip": {
+        "type": "string"
+      },
+      "port": {
+        "type": "string"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "auth": {
+      "user": {
+        "type": "integer",
+        "model": "user",
+        "foreignKey": true,
+        "alias": "user"
+      },
+      "email": {
+        "type": "string",
+        "unique": true
+      },
+      "password": {
+        "type": "string"
+      },
+      "resetToken": {
+        "type": "integer",
+        "model": "resettoken",
+        "foreignKey": true,
+        "alias": "resetToken"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "jwt": {
+      "token": {
+        "type": "text"
+      },
+      "owner": {
+        "type": "integer",
+        "model": "user",
+        "foreignKey": true,
+        "alias": "owner"
+      },
+      "revoked": {
+        "type": "boolean",
+        "defaultsTo": false
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "resettoken": {
+      "token": {
+        "type": "text"
+      },
+      "owner": {
+        "type": "integer",
+        "model": "auth",
+        "foreignKey": true,
+        "alias": "owner"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "use": {
+      "remoteAddress": {
+        "type": "string"
+      },
+      "jsonWebToken": {
+        "type": "integer",
+        "model": "jwt",
+        "foreignKey": true,
+        "alias": "jsonWebToken"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "user": {
+      "auth": {
+        "type": "integer",
+        "model": "auth",
+        "foreignKey": true,
+        "alias": "auth"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "chat": {
+      "usuario": {
+        "type": "string"
+      },
+      "mensaje": {
+        "type": "string"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "persona": {
+      "dni": {
+        "type": "integer",
+        "primaryKey": true,
+        "unique": true
+      },
+      "nombre": {
+        "type": "string"
+      },
+      "apellido": {
+        "type": "string"
+      },
+      "tipo_dni": {
+        "type": "string"
+      },
+      "fecha_nac": {
+        "type": "date"
+      },
+      "direccion": {
+        "type": "string"
+      },
+      "ciudad": {
+        "type": "string"
+      },
+      "provincia": {
+        "type": "integer"
+      },
+      "cp": {
+        "type": "integer"
+      },
+      "email": {
+        "type": "string",
+        "unique": true
+      },
+      "telefono": {
+        "type": "integer"
+      },
+      "fecha_alta": {
+        "type": "date"
+      },
+      "encryptedPassword": {
+        "type": "string"
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    }
+  },
+  "counters": {
+    "attempt": {
+      "id": 1
+    },
+    "auth": {
+      "id": 1
+    },
+    "jwt": {},
+    "resettoken": {},
+    "use": {},
+    "user": {
+      "id": 1
+    },
+    "chat": {
+      "id": 4
+    },
+    "persona": {
+      "id": 2
+    }
+  }
+}

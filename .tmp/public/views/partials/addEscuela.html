@@ -1,0 +1,121 @@
+<section class="content-header">
+	<h1>Escuelas<small>Panel de control</small></h1>
+</section>
+<section class="content">
+          <div class="row">
+            <div class="col-xs-12">
+            	<div class="box">
+				    <div class="box-header">
+				        <h3 class="box-title">Nueva escuela</h3>
+				    </div><!-- /.box-header -->
+				    <div class="box-body">
+				        <form role="form">
+				            <div class="form-group">
+				            	<label  for="id">ID:</label>
+								<input ng-model="form.id" name="id">
+				            </div>
+				            <div class="form-group">
+				                <label  for="nombre">Nombre:</label>
+								<input ng-model="form.nombre" name="nombre">
+				            </div>
+				            <div class="form-group">
+				            	<label  for="telefono">Telefono:</label>
+				            	<input ng-model="form.telefono" name="telefono">							
+				            </div>
+				            <div class="form-group">
+				            	<label  for="email">E-mail:</label>
+				            	<input ng-model="form.email" name="email">
+				            </div>
+				            <div class="form-group">
+				            	<label for="sector">Sector:
+									<select ng-model="form.sector" name="sector">
+										<option value="PUBLICO">PUBLICO</option>
+										<option value="PRIVADO">PRIVADO</option>
+									</select>
+								</label>
+				            </div>
+				            <div class="form-group">
+				            	<label  for="domicilio">Domicilio:</label>
+								<input ng-model="form.domicilio" name="domicilio">
+				            </div>
+				            <div class="form-group">
+				            	<label  for="cp">Código Postal:</label>
+				            	<input ng-model="form.cp" name="cp">
+				            </div>
+				            <div class="form-group">
+				            	<label  for="distrito">Distrito:</label>
+				            	<input ng-model="form.distrito" name="distrito">
+				            </div>
+				            <div class="form-group">
+				            	<label for="provincia"> Provincia:
+									<select ng-model="form.provincia" name="provincia" ng-change="getLocalidades()">
+										<option ng-repeat="provincia in provincias" value="{{provincia.id_provincia}}">{{provincia.nombre_provincia}}</option>
+									</select>
+								</label>
+				            </div>
+				            <div class="form-group">
+				            	<label for="localidad"> Localidad:
+									<select ng-model="form.localidad" name="localidad" >
+										<option ng-repeat="localidad in localidades" value="{{localidad.id_localidad}}">{{localidad.nombre_localidad}}</option>
+									</select>
+								</label>
+				            </div>
+				            <div class="form-group">
+				            	<label  for="ubicacion">Ubicación:</label>
+								<input ng-model="form.ubicacion" name="ubicacion">
+							</div>
+							<div class="form-group">
+								<label  for="observaciones">Observaciones:</label>
+								<textarea ng-model="form.observaciones" name="observaciones"></textarea>
+				            </div>
+				            <div id="cursos" class="box box-default">
+							  <div class="box-header with-border">
+							    <h3 class="box-title">Cursos</h3>
+							  </div><!-- /.box-header -->
+							  <div class="box-body" ng-model="form.grados" id="lista-cursos" ng-if="form.grados.length > 0">
+							  		<div ng-repeat="curso in form.grados" class="form-group">
+							            <label>Grado:{{ curso.descripcion_grado}}</label>
+							            <label>Turno:{{ curso.descripcion_turno}}</label>
+							            <label>Cantidad:{{ curso.cantidad_grado}}</label>
+										<button class="btn-flat btn" type="button" ng-click="deleteCurso(curso.id_curso)" ><i class="fa fa-close"></i></button>
+							 	 	</div>
+							  </div><!-- /.box-body -->
+							  <div class="box-footer">
+							  	<div class="form-grado">
+							  		<label for="ciclo"> Ciclos:
+										<select ng-model="form.ciclo" name="ciclo" ng-change="getGrados(form.ciclo)">
+											<option ng-repeat="ciclo in ciclos"  value="{{ciclo.id_ciclo}}">{{ciclo.descripcion_ciclo}}</option>
+										</select>
+									</label>
+					            	<label for="grado"> Grado:
+										<select ng-model="form.grado" name="grado">
+											<option ng-model="form.grad" ng-repeat="grado in grados" value="{{grado.id_grado}}">{{grado.nombre_grado}}</option>
+										</select>
+									</label>
+									<label for="turno"> Turno:
+										<select ng-model="form.turno" name="turno">
+											<option ng-repeat="turno in turnos" value="{{turno.id_turno}}">{{turno.descripcion_turno}}</option>
+										</select>
+									</label>
+									<label for="cantidad_grado"> Cantidad:
+										<input ng-model="form.cantidad_grado" name="cantidad_grado">
+									</label>
+
+									<button class="btn-flat btn" type="button" ng-click="addCurso()" ><i class="fa fa-check"></i></button>
+				            	</div>
+							  </div><!-- /.box-footer -->
+							</div><!-- /.box -->
+				            <div class="form-group">
+								<button class="btn-flat btn" type="button" ng-click="getCursos()" >
+							  		<i class="fa fa-plus"></i> Agregar Curso
+								</button>
+				            </div>
+				            <div class="box-footer">
+						        <button ng-click="submitEscuela()" class="btn btn-primary">Guardar</button>
+						    </div>
+						</form>
+				    </div><!-- /.box-body -->
+				</div><!-- /.box -->
+        </div><!-- col-xs-12 -->
+    </div><!-- /.row (main row) -->
+</section><!-- /.content -->						

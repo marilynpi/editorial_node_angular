@@ -35,7 +35,7 @@ module.exports.routes = {
   /*'/*': {
     view: 'index'
   },*/
-  '/*': { 
+  '*': { 
     controller: 'App',
     action: 'servir',
     skipAssets: true,
