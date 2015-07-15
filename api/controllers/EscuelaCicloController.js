@@ -6,6 +6,9 @@
  */
 
 module.exports = {
-	
-};
+	"test": function(request, response) {
+        return response.json("test");
+    } //test
+    
+}; //module.exports
 

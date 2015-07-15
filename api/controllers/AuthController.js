@@ -27,12 +27,21 @@ module.exports = {
         if (!valida) {
           return response.json(401, {error: 'email o clave incorrecta'});
         } else {
+          var token = jwToken.issue({dni : persona.dni });
+          request.decoded = token;
+          
           response.json({
             persona: persona,
-            token: jwToken.issue({dni : persona.dni })
+            token: token
           });
         }
       });
     })
+  },
+  me: function(request, response){
+    console.log(request.token);
+    Persona.find({dni:request.token.dni}).populateAll().exec(function(error,persona){
+      return response.json(persona);
+    });
   }
 };

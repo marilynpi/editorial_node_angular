@@ -2,12 +2,16 @@
 angular.module('myApp', [
   'myApp.controllers',
   'myApp.filters',
-  'myApp.services',
+  'myApp.services', //borrar
   'myApp.directives',
   'underscore',
-  'ngCookies'
+  'ngCookies',
+  'authService' //servicios alexis
 ]).
-config(function ($routeProvider, $locationProvider) {
+config(function ($routeProvider, $locationProvider, $httpProvider) {
+  
+  $httpProvider.interceptors.push("AuthInterceptor");
+  
   $routeProvider.
     when('/docentes', {
       templateUrl: 'views/partials/docentes.html',
@@ -77,17 +81,17 @@ config(function ($routeProvider, $locationProvider) {
       templateUrl: 'views/partials/editColeccion.html',
       controller: 'EditColeccionCtrl'
     }).
-    when('/', {
+    when('/login', {
       templateUrl: 'views/partials/login.html',
       controller: 'LoginCtrl'
     }).
-    when("/home", {
+    when("/", {
         templateUrl : "views/partials/home.html",
         controller : "homeCtrl"
-    }).
-    otherwise({
+    })
+    /*.otherwise({
       redirectTo: '/'
-    });
+    });*/
 
   $locationProvider.html5Mode(true);
 });

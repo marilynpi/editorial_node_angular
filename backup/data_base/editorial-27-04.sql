@@ -74,9 +74,8 @@ INSERT INTO `ciclo` (`id`, `descripcion`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `coleccion` (
-  `id_coleccion` int(11) NOT NULL,
-  `descripcion` varchar(100) NOT NULL,
-  PRIMARY KEY (`id_coleccion`)
+  `id_coleccion` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `descripcion` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -201,6 +200,7 @@ CREATE TABLE IF NOT EXISTS `libro` (
   `codigo_barra` int(30) DEFAULT NULL,
   `imagen` varchar(300) DEFAULT NULL,
   `resumen` varchar(1000) DEFAULT NULL,
+  `autores` varchar(200) DEFAULT NULL
   `fecha_alta` date NOT NULL,
   PRIMARY KEY (`isbn`),
   KEY `id_col` (`id_col`)

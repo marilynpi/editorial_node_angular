@@ -31,21 +31,22 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr ng-repeat="escuela in escuelas">
-                      	<td><p>{{escuela.id}}</p></td>
-                       	<td><p>{{escuela.nombre}}</p></td>
-                        <td><p>{{escuela.sector}}</p></td>
-                        <td><p>{{escuela.telefono}}</p></td>
-                        <td><p>{{escuela.email}}</p></td>
-                        <td><p>{{escuela.domicilio}}</p></td>
-                        <td><p>{{escuela.localidad}}</p></td>
-                        <td><p>{{escuela.provincia}}</p></td>
-                        <td><p>{{escuela.ubicacion}}</p></td>
-                        <td><p>{{escuela.cp}}</p></td>
-                        <td><p>{{escuela.grado}}</p></td>
-                        <td><p>{{escuela.turno}}</p></td>
-                        <td><p>{{escuela.ciclo}}</p></td>
-                        <td><p>{{escuela.cantidadGrados}}</p></td>
+                      
+                      <tr ng-repeat="data in escuelas">
+                      	<td><p>{{data.escuela.id}}</p></td>
+                       	<td><p>{{data.escuela.nombre}}</p></td>
+                        <td><p>{{data.escuela.sector}}</p></td>
+                        <td><p>{{data.escuela.telefono}}</p></td>
+                        <td><p>{{data.escuela.email}}</p></td>
+                        <td><p>{{data.escuela.domicilio}}</p></td>
+                        <td><p>{{data.escuela.localidad.nombre_localidad}}</p></td>
+                        <td><p>{{data.escuela.provincia.nombre_provincia}}</p></td>
+                        <td><p>{{data.escuela.ubicacion}}</p></td>
+                        <td><p>{{data.escuela.cp}}</p></td>
+                        <td><p>{{data.grado.descripcion}}</p></td>
+                        <td><p>{{data.grado.id}}</p></td>
+                        <td><p>{{data.grado.descripcion}}</p></td>
+                        <td><p>{{data.cantidad_grado}}</p></td>
                         <td><p><a href="escuela/editar/{{escuela.id}}" title="Editar"><i class="fa fa-edit"></i></a><br>
                         	<a href="escuela/borrar/{{escuela.id}}" title="Borrar"><i class="fa fa-ban"></i></a>
                         </p></td>

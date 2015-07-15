@@ -320,32 +320,40 @@ angular.module('myApp.controllers', []).
       $location.url('/docentes');
     };
   }).
-  controller('EscuelaCtrl', function ($scope, $http) {
-    $http.get('/api/gradosTurnos').
+/*  controller('EscuelaCtrl', function ($scope, $http) {
+    $http.get('/api/escuelaciclo').
     success(function(data, status, headers, config) {
-      var escuelas = [];
-      data.forEach(function (escuela, i) {
-        escuelas.push({
-          id: escuela.id,
-          nombre: escuela.nombre,
-          telefono: escuela.telefono,
-          email: escuela.email,
-          domicilio: escuela.domicilio,
-          localidad: escuela.localidad,
-          cp: escuela.cp,
-          sector: escuela.sector,
-          distrito: escuela.distrito,
-          ubicacion: escuela.ubicacion,
-          provincia: escuela.provincia,
-          grado: escuela.grado,
-          turno: escuela.id_turno,
-          ciclo: escuela.ciclo,
-          cantidadGrados: escuela.cantidad_grado,
-          observaciones: escuela.observaciones
+      
+      $scope.escuelas = data;
+      console.log($scope.escuelas);
+    });
+
+  }).*/
+  controller('EscuelaCtrl', function ($scope, $http, $q) {
+    
+    var response = [];
+    
+    
+    $http.get('/api/escuelaciclo')
+    .then(function(resultado){
+      return resultado;
+    })
+    .then(function(resultado){
+      resultado.data.forEach(function(valor,i){
+        $http.get('/api/escuela/'+valor.id_escuela.id).success(function(respuesta){
+          
+          var escuelaCiclo = {
+            escuela : respuesta,
+            cantidad_grado : valor.cantidad_grado,
+            grado: valor.id_grado
+          };
+          console.log(escuelaCiclo);
+          response.push(escuelaCiclo);
         });
       });
-      $scope.escuelas = escuelas;
-    });
+      
+      $scope.escuelas = response;
+    })
 
   }).
   controller('AddEscuelaCtrl', function ($scope, $http, $location) {
@@ -518,20 +526,20 @@ angular.module('myApp.controllers', []).
     };
   }).
   controller('LibroCtrl', function ($scope, $http) {
-    $http.get('/api/libros').
-    success(function(data, status, headers, config) {
+    $http.get('/api/libro')
+    .success(function(data, status, headers, config) {
       var libros = [];
       data.forEach(function (libro, i) {
         libros.push({
           isbn:libro.isbn,
           titulo: libro.titulo,
-          id_col: libro.id_col,
-          coleccion: libro.descripcion,
+          id_col: libro.id_col.id_col,
+          coleccion: libro.id_col.descripcion,
           paginas: libro.paginas,
           peso: libro.peso,
           precio: libro.precio,
           autores:libro.autores,
-          formato: libro.formato
+          formato: libro.tamanio
         });
       });
       $scope.libros = libros;
@@ -541,7 +549,7 @@ angular.module('myApp.controllers', []).
   }).
   controller('AddLibroCtrl', function ($scope, $http, $location) {
     $scope.form = {};
-    $http.get('/api/colecciones').
+    $http.get('/api/coleccion').
     success(function(data, status, headers, config) {
       var colecciones = [];
       data.forEach(function (coleccion, i) {
@@ -560,24 +568,24 @@ angular.module('myApp.controllers', []).
     };
   }).
   controller('EditLibroCtrl', function ($scope, $http, $location, $routeParams) {
-    $scope.form = {};
+    //$scope.form = {};
     $http.get('/api/libro/' + $routeParams.id).
       success(function(data) {
-        console.log(data)
-        var libro = {};
+        console.log("libro: ",data);
+        /*var libro = {};
         libro = {
-            isbn: data[0].isbn,
-            titulo: data[0].titulo,
+            isbn: data.isbn,
+            titulo: data.titulo,
             id_col: data[0].id_col,
             paginas: data[0].paginas,
             peso: data[0].peso,
             precio: data[0].precio,
             autores:data[0].autores,
             formato: data[0].formato
-        }
-      $scope.form = libro;
+        };*/
+      $scope.form = data;
       });
-    $http.get('/api/colecciones').
+    $http.get('/api/coleccion').
     success(function(data, status, headers, config) {
       var colecciones = [];
       data.forEach(function (coleccion, i) {

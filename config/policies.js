@@ -34,6 +34,9 @@ module.exports.policies = {
   PersonaController:{
   	'*': true,
   	'update':['estaLogueado','esDocente']
+  },
+  AuthController:{
+  	'me':'estaLogueado'
   }
 
   /***************************************************************************
