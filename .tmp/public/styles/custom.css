@@ -40,3 +40,6 @@ body{
 		padding-right: 3px;
 		padding-left: 3px;
 	}
+	.alert-danger{
+		text-align: "center" !important;
+	}

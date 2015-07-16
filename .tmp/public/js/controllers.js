@@ -1,11 +1,11 @@
 /* Controllers */
 
 angular.module('myApp.controllers', []).
-  controller('DocenteCtrl', function ($scope, $http, $cookies) {
-    $http.get('/api/docentesEscuelas').
-    success(function(data, status, headers, config) {
-      var docentes = [];
-      data.forEach(function (docente, i) {
+  controller('DocenteCtrl', function ($scope, $http) {
+    $http.get('/api/persona/docente')
+    .success(function(data, status, headers, config) {
+      //var docentes = [];
+      /*data.forEach(function (docente, i) {
         docentes.push({
           tipo_dni: docente.tipo_dni,
           id: docente.dni,
@@ -23,11 +23,8 @@ angular.module('myApp.controllers', []).
           cargo: docente.cargo,
           escuela: docente.escuela
         });
-      });
-      $scope.docentes = docentes;
-      $cookies.nombrecookie = "unodepiera";
-      //para acceder
-      console.log($cookies.nombrecookie);
+      });*/
+      $scope.docentes = data;
     });
 
   }).
@@ -678,9 +675,33 @@ angular.module('myApp.controllers', []).
     $scope.home = function () {
       $location.url('/colecciones');
     };
-  }).
+  })
+  .controller('LoginCtrl',function($scope,$rootScope,$location, Auth){
+    
+    $scope.doLogin = function(){
+      
+      $scope.processing = true;
+      $scope.error = "";
+    
+      Auth.login($scope.loginData.email,$scope.loginData.password)
+      .success(function(data){
+        $scope.processing = false;
 
-  controller('LoginCtrl', function ($scope, $http, $location, auth) {
+        if(data.persona)
+          $location.path("/docentes");
+        else
+          $scope.error = data.error;
+      })
+      .error(function(data){
+        $scope.error = data.error;
+      });
+    }
+    
+    
+    
+  })
+  /*
+  .controller('LoginCtrl', function ($scope, $http, $location, auth) {
     //$scope.form = {usuario:'1', password:'123'};
     angular.element(document.querySelector('.main-header')).css('display', 'none');
     angular.element(document.querySelector('.main-sidebar')).css('display', 'none');
@@ -700,13 +721,13 @@ angular.module('myApp.controllers', []).
           angular.element(document.querySelector('.content-wrapper')).attr('style', '');
           angular.element(document.querySelector('.main-footer')).attr('style', '');
         }
-      /*$http.post('/api/auth', $scope.form).
+      $http.post('/api/auth', $scope.form).
         success(function(data) {
           console.log('ok')
-        });*/
+        });
     };
-  }).
-  controller('homeCtrl', function($scope, $cookies, auth) 
+  })*/
+  .controller('homeCtrl', function($scope, $cookies, auth) 
   {
     //devolvemos a la vista el nombre del usuario
     $scope.username = $cookies.username;
@@ -717,5 +738,8 @@ angular.module('myApp.controllers', []).
     {
         auth.logout();
     }
-
-});
+  }
+  .controller('mainController',function($scope,$rootScope, $location){
+    $scope.test = "test";
+  })
+  );

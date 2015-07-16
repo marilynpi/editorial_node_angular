@@ -20,5 +20,10 @@ module.exports = {
         response.json(200, {persona: persona, token: jwToken.issue({dni: persona.dni})});
       }
     });
+  },
+  docente: function(request, response){
+    Persona.find().populate("rol",{nombre:"docente"}).populate("provincia").exec(function(error,persona){
+      return response.json(persona);
+    });
   }
 };

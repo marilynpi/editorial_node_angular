@@ -1,17 +1,15 @@
 
 angular.module('myApp', [
+  'ngRoute',
   'myApp.controllers',
+  'authService', //servicio alexis
   'myApp.filters',
-  'myApp.services', //borrar
-  'myApp.directives',
-  'underscore',
-  'ngCookies',
-  'authService' //servicios alexis
-]).
-config(function ($routeProvider, $locationProvider, $httpProvider) {
+  'myApp.directives'
+])
+.config(function ($routeProvider, $locationProvider, $httpProvider) {
   
-  $httpProvider.interceptors.push("AuthInterceptor");
-  
+  $httpProvider.interceptors.push('AuthInterceptor');
+
   $routeProvider.
     when('/docentes', {
       templateUrl: 'views/partials/docentes.html',
@@ -83,12 +81,13 @@ config(function ($routeProvider, $locationProvider, $httpProvider) {
     }).
     when('/login', {
       templateUrl: 'views/partials/login.html',
-      controller: 'LoginCtrl'
+      controller: 'LoginCtrl',
+      controllerAs: 'login'
     }).
     when("/", {
         templateUrl : "views/partials/home.html",
         controller : "homeCtrl"
-    })
+    });
     /*.otherwise({
       redirectTo: '/'
     });*/

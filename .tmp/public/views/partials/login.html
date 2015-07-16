@@ -8,19 +8,22 @@
                 <div class="box-header">
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                   <form role="form" name="login">
-                    <div class="form-group" ng-class='{"has-error":login.username.$error.required && !login.username.$pristine}'>
+                   <form role="form" name="login" ng-submit="doLogin()">
+                    <div class="form-group" ng-class='{"has-error":loginData.email.$error.required && !loginData.email.$pristine}'>
                       <label for="username" class="control-label">Usuario</label>
-                      <input type='text' class="form-control" ng-model="form.username" name="username" required>
-                      <span data-ng-show="login.username.$error.required && !login.username.$pristine" class="control-label" >Ingrese usuario</span>
+                      <input type='text' class="form-control" ng-model="loginData.email" name="username" required>
+                      <span data-ng-show="username.$error.required && !loginData.email.$pristine" class="control-label" >Ingrese usuario</span>
                     </div>
-                    <div class="form-group" ng-class='{"has-error":login.password.$error.required && !login.password.$pristine}'>
+                    <div class="form-group" ng-class='{"has-error":loginData.password.$error.required && !loginData.password.$pristine}'>
                       <label for="password" class="control-label">Contraseña</label>
-                      <input type='password' class="form-control" ng-model="form.password" name="password" required>
-                      <span data-ng-show="login.password.$error.required && !login.password.$pristine" class="control-label" >Ingrese la contraseña</span>
+                      <input type='password' class="form-control" ng-model="loginData.password" name="password" required>
+                      <span data-ng-show="loginData.password.$error.required && !loginData.password.$pristine" class="control-label" >Ingrese la contraseña</span>
                     </div>
-                    <div ng-show="msg" class="alert alert-danger" role="alert">{{msg}}</div>
-                    <button class="btn btn-default" ng-disabled="!login.$valid" ng-click="submit()">Ingresar</button>
+                    <div ng-show="error" class="alert alert-danger" role="alert">{{error}}</div>
+                    <button type="submit" class="btn btn-block btn-primary">
+              				<span ng-if="!processing">Login</span>
+              				<span ng-if="processing" class="spinner"><span class="glyphicon glyphicon-repeat"></span></span>
+              			</button>
                   </form>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
