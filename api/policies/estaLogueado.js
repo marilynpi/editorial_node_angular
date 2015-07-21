@@ -28,7 +28,7 @@ module.exports = function (request, response, next) {
     // We delete the token from param to not mess with blueprints
     delete request.query.token;
   } else {
-    return response.json(401, {error: 'No se encontro un header'});
+    return response.json(401, {error: 'Debes pasar un token por el header'});
   }
  
   jwToken.verify(token, function (error, token) {

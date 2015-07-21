@@ -30,9 +30,21 @@
 	    <!-- bootstrap wysihtml5 - text editor -->
 	    <link href="/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
 	    
+	    <!--Codigo Angular-->
 	    
+	    <script src="/js/lib/angular/angular.min.js"></script>
+	    <script src="/js/lib/angular/angular-route.min.js"></script>
+	    
+			<script src="/js/controllers.js"></script>
+			<script src="/js/services/authService.js"></script>
+			<script src="/js/filters.js"></script>
+			<script src="/js/directives.js"></script>
+			<script src="/js/app.routes.js"></script>
+			<script src="/js/app.js"></script>
+			<!--<script src="/js/services.js"></script>-->
+	   
 	</head>
-	<body class="skin-blue" ng-class="{sidebar-collapse:main.logueado}" ng-controller="mainController as main">
+	<body class="skin-blue" ng-controller="mainController as main">
     <div class="wrapper">
 		<header class="main-header">
 	        <!-- Logo -->
@@ -40,7 +52,8 @@
 	        <!-- Header Navbar: style can be found in header.less -->
 	        <nav class="navbar navbar-static-top" role="navigation">
 	          <!-- Sidebar toggle button-->
-	          <a class="sidebar-toggle" data-toggle="offcanvas" role="button" ng-if="main.logueado">
+	          <a class="sidebar-toggle" data-toggle="offcanvas" role="button">
+	          
 	            <span class="sr-only">Toggle navigation</span>
 	          </a>
 	          <div class="navbar-custom-menu">
@@ -81,7 +94,7 @@
 	          <ul class="sidebar-menu">
 	            <li class="header">MENU</li>
 	            <li class="treeview">
-	              <a href="/docentes">
+	              <a href="/docentes" ng-click="main.cambiarVista('docentes')">
 	                <i class="fa fa-user"></i> 
 	                <span>Docentes</span> 
 	                <i class="fa fa-angle-left pull-right"></i>
@@ -91,7 +104,7 @@
 	              </ul>
 	            </li>
 	            <li class="treeview">
-	              <a href="/escuelas">
+	              <a href="/escuelas" ng-click="main.cambiarVista('escuelas')">
 	                <i class="fa fa-university"></i>
 	                <span>Escuelas</span>
 	                <i class="fa fa-angle-left pull-right"></i>
@@ -101,7 +114,7 @@
 	              </ul>
 	            </li>
 	            <li class="treeview">
-	              <a href="/libros">
+	              <a href="/libros" ng-click="main.cambiarVista('libros')">
 	                <i class="fa fa-book"></i>
 	                <span>Libros</span>
 	                <i class="fa fa-angle-left pull-right"></i>
@@ -111,7 +124,7 @@
 	              </ul>
 	            </li>
 	            <li class="treeview">
-	              <a href="/colecciones">
+	              <a href="/colecciones" ng-click="main.cambiarVista('colecciones')">
 	                <i class="fa fa-th"></i>
 	                <span>Colecciones</span>
 	                <i class="fa fa-angle-left pull-right"></i>
@@ -136,18 +149,7 @@
 	    </footer>
     </div><!-- ./wrapper -->
     
-    <!--Codigo Angular-->
-	    
-	    <script src="/js/lib/angular/angular.min.js"></script>
-	    <script src="/js/lib/angular/angular-route.min.js"></script>
-	    <!--<script src="/js/lib/angular/cookies.js"></script>-->
-	    <!--<script src="/js/angular-underscore-module.js" type="text/javascript"></script>-->
-			<script src="/js/app.js"></script>
-			<script src="/js/controllers.js"></script>
-			<script src="/js/services/authService.js"></script>
-			<!--<script src="/js/services.js"></script>-->
-			<script src="/js/filters.js"></script>
-			<script src="/js/directives.js"></script>
+
     
 	<!-- jQuery 2.1.3 -->
     <script src="/plugins/jQuery/jQuery-2.1.3.min.js"></script>

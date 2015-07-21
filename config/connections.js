@@ -43,11 +43,19 @@ module.exports.connections = {
   ***************************************************************************/
   mysql: {
     adapter: 'sails-mysql',
-    host: '0.0.0.0',
-    user: 'alexis1111',
-    password: '',
-    database: 'c9'
+    host: '184.173.234.17',
+    port: 3306,
+    user: 'c406li',
+    password: 'tajiNuANAD5!3',
+    database: 'c406editorial'
   },
+    /*mysql: {
+      adapter: 'sails-mysql',
+      host: '0.0.0.0',
+      user: 'alexis1111',
+      password: '',
+      database: 'editorial'
+  },*/
 
   /***************************************************************************
   *                                                                          *

@@ -1,29 +1,18 @@
 /* Controllers */
 
-angular.module('myApp.controllers', []).
-  controller('DocenteCtrl', function ($scope, $http) {
-    $http.get('/api/persona/docente')
+angular.module('controllers', [])
+
+  .controller('mainController',function($scope,$location){
+    var vm = this;
+
+    this.cambiarVista = function(ruta){
+      $location.url("/" + ruta);
+    }
+  })
+  .controller('DocenteCtrl', function ($scope, $http) {
+    $http.get('/api/personagrado')
     .success(function(data, status, headers, config) {
-      //var docentes = [];
-      /*data.forEach(function (docente, i) {
-        docentes.push({
-          tipo_dni: docente.tipo_dni,
-          id: docente.dni,
-          nombre: docente.nombre,
-          apellido: docente.apellido,
-          fecha_nac: docente.fecha_nac,
-          direccion: docente.direccion,
-          ciudad: docente.ciudad,
-          provincia: docente.provincia,
-          cp: docente.cp,
-          email: docente.email,
-          telefono: docente.telefono,
-          grado: docente.grado,
-          turno: docente.id_turno,
-          cargo: docente.cargo,
-          escuela: docente.escuela
-        });
-      });*/
+      console.log(data);
       $scope.docentes = data;
     });
 
@@ -316,41 +305,12 @@ angular.module('myApp.controllers', []).
     $scope.home = function () {
       $location.url('/docentes');
     };
-  }).
-/*  controller('EscuelaCtrl', function ($scope, $http) {
-    $http.get('/api/escuelaciclo').
-    success(function(data, status, headers, config) {
-      
+  })
+  .controller('EscuelaCtrl', function ($scope, $http, $q) {
+    
+    $http.get('/api/escuelaciclo').success(function(data){
       $scope.escuelas = data;
-      console.log($scope.escuelas);
     });
-
-  }).*/
-  controller('EscuelaCtrl', function ($scope, $http, $q) {
-    
-    var response = [];
-    
-    
-    $http.get('/api/escuelaciclo')
-    .then(function(resultado){
-      return resultado;
-    })
-    .then(function(resultado){
-      resultado.data.forEach(function(valor,i){
-        $http.get('/api/escuela/'+valor.id_escuela.id).success(function(respuesta){
-          
-          var escuelaCiclo = {
-            escuela : respuesta,
-            cantidad_grado : valor.cantidad_grado,
-            grado: valor.id_grado
-          };
-          console.log(escuelaCiclo);
-          response.push(escuelaCiclo);
-        });
-      });
-      
-      $scope.escuelas = response;
-    })
 
   }).
   controller('AddEscuelaCtrl', function ($scope, $http, $location) {
@@ -727,19 +687,16 @@ angular.module('myApp.controllers', []).
         });
     };
   })*/
-  .controller('homeCtrl', function($scope, $cookies, auth) 
+  .controller('homeCtrl', function($scope, Auth) 
   {
     //devolvemos a la vista el nombre del usuario
-    $scope.username = $cookies.username;
-    $scope.password = $cookies.password;
+    $scope.username = "Usuario";
+    $scope.password = "";
     //la función logout que llamamos en la vista llama a la función
     //logout de la factoria auth
     $scope.logout = function()
     {
-        auth.logout();
+        Auth.logout();
     }
   }
-  .controller('mainController',function($scope,$rootScope, $location){
-    $scope.test = "test";
-  })
   );

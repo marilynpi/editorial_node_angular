@@ -22,7 +22,7 @@ module.exports = {
     });
   },
   docente: function(request, response){
-    Persona.find().populate("rol",{nombre:"docente"}).populate("provincia").exec(function(error,persona){
+    Persona.find().populateAll().where({rol:{nombre:"docente"}}).exec(function(error,persona){
       return response.json(persona);
     });
   }

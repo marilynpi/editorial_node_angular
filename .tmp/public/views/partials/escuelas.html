@@ -32,7 +32,8 @@
                     </thead>
                     <tbody>
                       
-                      <tr ng-repeat="data in escuelas">
+                      {{escuelas}}
+                      <tr ng-repeat="escuela in escuelas">
                       	<td><p>{{data.escuela.id}}</p></td>
                        	<td><p>{{data.escuela.nombre}}</p></td>
                         <td><p>{{data.escuela.sector}}</p></td>

@@ -1,7 +1,12 @@
 /* Controllers */
 
-angular.module('myApp.controllers', []).
-  controller('DocenteCtrl', function ($scope, $http, $cookies) {
+angular.module('myApp.controllers', [])
+  .controller('MainCtrl',function($scope,$location){
+    
+    $scope.test = "Test";
+    
+  })
+  .controller('DocenteCtrl', function ($scope, $http, $cookies) {
     $http.get('/api/docentesEscuelas').
     success(function(data, status, headers, config) {
       var docentes = [];
