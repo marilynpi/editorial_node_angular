@@ -31,6 +31,7 @@
                       </tr>
                     </thead>
                     <tbody>
+                      
                       <tr ng-repeat="docente in docentes">
                       	<td><p>{{docente.nombre}}</p></td>
                        	<td><p>{{docente.apellido}}</p></td>
@@ -47,8 +48,8 @@
                         <td><p>{{docente.cargo}}</p></td>
                         <td><p>{{docente.grado}}</p></td>
                         <td><p>{{docente.turno}}</p></td>
-                        <td><p><a href="docente/editar/{{docente.id}}" title="Editar"><i class="fa fa-edit"></i></a><br>
-                        	<a href="docente/borrar/{{docente.id}}" title="Borrar"><i class="fa fa-ban"></i></a>
+                        <td><p><a href="docente/editar/{{docente.dni}}" title="Editar"><i class="fa fa-edit"></i></a><br>
+                        	<a href="docente/borrar/{{docente.dni}}" title="Borrar"><i class="fa fa-ban"></i></a>
                         </p></td>
                       </tr>
                     </tbody>

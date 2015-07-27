@@ -770,7 +770,7 @@ var Connection = (function(){
 		}
 	};
 
-	Connection.prototype.getAllSchoolCourseInning = function(callback){
+	Connection.prototype.getSchoolCourseInning = function(callback){
 		//escuelas+ciclos+grados+turnos
 		Connection();
 		if(self.connection){

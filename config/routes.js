@@ -42,7 +42,9 @@ module.exports.routes = {
     skipRegex: /^\/api\/.*$/
     },
   // rutas custom
-  'get /turno/:id/escuelas': 'TurnoController.escuelas'
+  'get /turno/:id/escuelas': 'TurnoController.escuelas',
+  'post /api/docente': 'PersonaController.docente',
+  'post /api/test/:id': 'EscuelaCicloController.test'
 
 
   /***************************************************************************

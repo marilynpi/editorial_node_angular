@@ -40,7 +40,8 @@ module.exports = {
   },
   me: function(request, response){
     console.log(request.token);
-    Persona.find({dni:request.token.dni}).populateAll().exec(function(error,persona){
+    //jwToken.verify(request.token)
+    Persona.findOne({dni:request.token.dni}).populateAll().exec(function(error,persona){
       return response.json(persona);
     });
   }

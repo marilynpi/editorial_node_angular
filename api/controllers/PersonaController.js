@@ -20,10 +20,11 @@ module.exports = {
         response.json(200, {persona: persona, token: jwToken.issue({dni: persona.dni})});
       }
     });
-  },
+  }, //fin create
   docente: function(request, response){
-    Persona.find().populateAll().where({rol:{nombre:"docente"}}).exec(function(error,persona){
-      return response.json(persona);
-    });
-  }
+    Persona.create(request.params.all())
+      .exec(function(err, docente) {
+        return response.json(docente);
+      });
+  } //fin docente
 };

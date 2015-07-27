@@ -9,7 +9,7 @@ module.exports = {
   
   connection: 'mysql',
   schema: true,
-  autoPK: true,
+  autoPK: false,
   autoCreatedAt: false,
   autoUpdatedAt: false,
   tableName: "escuela_ciclo",
