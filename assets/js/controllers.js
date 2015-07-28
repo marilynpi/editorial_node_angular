@@ -53,8 +53,9 @@ angular.module('controllers', [])
     $scope.listaEscuelas = [];
     $scope.cursoShow = false;
     $scope.dataEscuelaShow = false;
-    $http.get('/api/provincia').
-    success(function(data, status, headers, config) {
+    
+    $http.get('/api/provincia')
+    .success(function(data, status, headers, config) {
       var provincias = [];
       data.forEach(function (provincia, i) {
         provincias.push({
@@ -64,8 +65,19 @@ angular.module('controllers', [])
       });
       $scope.provincias = provincias;
     });
+    
     $scope.submitDocente = function () {
-      console.log($scope.form, $scope.listaEscuelas)
+      console.log($scope.form, $scope.listaEscuelas);
+      var resultado = {
+        docente: $scope.form,
+        escuelas: $scope.listaEscuelas
+        };
+      
+      $http.post('/api/personagrado',resultado)
+      .success(function(data){
+        console.log(data);
+      })
+      
       /*$http.post('/api/docente', $scope.form).
         success(function(data) {
           $http.post('/api/docenteGrado/'+ JSON.stringify($scope.listaEscuelas)).

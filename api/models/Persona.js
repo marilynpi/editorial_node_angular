@@ -21,39 +21,39 @@ module.exports = {
     dni:{
       type: "integer",
       primaryKey: true,
-      required: true,
+      required: false,
       unique: true
     },
     nombre:{
       type: "string",
-      required: true
+      required: false
     },
     apellido:{
       type: "string",
-      required: true
+      required: false
     },
     tipo_dni:{
       type: "string",
-      required: true
+      required: false
     },
     fecha_nac:{
       type: "date",
-      required: true
+      required: false
     },
     direccion:{
       type: "string",
-      required: true
+      required: false
     },
     ciudad:{
       type: "string",
-      required: true
+      required: false
     },
     provincia:{
       model: "provincia"
     },
     cp:{
       type: "integer",
-      required: true
+      required: false
     },
     email: {
       type: 'email',
@@ -62,11 +62,11 @@ module.exports = {
     },
     telefono:{
       type: "integer",
-      required: true
+      required: false
     },
     fecha_alta:{
       type: "date",
-      required: true
+      required: false
     },
     password: {
       type: 'string'
