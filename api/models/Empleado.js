@@ -7,7 +7,6 @@
 
 module.exports = {
 
-  connection: 'mysql',
   attributes: {
   		nombre:{
   			type:"string",

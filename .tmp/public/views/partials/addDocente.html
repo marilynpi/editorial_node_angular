@@ -37,12 +37,19 @@
 								<span data-ng-show="docente.id.$error.required && !docente.id.$pristine" class="control-label" >Nro de documento es requerido.</span>
 				            </div>
 				            <div class="form-group" ng-class='{"has-error": docente.fecha_nac.$error.required && !docente.fecha_nac.$pristine, "has-warning": !docente.$pristine && docente.fecha_nac.$error.date}'>
-				            	<label for="fecha_nac" class="control-label" >Fecha de Nacimiento</label>
+				            	<label for="fecha_nac" class="control-label">Fecha de Nacimiento</label>
 			                    <div class="input-group">
 			                      <div class="input-group-addon">
 			                        <i class="fa fa-calendar"></i>
 			                      </div>
-			                      <input id="fecha_nac" ng-model="form.fecha_nac" name="fecha_nac" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask required/>
+								<!--<p class="input-group">
+          							<input type="text" class="form-control" datepicker-popup="dd-MMMM-yyyy" ng-model="form.fecha_nac" is-open="opened" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+										</span>
+								</p>-->
+								<input id="fecha_nac" ng-model="form.fecha_nac" name="fecha_nac" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask required/>
+			                      <!--<input id="fecha_nac" ng-model="form.fecha_nac" name="fecha_nac" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask required/>-->
 			                      <span data-ng-show="docente.fecha_nac.$error.required && !docente.fecha_nac.$pristine" class="control-label" >Fecha de nacimiento es requerida.</span>
 								<span data-ng-show="!docente.pristine && docente.fecha_nac.$error.number" class="control-label">Fecha de nacimiento solo admite fecha con formato dd/mm/aaaa.</span>
 			                    </div><!-- /.input group -->
@@ -83,6 +90,7 @@
 								<span data-ng-show="docente.telefono.$error.required && !docente.telefono.$pristine" class="control-label" >Teléfono es requerido.</span>
 				            </div>
 				            <div class="box-footer">
+				            	<pre>{{form}}</pre>
 						        <button ng-click="submitDocente()" class="btn btn-primary">Guardar</button>
 						    </div>
 				        </form>
@@ -139,6 +147,7 @@
 												    </div>
 											</div>
 										</div>
+										
 										<button class="btn-flat btn" type="button" ng-click="addCursoEscuela()" ><i class="fa fa-plus"></i> Agregar</button>
 					            	</div>
 								  </div><!-- /.box-body -->

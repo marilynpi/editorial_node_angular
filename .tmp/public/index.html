@@ -184,6 +184,10 @@
     <script src="/plugins/input-mask/jquery.inputmask.js" type="text/javascript"></script>
     <script src="/plugins/input-mask/jquery.inputmask.date.extensions.js" type="text/javascript"></script>
     <script src="/plugins/input-mask/jquery.inputmask.extensions.js" type="text/javascript"></script>
+    <!-- datepicker -->
+    <script src="/js/ui-bootstrap-custom-0.13.1.min.js"></script>
+    <script src="/js/ui-bootstrap-custom-tpls-0.13.1.min.js"></script>
+    
     <!-- AdminLTE App -->
     <script src="/js/app.min.js" type="text/javascript"></script>
 
@@ -191,12 +195,20 @@
 	 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
       $.widget.bridge('uibutton', $.ui.button);
+      
       $(function () {
       	setTimeout(function(){ 
       		console.log('mask',$("#fecha_nac"));
         	//Datemask dd/mm/yyyy
-        	$("#fecha_nac").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-
+        	/*$("#fecha_nac").inputmask("dd/mm/yyyy", {
+        		"placeholder": "dd/mm/yyyy", 
+        		"autoUnmask": "false", 
+        		"oncomplete": function(){
+        			 var value = $.inputmask.format($('input#fecha_nac').val() , { alias: "dd/mm/yyyy"});
+        			 $('input#fecha_nac').attr('value', value);
+        		}
+        	});*/
+					//Inputmask.format("2331973", { alias: "dd/mm/yyyy"});
       	 }, 3000);
       	
       });

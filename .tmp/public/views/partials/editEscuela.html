@@ -30,10 +30,7 @@
 								<label for="domicilio">Domicilio:</label>
 								<input ng-model="form.domicilio" name="domicilio" value="{{form.domicilio}}">
 							</div>
-							<div class="form-group">
-								<label for="localidad">Localidad:</label>
-								<input ng-model="form.localidad" name="localidad" value="{{form.localidad}}">
-							</div>
+							
 							<div class="form-group">
 								<label for="cp">Código Postal:</label>
 								<input ng-model="form.cp" name="cp" value="{{form.cp}}">
@@ -48,12 +45,24 @@
 							</div>
 							<div class="form-group">
 								<label for="provincia">Provincia:</label>
-								<input ng-model="form.provincia" name="provincia" value="{{form.provincia}}">
+								<select ng-model="form.provincia" name="provincia">
+									<option ng-repeat="provincia in provincias" value="{{provincia.id_provincia}}" ng-selected="provincia.id_provincia == form.provinciaSeleccionada">{{provincia.nombre_provincia}}</option>
+								</select>
+							</div>
+							
+							<div class="form-group">
+								<label for="localidad">Localidad:</label>
+								<!--<input ng-model="form.localidad" name="localidad" value="{{form.localidad}}">-->
+								<select ng-model="form.localidad" name="localidad" >
+									
+								<option ng-repeat="localidad in localidades" ng-selected="{{localidad.id_localidad == form.localidadSeleccionada}}" value="{{localidad.id_localidad}}">{{localidad.nombre_localidad}}</option>
+								</select>
 							</div>
 							<div class="form-group">
 								<label for="observaciones">Observaciones:</label>
 								<textarea ng-model="form.observaciones" name="observaciones" value="{{form.observaciones}}"></textarea>
 							</div>
+							<pre>{{form}}</pre>
 							<div class="box-footer">
 						        <button ng-click="editEscuela()" class="btn btn-primary">Guardar</button>
 						    </div>

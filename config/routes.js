@@ -45,7 +45,7 @@ module.exports.routes = {
   'get /turno/:id/escuelas': 'TurnoController.escuelas',
   'post /api/personagrado': 'PersonagradoController.create',
   'post /api/docente': 'PersonaController.docente',
-  'post /api/test/:id': 'EscuelaCicloController.test'
+  'get /escuelaciclo/singrado': 'EscuelaCicloController.sinGrado'
 
 
   /***************************************************************************

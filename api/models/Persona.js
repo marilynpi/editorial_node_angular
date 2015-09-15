@@ -7,11 +7,10 @@
  
 // We don't want to store password without encryption
 var bcrypt = require('bcrypt');
-var session = require("../../config/session");
+ 
  
 module.exports = {
   
-  connection: 'mysql',
   schema: true,
   autoPK: false,
   autoCreatedAt: false,
@@ -21,39 +20,39 @@ module.exports = {
     dni:{
       type: "integer",
       primaryKey: true,
-      required: false,
+      required: true,
       unique: true
     },
     nombre:{
       type: "string",
-      required: false
+      required: true
     },
     apellido:{
       type: "string",
-      required: false
+      required: true
     },
     tipo_dni:{
       type: "string",
-      required: false
+      required: true
     },
     fecha_nac:{
       type: "date",
-      required: false
+      required: true
     },
     direccion:{
       type: "string",
-      required: false
+      required: true
     },
     ciudad:{
       type: "string",
-      required: false
+      required: true
     },
     provincia:{
       model: "provincia"
     },
     cp:{
       type: "integer",
-      required: false
+      required: true
     },
     email: {
       type: 'email',
@@ -62,11 +61,12 @@ module.exports = {
     },
     telefono:{
       type: "integer",
-      required: false
+      required: true
     },
     fecha_alta:{
       type: "date",
-      required: false
+      defaultsTo: function (){ return new Date(); },
+      required: true
     },
     password: {
       type: 'string'
@@ -84,7 +84,6 @@ module.exports = {
   },
   // Here we encrypt password before creating a User
   beforeCreate : function (values, next) {
-    
     bcrypt.genSalt(10, function (err, salt) {
       if(err) return next(err);
       bcrypt.hash(sails.config.session.secret, salt, function (err, hash) {

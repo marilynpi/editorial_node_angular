@@ -7,7 +7,6 @@
 
 module.exports = {
   
-  connection: 'mysql',
   schema: true,
   autoCreatedAt: false,
   autoUpdatedAt: false,

@@ -7,11 +7,11 @@
 
 module.exports = {
 
-  connection: 'mysql',
   schema: true,
   autoPK: false,
   autoCreatedAt: false,
   autoUpdatedAt: false,
+  tableName: "provincias",
   
   attributes: {
     id_provincia:{
@@ -19,7 +19,7 @@ module.exports = {
       primaryKey: true,
       required: true
     },
-    nombre_provincia:{
+    nombre:{
       type: "string",
       required: true
     }

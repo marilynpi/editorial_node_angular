@@ -4,7 +4,8 @@ angular.module('myApp', [
   'controllers',
   'authService', //servicio alexis
   'filters',
-  'directives'
+  'directives',
+  'ui.bootstrap'
 ])
 .config(function ($httpProvider) {
   

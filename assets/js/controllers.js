@@ -48,6 +48,7 @@ angular.module('controllers', [])
 
   }).
   controller('AddDocenteCtrl', function ($scope, $http, $location) {
+
     angular.element(document.querySelector('#escuelas')).css('display', 'none');
     $scope.form = {};
     $scope.listaEscuelas = [];
@@ -77,6 +78,9 @@ angular.module('controllers', [])
       .success(function(data){
         console.log(data);
       })
+      .error(function(data){
+        console.log("ha ocurrido un error en la carga del docente");
+      });
       
       /*$http.post('/api/docente', $scope.form).
         success(function(data) {
@@ -138,7 +142,7 @@ angular.module('controllers', [])
       $scope.dataEscuelaShow = true;
     };
     $scope.getGradosTurnos = function (id_escuela){
-      //$http.get('/api/gradosTurnos/' + id_escuela).
+      
       $http.get('/api/escuelaciclo/' + id_escuela).
       success(function(data) {
         var cursos = [];
@@ -255,7 +259,8 @@ angular.module('controllers', [])
     });
 
     $scope.deleteDocente = function () {
-      $http.delete('/api/docente/' + $routeParams.id).
+      //$http.delete('/api/docente/' + $routeParams.id).
+      $http.delete('/api/personagrado/' + $routeParams.id).
         success(function(data) {
           $location.url('/docentes');
         });
@@ -271,12 +276,14 @@ angular.module('controllers', [])
       $scope.escuelas = data;
     });
 
-  }).
-  controller('AddEscuelaCtrl', function ($scope, $http, $location) {
+  })
+  .controller('AddEscuelaCtrl', function ($scope, $http, $location) {
     angular.element(document.querySelector('#cursos .box-footer')).css('display', 'none');
     $scope.form = {};
     $scope.form.grados = [];
-    $http.get('/api/provincias').
+    /*
+    // 2 veces ?
+    $http.get('/api/provincia').
     success(function(data, status, headers, config) {
       var provincias = [];
       data.forEach(function (provincia, i) {
@@ -286,35 +293,45 @@ angular.module('controllers', [])
         });
       });
       $scope.provincias = provincias;
-    });
-    $http.get('/api/provincias').
+    });*/
+    $http.get('/api/provincia').
     success(function(data, status, headers, config) {
       var provincias = [];
       data.forEach(function (provincia, i) {
         provincias.push({
           id_provincia: provincia.id_provincia,
-          nombre_provincia: provincia.nombre_provincia,
+          nombre_provincia: provincia.nombre,
         });
       });
       $scope.provincias = provincias;
     });
     $scope.submitEscuela = function () {
-      $http.post('/api/escuela', $scope.form).
+      var resultado = {
+        escuela: $scope.form,
+        cursos: $scope.form.grados
+      };
+      console.log(resultado);
+      $http.post("/api/escuelaciclo",resultado)
+      .success(function(data){
+        $location.url('/escuelas');
+      });
+      
+      /*$http.post('/api/escuela', $scope.form).
         success(function(data) {
           $http.post('/api/escuelaCiclo/'+ JSON.stringify($scope.form.grados)).
              success(function(data) {
                $location.url('/escuelas');
             });
-        });
+        });*/
     };
     $scope.getLocalidades = function () {
-      $http.get('/api/localidades/' + $scope.form.provincia).
+      $http.get('/api/provincia/' + $scope.form.provincia).
       success(function(data) {
         var localidades = [];
         data.forEach(function (localidad, i) {
           localidades.push({
             id_localidad: localidad.id_localidad,
-            nombre_localidad: localidad.nombre_localidad,
+            nombre_localidad: localidad.nombre,
           });
         });
         $scope.localidades = localidades;
@@ -332,8 +349,8 @@ angular.module('controllers', [])
       angular.element(document.querySelector('#cursos .box-footer')).css('display', 'none');
     };
     $scope.getCursos = function (id_grado, id_turno) {
-      $http.get('/api/turnos').
-      success(function(data, status, headers, config) {
+      $http.get('/api/turno')
+      .success(function(data, status, headers, config) {
         var turnos = [];
         data.forEach(function (turno, i) {
           turnos.push({
@@ -343,7 +360,7 @@ angular.module('controllers', [])
         });
         $scope.turnos = turnos;
       });
-      $http.get('/api/ciclos').
+      $http.get('/api/ciclo').
       success(function(data, status, headers, config) {
         var ciclos = [];
         data.forEach(function (ciclo, i) {
@@ -357,7 +374,7 @@ angular.module('controllers', [])
       angular.element(document.querySelector('#cursos .box-footer')).css('display', 'block');
     };
     $scope.getGrados = function (id_curso){
-      $http.get('/api/grados/' + id_curso).
+      $http.get('/api/grado/' + id_curso).
       success(function(data) {
         var grados = [];
         data.forEach(function (grado, i) {
@@ -375,7 +392,7 @@ angular.module('controllers', [])
   }).
   controller('EditEscuelaCtrl', function ($scope, $http, $location, $routeParams) {
     $scope.form = {};
-    $http.get('/api/escuela/' + $routeParams.id).
+    $http.get('/api/escuelaciclo/' + $routeParams.id).
       success(function(data) {
         var escuela = {};
         escuela = {
@@ -384,18 +401,45 @@ angular.module('controllers', [])
             telefono: data.telefono,
             email: data.email,
             domicilio: data.domicilio,
-            localidad: data.localidad.nombre_localidad,
+            localidadSeleccionada: data.localidad.id_localidad,
             id_localidad: data.localidad.id_localidad,
             cp: data.cp,
             sector: data.sector,
             distrito: data.distrito,
             ubicacion: data.ubicacion,
-            provincia: data.provincia.nombre_provincia,
-            id_provincia: data.provincia.id_provincia,
+            provincia: data.provincia.nombre,
+            provinciaSeleccionada: data.provincia.id_provincia,
             observaciones: data.observaciones
         }
       $scope.form = escuela;
       });
+      
+    $http.get('/api/provincia').
+    success(function(data, status, headers, config) {
+      var provincias = [];
+      data.forEach(function (provincia, i) {
+        provincias.push({
+          id_provincia: provincia.id_provincia,
+          nombre_provincia: provincia.nombre,
+        });
+      });
+      $scope.provincias = provincias;
+    });
+    
+    $scope.getLocalidades = function () {
+      $http.get('/api/provincia/' + $scope.form.provincia).
+      success(function(data) {
+        var localidades = [];
+        data.forEach(function (localidad, i) {
+          localidades.push({
+            id_localidad: localidad.id_localidad,
+            nombre_localidad: localidad.nombre,
+          });
+        });
+        $scope.localidades = localidades;
+      });
+    };
+      
     $scope.editEscuela = function () {
       $http.put('/api/escuela/' + $routeParams.id, $scope.form).
         success(function(data) {
@@ -455,7 +499,7 @@ angular.module('controllers', [])
           peso: libro.peso,
           precio: libro.precio,
           autores:libro.autores,
-          formato: libro.tamanio
+          formato: libro.formato
         });
       });
       $scope.libros = libros;

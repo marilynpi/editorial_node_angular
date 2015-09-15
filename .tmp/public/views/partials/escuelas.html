@@ -32,7 +32,7 @@
                     </thead>
                     <tbody>
                       <tr ng-repeat="escuela in escuelas">
-                      	<td><p>{{escuela.id}}</p></td>
+                      	<td><p>{{escuela.id_escuela}}</p></td>
                        	<td><p>{{escuela.nombre}}</p></td>
                         <td><p>{{escuela.sector}}</p></td>
                         <td><p>{{escuela.telefono}}</p></td>
@@ -46,7 +46,7 @@
                         <td><p>{{escuela.turno}}</p></td>
                         <td><p>{{escuela.ciclo}}</p></td>
                         <td><p>{{escuela.cantidad_grado}}</p></td>
-                        <td><p><a href="escuela/editar/{{escuela.id}}" title="Editar"><i class="fa fa-edit"></i></a><br>
+                        <td><p><a href="escuela/editar/{{escuela.id_escuela}}" title="Editar"><i class="fa fa-edit"></i></a><br>
                         	<a href="escuela/borrar/{{escuela.id}}" title="Borrar"><i class="fa fa-ban"></i></a>
                         </p></td>
                       </tr>

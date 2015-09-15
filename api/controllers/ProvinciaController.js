@@ -6,6 +6,12 @@
  */
 
 module.exports = {
-	
+	findOne: function(request,response){
+	    var provincia = request.param("id");
+	    
+	    Localidad.find({id_provincia:provincia}).sort('nombre').exec(function(err,localidades){
+	        return response.json(localidades);
+	    })
+	}
 };
 

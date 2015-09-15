@@ -7,11 +7,11 @@
 
 module.exports = {
   
-  connection: 'mysql',
   schema: true,
   autoPK: false,
   autoCreatedAt: false,
   autoUpdatedAt: false,
+  tableName: "localidades",
   
   attributes: {
     id_localidad:{
@@ -19,13 +19,17 @@ module.exports = {
       primaryKey: true,
       required: true,
     },
+    nombre:{
+      type:"string",
+      required: true
+    },
     id_provincia:{
       model: "provincia"
     },
-    nombre_localidad:{
-      type:"string",
-      required: true
+    cp:{
+      type:"string"
     }
+    
   }
 };
 
