@@ -52,6 +52,6 @@ Install dependencies
     $ npm install
 ```
 ``` bash
-    sails lift    
+    $ sails lift    
 ```
 Open http://localhost:1337/login.
