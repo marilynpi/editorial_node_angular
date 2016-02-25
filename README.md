@@ -1,6 +1,3 @@
-# sails
-
-
 editorial_node_angular
 =======================
                 .-..-.
