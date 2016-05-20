@@ -43,6 +43,17 @@ You will also need to install:
   * Install sails
     $ npm install sails -g
 
+ Ubuntu:
+  * Install the latest version of [nodejs](https://nodejs.org/)
+  * Install dev libs 
+    $ sudo apt-get install build-essential openssl libssl-dev
+  * Install node-gyp
+    $ npm install node-gyp 
+  * Install bcrypt
+    $ npm install bcrypt
+  * Install sails
+    $ npm install sails
+
 Install dependencies
   In the root of project, run
 ``` bash
@@ -51,4 +62,3 @@ Install dependencies
 ``` bash
     $ sails lift    
 ```
-Open http://localhost:1337/login.
